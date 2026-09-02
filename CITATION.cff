@@ -1,0 +1,39 @@
+cff-version: 1.2.0
+message: "If you use this replication package, please cite the paper (preferred citation) and the package itself."
+type: software
+title: "Replication package for 'Goodness-of-Fit Indices and Diagnostics for Topic Models'"
+version: 1.0.0
+date-released: 2026-09-02
+license: MIT
+repository-code: "https://github.com/contefranz/OpTop-R2-replication"
+abstract: "Code, cached results and data behind every table and figure of 'Goodness-of-Fit Indices and Diagnostics for Topic Models' (Lewis and Grossetti): four simulation studies, the MD&A empirical application, and the September 2026 robustness arms. Methods are implemented in the R package OpTop."
+keywords:
+  - topic models
+  - latent Dirichlet allocation
+  - goodness of fit
+  - model selection
+  - specification tests
+  - held-out evaluation
+  - R
+authors:
+  - family-names: Lewis
+    given-names: Craig M.
+    orcid: "https://orcid.org/0000-0001-8734-1702"
+    affiliation: "Vanderbilt University"
+  - family-names: Grossetti
+    given-names: Francesco
+    orcid: "https://orcid.org/0000-0002-5130-7745"
+    affiliation: "Bocconi University"
+    email: francesco.grossetti@unibocconi.it
+preferred-citation:
+  type: unpublished
+  title: "Goodness-of-Fit Indices and Diagnostics for Topic Models"
+  year: 2026
+  notes: "Submitted to the Journal of the Royal Statistical Society, Series B."
+  authors:
+    - family-names: Lewis
+      given-names: Craig M.
+      orcid: "https://orcid.org/0000-0001-8734-1702"
+    - family-names: Grossetti
+      given-names: Francesco
+      orcid: "https://orcid.org/0000-0002-5130-7745"

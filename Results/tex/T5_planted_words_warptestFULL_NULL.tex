@@ -1,0 +1,16 @@
+\begin{table}
+\centering
+\begin{talltblr}[         %% tabularray outer open
+caption={Identification of planted contamination words by two word-level criteria},
+]                     %% tabularray outer close
+{                     %% tabularray inner open
+colspec={Q[]Q[]Q[]Q[]Q[]Q[]},
+hline{2}={1-6}{solid, black, 0.05em},
+hline{1}={1-6}{solid, black, 0.08em},
+hline{4}={1-6}{solid, black, 0.08em},
+}                     %% tabularray inner close
+criterion & n_planted & precision_at_n & recall_top50 & median_rank_planted & W \\
+mean held-out residual (desc) & 50 & 1 & 1 & 25.5 & 5000 \\
+word-level R2 (asc, filtered) & 37 & 0 & 0 & 2716.0 & 3268 \\
+\end{talltblr}
+\end{table}

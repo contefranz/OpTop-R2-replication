@@ -1,0 +1,23 @@
+\begin{table}
+\centering
+\begin{talltblr}[         %% tabularray outer open
+caption={Per-stratum moments for one rejected case (BH-adjusted)},
+]                     %% tabularray outer close
+{                     %% tabularray inner open
+colspec={Q[]Q[]Q[]Q[]Q[]Q[]},
+hline{2}={1-6}{solid, black, 0.05em},
+hline{1}={1-6}{solid, black, 0.08em},
+hline{11}={1-6}{solid, black, 0.08em},
+}                     %% tabularray inner close
+test & stratum & gbar & t & pval & pval_bh \\
+T1_freq_contrast & hi_vs_lo & -1e-04 & -25.0823 & 7.8e-139 & 7.8e-139 \\
+T2_freq_strata & f1_vs_f5 & 1e-04 & 25.0823 & 7.8e-139 & 3.1e-138 \\
+T2_freq_strata & f2_vs_f5 & 1e-04 & 24.3488 & 6.0e-131 & 1.2e-130 \\
+T2_freq_strata & f3_vs_f5 & 1e-04 & 23.8722 & 6.0e-126 & 7.9e-126 \\
+T2_freq_strata & f4_vs_f5 & 1e-04 & 21.9966 & 3.1e-107 & 3.1e-107 \\
+T3_fit_strata & s1_vs_s5 & 1e-04 & 23.7614 & 8.4e-125 & 1.7e-124 \\
+T3_fit_strata & s2_vs_s5 & 1e-04 & 24.6874 & 1.5e-134 & 5.8e-134 \\
+T3_fit_strata & s3_vs_s5 & 1e-04 & 21.4100 & 1.1e-101 & 1.1e-101 \\
+T3_fit_strata & s4_vs_s5 & 1e-04 & 23.3145 & 3.2e-120 & 4.2e-120 \\
+\end{talltblr}
+\end{table}

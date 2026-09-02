@@ -1,0 +1,20 @@
+\begin{table}
+\centering
+\begin{talltblr}[         %% tabularray outer open
+caption={Tests 1-3 under the correct DGP: raw (H0: mu = 0) and centered-at-conditional-truth rejection rates (nominal 5%), with mean effect sizes},
+]                     %% tabularray outer close
+{                     %% tabularray inner open
+colspec={Q[]Q[]Q[]Q[]Q[]Q[]},
+hline{2}={1-6}{solid, black, 0.05em},
+hline{1}={1-6}{solid, black, 0.08em},
+hline{8}={1-6}{solid, black, 0.08em},
+}                     %% tabularray inner close
+test & K & size_raw & size_centered & gbar_absmax & n \\
+T1_freq_contrast & 10 & 0.3876 & 0.0556 & 1.8e-06 & 5000 \\
+T2_freq_strata & 10 & 0.9754 & 0.0582 & 2.5e-06 & 5000 \\
+T3_fit_strata & 10 & 0.2310 & 0.0552 & 6.5e-06 & 5000 \\
+T1_freq_contrast & 40 & 0.3198 & 0.0576 & 1.4e-06 & 5000 \\
+T2_freq_strata & 40 & 0.9704 & 0.0580 & 2.0e-06 & 5000 \\
+T3_fit_strata & 40 & 0.1990 & 0.0580 & 2.8e-06 & 5000 \\
+\end{talltblr}
+\end{table}

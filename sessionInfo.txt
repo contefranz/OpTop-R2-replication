@@ -1,0 +1,121 @@
+Environments that produced the shipped results
+==============================================
+Captured 2026-09-02 from the replication package root. Two environments contributed;
+every cache also carries its own stamp in attr(x, "run_meta") (R version,
+package versions, timestamp) -- Section C lists them.
+
+A. September 2026 environment -- current, pinned by install.R
+-------------------------------------------------------------
+Produced: the robustness arms of 31 Aug - 2 Sep 2026 (replicated selection,
+second DGP, matched-prior E4 size arm, MD&A c/grid sensitivity, restart
+dispersion), all post-processing, and the regeneration of every shipped
+figure and table from the caches (Lane A, 2 Sep 2026). Unit gates U1-U16 pass.
+
+Hardware: Apple M3 Pro (12 cores), 36 GB RAM, macOS 27.0 (26A5421a)
+
+R version 4.6.1 (2026-06-24)
+Platform: aarch64-apple-darwin25.4.0
+Running under: macOS Golden Gate 27.0
+
+Matrix products: default
+BLAS:   /opt/homebrew/Cellar/openblas/0.3.33/lib/libopenblasp-r0.3.33.dylib 
+LAPACK: /opt/homebrew/Cellar/r/4.6.1/lib/R/lib/libRlapack.dylib;  LAPACK version 3.12.1
+
+locale:
+[1] en_US/en_US/en_US/C/en_US/en_US
+
+time zone: Europe/Rome
+tzcode source: internal
+
+attached base packages:
+[1] stats     graphics  grDevices utils     datasets  methods   base     
+
+other attached packages:
+ [1] MASS_7.3-65         digest_0.6.39       here_1.0.2         
+ [4] writexl_1.5.4       tinytable_0.17.0    qs2_0.2.2          
+ [7] patchwork_1.3.2     ggplot2_4.0.3       future.apply_1.20.2
+[10] future_1.70.0       Matrix_1.7-5        data.table_1.18.4  
+[13] quanteda_4.4        text2vec_0.6.6      topicmodels_0.2-17 
+[16] NLPstudio_1.2.0     OpTop_0.20.0       
+
+loaded via a namespace (and not attached):
+ [1] generics_0.1.4        xml2_1.6.0            slam_0.1-55          
+ [4] stringi_1.8.7         lattice_0.22-9        listenv_1.0.0        
+ [7] magrittr_2.0.5        grid_4.6.1            RColorBrewer_1.1-3   
+[10] float_0.3-3           rprojroot_2.1.1       tm_0.7-18            
+[13] stopwords_2.3         scales_1.4.0          RhpcBLASctl_0.23-42  
+[16] codetools_0.2-20      modeltools_0.2-24     cli_3.6.6            
+[19] rlang_1.2.0           crayon_1.5.3          parallelly_1.48.0    
+[22] withr_3.0.3           tools_4.6.1           NLP_0.3-2            
+[25] parallel_4.6.1        dplyr_1.2.1           fastmatch_1.1-8      
+[28] rsparse_0.5.3         globals_0.19.1        mlapi_0.1.1          
+[31] vctrs_0.7.3           R6_2.6.1              stats4_4.6.1         
+[34] lifecycle_1.0.5       stringfish_0.19.0     pkgconfig_2.0.3      
+[37] RcppParallel_5.1.11-2 pillar_1.11.1         gtable_0.3.6         
+[40] glue_1.8.1            Rcpp_1.1.1-1.1        lgr_0.5.2            
+[43] tibble_3.3.1          tidyselect_1.2.1      farver_2.1.2         
+[46] compiler_4.6.1        S7_0.2.2             
+
+--- Key analysis packages (source pins) ---
+OpTop          0.20.0   github contefranz/OpTop      commit 1166daed33 (main, 2026-07-22)
+NLPstudio      1.2.0    github contefranz/NLPstudio  commit 771b42e328 (main, 2026-07-23)
+text2vec       0.6.6    CRAN
+topicmodels    0.2.17   CRAN
+quanteda       4.4      CRAN
+data.table     1.18.4   CRAN
+Matrix         1.7.5    CRAN
+future.apply   1.20.2   CRAN
+ggplot2        4.0.3    CRAN
+patchwork      1.3.2    CRAN
+qs2            0.2.2    CRAN
+tinytable      0.17.0   CRAN
+writexl        1.5.4    CRAN
+here           1.0.2    CRAN
+digest         0.6.39   CRAN
+MASS           7.3.65   CRAN
+
+B. July 2026 environment -- baseline caches (as captured 2026-07-15)
+--------------------------------------------------------------------
+Produced: E1, E2, E3, E5 and the MD&A baseline (OpTop 0.14.1, 13-14 Jul 2026);
+E4 and E6 (OpTop 0.14.0, 11 Jul 2026, before the null-discrepancy floor of
+0.14.1 -- immaterial: both score under reconstruction / in-sample, where the
+floor excludes no document; see README.md, Section 2).
+
+Hardware: Apple M3 Pro (12 cores), 36 GB RAM, macOS Tahoe 26.5.2
+
+R version 4.6.1 (2026-06-24)
+Platform: aarch64-apple-darwin25.4.0
+Running under: macOS Tahoe 26.5.2
+
+Matrix products: default
+BLAS:   /opt/homebrew/Cellar/openblas/0.3.33/lib/libopenblasp-r0.3.33.dylib
+LAPACK: /opt/homebrew/Cellar/r/4.6.1/lib/R/lib/libRlapack.dylib;  LAPACK version 3.12.1
+
+locale: en_US/en_US/en_US/C/en_US/en_US
+time zone: Europe/Rome
+
+--- Key analysis packages (source pins) ---
+OpTop          0.14.1   github contefranz/OpTop      commit 6cb4fb8739 (release 0.14.1 on branch
+                        paper-alignment-july26, contained in main at 4e89b1bd2e)
+               0.14.0   (E4 and E6 caches)
+NLPstudio      1.1.1    github contefranz/NLPstudio  commit 42b0f1c650 (release 1.1.1)
+CRAN packages: same versions as in A.
+
+C. Per-cache version stamps (attr(x, "run_meta"))
+--------------------------------------------------
+cache                                                                                           OpTop   NLPstudio produced           
+E1/e1_results_E1_full_Kstar20_J1000_W10000_a0p5_b0p01_k5-50by5_warplda_fa0p1_fb0p01.qs2         0.20.0  1.2.0     2026-09-01 23:10:21
+E1/e1_results_E1_full_Kstar40_J1000_W5000_a0p5_b0p01_k10-100by10_warplda_fa0p1_fb0p01.qs2       0.14.1  1.1.1     2026-07-13 09:46:26
+E1/e1_selreps_E1_full_Kstar40_J1000_W5000_a0p5_b0p01_k10-100by10_warplda_fa0p1_fb0p01.qs2       0.20.0  1.2.0     2026-09-01 22:25:05
+E2/e2_results_E2_full_Kstar20_J1000_W10000_a0p5_b0p01_k5-50by5_warplda_fa0p1_fb0p01.qs2         0.20.0  1.2.0     2026-09-01 23:47:01
+E2/e2_results_E2_full_Kstar40_J1000_W5000_a0p5_b0p01_k10-100by10_warplda_fa0p1_fb0p01.qs2       0.14.1  1.1.1     2026-07-13 10:33:07
+E3/e3_results_E3_full_Kstar40_J1000_W5000_a0p5_b0p01_k10-100by10_warplda_fa0p1_fb0p01.qs2       0.14.1  1.1.1     2026-07-13 11:24:58
+E4/e4_results_E4_full_Kstar40_J1000_W5000_a0p5_b0p01_k10-100by10_warplda_fa0p1_fb0p01.qs2       0.14.0  1.1.1     2026-07-11 10:17:11
+E4/e4_results_E4_full_Kstar40_J1000_W5000_a0p5_b0p01_k10-100by10_warplda_fa0p5_fb0p01.qs2       0.20.0  1.2.0     2026-09-01 14:16:09
+E5/e5_results_E5_full_Kstar40_J1000_W5000_a0p5_b0p01_k10-100by10_warplda_fa0p1_fb0p01.qs2       0.14.1  1.1.1     2026-07-13 12:31:19
+E6/e6_results_E6_full_Kstar40_J1000_W5000_a0p5_b0p01_k10-100by10_warplda_fa0p1_fb0p01.qs2       0.14.0  1.1.1     2026-07-11 13:50:43
+MDNA/mdna_results_MDNA_2015_2016_c05.qs2                                                        0.20.0  1.2.0     2026-09-02 01:43:03
+MDNA/mdna_results_MDNA_2015_2016_c2.qs2                                                         0.20.0  1.2.0     2026-09-02 03:37:45
+MDNA/mdna_results_MDNA_2015_2016_g100.qs2                                                       0.20.0  1.2.0     2026-09-02 04:16:56
+MDNA/mdna_results_MDNA_2015_2016.qs2                                                            0.14.1  1.1.1     2026-07-14 23:32:58
+(all caches: R 4.6.1)

@@ -1,0 +1,97 @@
+metric,K_hat,eps,alpha,eval,replicate,rule
+chisq,20,0.01,0.05,ho_reconstruction,1,eps_0p01
+dev,20,0.01,0.05,ho_reconstruction,1,eps_0p01
+se,20,0.01,0.05,ho_reconstruction,1,eps_0p01
+chisq,20,0.005,0.05,ho_reconstruction,1,eps_0p005
+dev,20,0.005,0.05,ho_reconstruction,1,eps_0p005
+se,40,0.005,0.05,ho_reconstruction,1,eps_0p005
+comparator,50,,,comparator,1,perplexity_min
+comparator,20,,,comparator,1,npmi_max
+comparator,50,,,comparator,1,optimal_topic (all rejected; min-stat)
+chisq,20,0.01,0.05,ho_reconstruction,2,eps_0p01
+dev,20,0.01,0.05,ho_reconstruction,2,eps_0p01
+se,10,0.01,0.05,ho_reconstruction,2,eps_0p01
+chisq,20,0.005,0.05,ho_reconstruction,2,eps_0p005
+dev,20,0.005,0.05,ho_reconstruction,2,eps_0p005
+se,10,0.005,0.05,ho_reconstruction,2,eps_0p005
+chisq,30,0.01,0.05,ho_completion,2,eps_0p01
+dev,30,0.01,0.05,ho_completion,2,eps_0p01
+se,15,0.01,0.05,ho_completion,2,eps_0p01
+chisq,45,0.005,0.05,ho_completion,2,eps_0p005
+dev,30,0.005,0.05,ho_completion,2,eps_0p005
+se,15,0.005,0.05,ho_completion,2,eps_0p005
+comparator,50,,,comparator,2,perplexity_min
+comparator,20,,,comparator,2,npmi_max
+comparator,50,,,comparator,2,optimal_topic (all rejected; min-stat)
+chisq,20,0.01,0.05,ho_reconstruction,3,eps_0p01
+dev,20,0.01,0.05,ho_reconstruction,3,eps_0p01
+se,10,0.01,0.05,ho_reconstruction,3,eps_0p01
+chisq,20,0.005,0.05,ho_reconstruction,3,eps_0p005
+dev,20,0.005,0.05,ho_reconstruction,3,eps_0p005
+se,10,0.005,0.05,ho_reconstruction,3,eps_0p005
+comparator,50,,,comparator,3,perplexity_min
+comparator,20,,,comparator,3,npmi_max
+comparator,50,,,comparator,3,optimal_topic (all rejected; min-stat)
+chisq,20,0.01,0.05,ho_reconstruction,4,eps_0p01
+dev,20,0.01,0.05,ho_reconstruction,4,eps_0p01
+se,10,0.01,0.05,ho_reconstruction,4,eps_0p01
+chisq,20,0.005,0.05,ho_reconstruction,4,eps_0p005
+dev,20,0.005,0.05,ho_reconstruction,4,eps_0p005
+se,10,0.005,0.05,ho_reconstruction,4,eps_0p005
+comparator,50,,,comparator,4,perplexity_min
+comparator,20,,,comparator,4,npmi_max
+comparator,45,,,comparator,4,optimal_topic (all rejected; min-stat)
+chisq,20,0.01,0.05,ho_reconstruction,5,eps_0p01
+dev,20,0.01,0.05,ho_reconstruction,5,eps_0p01
+se,10,0.01,0.05,ho_reconstruction,5,eps_0p01
+chisq,20,0.005,0.05,ho_reconstruction,5,eps_0p005
+dev,20,0.005,0.05,ho_reconstruction,5,eps_0p005
+se,10,0.005,0.05,ho_reconstruction,5,eps_0p005
+comparator,50,,,comparator,5,perplexity_min
+comparator,20,,,comparator,5,npmi_max
+comparator,50,,,comparator,5,optimal_topic (all rejected; min-stat)
+chisq,20,0.01,0.05,ho_reconstruction,6,eps_0p01
+dev,20,0.01,0.05,ho_reconstruction,6,eps_0p01
+se,15,0.01,0.05,ho_reconstruction,6,eps_0p01
+chisq,20,0.005,0.05,ho_reconstruction,6,eps_0p005
+dev,20,0.005,0.05,ho_reconstruction,6,eps_0p005
+se,15,0.005,0.05,ho_reconstruction,6,eps_0p005
+comparator,50,,,comparator,6,perplexity_min
+comparator,20,,,comparator,6,npmi_max
+comparator,50,,,comparator,6,optimal_topic (all rejected; min-stat)
+chisq,20,0.01,0.05,ho_reconstruction,7,eps_0p01
+dev,20,0.01,0.05,ho_reconstruction,7,eps_0p01
+se,15,0.01,0.05,ho_reconstruction,7,eps_0p01
+chisq,20,0.005,0.05,ho_reconstruction,7,eps_0p005
+dev,20,0.005,0.05,ho_reconstruction,7,eps_0p005
+se,15,0.005,0.05,ho_reconstruction,7,eps_0p005
+comparator,50,,,comparator,7,perplexity_min
+comparator,20,,,comparator,7,npmi_max
+comparator,50,,,comparator,7,optimal_topic (all rejected; min-stat)
+chisq,20,0.01,0.05,ho_reconstruction,8,eps_0p01
+dev,20,0.01,0.05,ho_reconstruction,8,eps_0p01
+se,15,0.01,0.05,ho_reconstruction,8,eps_0p01
+chisq,20,0.005,0.05,ho_reconstruction,8,eps_0p005
+dev,20,0.005,0.05,ho_reconstruction,8,eps_0p005
+se,15,0.005,0.05,ho_reconstruction,8,eps_0p005
+comparator,45,,,comparator,8,perplexity_min
+comparator,20,,,comparator,8,npmi_max
+comparator,45,,,comparator,8,optimal_topic (all rejected; min-stat)
+chisq,20,0.01,0.05,ho_reconstruction,9,eps_0p01
+dev,20,0.01,0.05,ho_reconstruction,9,eps_0p01
+se,10,0.01,0.05,ho_reconstruction,9,eps_0p01
+chisq,20,0.005,0.05,ho_reconstruction,9,eps_0p005
+dev,20,0.005,0.05,ho_reconstruction,9,eps_0p005
+se,10,0.005,0.05,ho_reconstruction,9,eps_0p005
+comparator,50,,,comparator,9,perplexity_min
+comparator,20,,,comparator,9,npmi_max
+comparator,50,,,comparator,9,optimal_topic (all rejected; min-stat)
+chisq,20,0.01,0.05,ho_reconstruction,10,eps_0p01
+dev,20,0.01,0.05,ho_reconstruction,10,eps_0p01
+se,15,0.01,0.05,ho_reconstruction,10,eps_0p01
+chisq,20,0.005,0.05,ho_reconstruction,10,eps_0p005
+dev,20,0.005,0.05,ho_reconstruction,10,eps_0p005
+se,15,0.005,0.05,ho_reconstruction,10,eps_0p005
+comparator,50,,,comparator,10,perplexity_min
+comparator,20,,,comparator,10,npmi_max
+comparator,50,,,comparator,10,optimal_topic (all rejected; min-stat)

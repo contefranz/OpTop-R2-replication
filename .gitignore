@@ -1,0 +1,16 @@
+# --- Raw corpus: deposited on Zenodo (README.md, Section 7); it exceeds GitHub's
+#     100 MB file limit. The 20 MB analysis-ready object IS tracked here. ---
+Data/corpus_item7/item7_2016_2017.qs2
+
+# --- Recomputable caches and logs (populated only by Lane-B runs) -----------
+Data/FITS/*
+!Data/FITS/.gitkeep
+Data/corpus/*
+!Data/corpus/.gitkeep
+*.log
+
+# --- OS noise ----------------------------------------------------------------
+.DS_Store
+
+# --- Generated previews ------------------------------------------------------
+README.html

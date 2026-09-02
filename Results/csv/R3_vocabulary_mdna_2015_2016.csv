@@ -1,0 +1,31 @@
+criterion,word,value
+over-observed (residual),trust,0.000339
+over-observed (residual),interest,0.000308
+over-observed (residual),company,0.000267
+over-observed (residual),october,0.00022
+over-observed (residual),income,0.000217
+over-observed (residual),costs,0.000214
+over-observed (residual),expenses,0.000193
+over-observed (residual),decrease,0.000172
+over-observed (residual),capital,0.000152
+over-observed (residual),compared,0.000151
+over-observed (residual),operating,0.000136
+over-observed (residual),properties,0.00013
+over-observed (residual),research,0.000128
+over-observed (residual),fiscal,0.000124
+over-observed (residual),development,0.000116
+worst fit (word R2),firstenergy,-21.4
+worst fit (word R2),farmer,-3.1
+worst fit (word R2),helicopters,-2.91
+worst fit (word R2),brewing,-2.36
+worst fit (word R2),repos,-2.21
+worst fit (word R2),idaho,-2.15
+worst fit (word R2),corning,-2.06
+worst fit (word R2),hawaiian,-1.97
+worst fit (word R2),net-leased,-1.95
+worst fit (word R2),manitoba,-1.81
+worst fit (word R2),hamilton,-1.78
+worst fit (word R2),seas,-1.64
+worst fit (word R2),sulfate,-1.52
+worst fit (word R2),brass,-1.46
+worst fit (word R2),hartford,-1.43

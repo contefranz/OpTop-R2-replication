@@ -1,0 +1,13 @@
+{
+  "title": "Replication package for 'Goodness-of-Fit Indices and Diagnostics for Topic Models'",
+  "upload_type": "software",
+  "description": "<p>Code, cached results and data behind every table and figure of <em>Goodness-of-Fit Indices and Diagnostics for Topic Models</em> (Craig M. Lewis and Francesco Grossetti; submitted to the Journal of the Royal Statistical Society, Series B): the four simulation studies of Section 5, the MD&amp;A empirical application of Section 6, and the September 2026 robustness arms. Three reproduction lanes: exhibits rebuilt from the shipped caches (minutes), full recompute (simulations about one day, MD&amp;A about seven hours), and the robustness batch (about sixteen hours). The methods are implemented in the R package OpTop (https://github.com/contefranz/OpTop); install.R pins OpTop 0.20.0 and NLPstudio 1.2.0, and sessionInfo.txt records both production environments. The raw Item-7 corpus (178 MB) is deposited separately.</p>",
+  "creators": [
+    {"name": "Lewis, Craig M.", "affiliation": "Vanderbilt University", "orcid": "0000-0001-8734-1702"},
+    {"name": "Grossetti, Francesco", "affiliation": "Bocconi University", "orcid": "0000-0002-5130-7745"}
+  ],
+  "license": "mit",
+  "access_right": "open",
+  "language": "eng",
+  "keywords": ["topic models", "latent Dirichlet allocation", "goodness of fit", "model selection", "specification tests", "held-out evaluation", "R"]
+}
