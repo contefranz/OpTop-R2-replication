@@ -1,0 +1,68 @@
+id,check,pass,detail
+A1,output of 'mdna' exists,TRUE,mdna_results_MDNA_2015_2016_rev2.qs2
+A1,output of 'mdna_c05' exists,TRUE,mdna_results_MDNA_2015_2016_c05_rev2.qs2
+A1,output of 'mdna_c2' exists,TRUE,mdna_results_MDNA_2015_2016_c2_rev2.qs2
+A1,output of 'mdna_g100' exists,TRUE,mdna_results_MDNA_2015_2016_g100_rev2.qs2
+A1,output of 'e1_base' exists,TRUE,e1_results_E1_full_Kstar40_J1000_W5000_a0p5_b0p01_k10-100by10_warplda_fa0p1_fb0p01_rev2.qs2
+A1,output of 'e1_dgp2' exists,TRUE,e1_results_E1_full_Kstar20_J1000_W10000_a0p5_b0p01_k5-50by5_warplda_fa0p1_fb0p01_rev2.qs2
+A1,output of 'e2_base' exists,TRUE,e2_results_E2_full_Kstar40_J1000_W5000_a0p5_b0p01_k10-100by10_warplda_fa0p1_fb0p01_rev2.qs2
+A1,output of 'e2_dgp2' exists,TRUE,e2_results_E2_full_Kstar20_J1000_W10000_a0p5_b0p01_k5-50by5_warplda_fa0p1_fb0p01_rev2.qs2
+A1,output of 'e6' exists,TRUE,e6_results_E6_full_Kstar40_J1000_W5000_a0p5_b0p01_k10-100by10_warplda_fa0p1_fb0p01_rev2.qs2
+A1,output of 'e4_base' exists,TRUE,e4_results_E4_full_Kstar40_J1000_W5000_a0p5_b0p01_k10-100by10_warplda_fa0p1_fb0p01_rev2.qs2
+A1,output of 'e4_prior' exists,TRUE,e4_results_E4_full_Kstar40_J1000_W5000_a0p5_b0p01_k10-100by10_warplda_fa0p5_fb0p01_rev2.qs2
+A1,output of 'selreps' exists,TRUE,e1_selreps_E1_full_Kstar40_J1000_W5000_a0p5_b0p01_k10-100by10_warplda_fa0p1_fb0p01_rev2.qs2
+A1,output of 'e5_resolution' exists,TRUE,e5_resolution_rev2.qs2
+A1,output of 'unbinned' exists,TRUE,unbinned_comparator_rev2.qs2
+A1,output of 'restarts' exists,TRUE,mdna_restarts_MDNA_2015_2016_rev2.qs2
+A2,"'mdna' stamped: Poisson word null on scored tokens, OpTop >= 0.20.1",TRUE,poisson_scored_tokens / OpTop 0.20.1
+A2,"'mdna_c05' stamped: Poisson word null on scored tokens, OpTop >= 0.20.1",TRUE,poisson_scored_tokens / OpTop 0.20.1
+A2,"'mdna_c2' stamped: Poisson word null on scored tokens, OpTop >= 0.20.1",TRUE,poisson_scored_tokens / OpTop 0.20.1
+A2,"'mdna_g100' stamped: Poisson word null on scored tokens, OpTop >= 0.20.1",TRUE,poisson_scored_tokens / OpTop 0.20.1
+A2,"'e1_base' stamped: Poisson word null on scored tokens, OpTop >= 0.20.1",TRUE,poisson_scored_tokens / OpTop 0.20.1
+A2,"'e1_dgp2' stamped: Poisson word null on scored tokens, OpTop >= 0.20.1",TRUE,poisson_scored_tokens / OpTop 0.20.1
+A2,"'e2_base' stamped: Poisson word null on scored tokens, OpTop >= 0.20.1",TRUE,poisson_scored_tokens / OpTop 0.20.1
+A2,"'e2_dgp2' stamped: Poisson word null on scored tokens, OpTop >= 0.20.1",TRUE,poisson_scored_tokens / OpTop 0.20.1
+A2,"'e6' stamped: Poisson word null on scored tokens, OpTop >= 0.20.1",TRUE,poisson_scored_tokens / OpTop 0.20.1
+A2,"'e4_base' stamped: Poisson word null on scored tokens, OpTop >= 0.20.1",TRUE,poisson_scored_tokens / OpTop 0.20.1
+A2,"'e4_prior' stamped: Poisson word null on scored tokens, OpTop >= 0.20.1",TRUE,poisson_scored_tokens / OpTop 0.20.1
+A2,"'selreps' stamped: Poisson word null on scored tokens, OpTop >= 0.20.1",TRUE,poisson_scored_tokens / OpTop 0.20.1
+A2,"'e5_resolution' stamped: Poisson word null on scored tokens, OpTop >= 0.20.1",TRUE,poisson_scored_tokens / OpTop 0.20.1
+A2,"'unbinned' stamped: Poisson word null on scored tokens, OpTop >= 0.20.1",TRUE,poisson_scored_tokens / OpTop 0.20.1
+A2,"'restarts' stamped: Poisson word null on scored tokens, OpTop >= 0.20.1",TRUE,poisson_scored_tokens / OpTop 0.20.1
+B1,'e1_base' configuration equals its source (declared overrides aside),TRUE,""
+B1,'e1_dgp2' configuration equals its source (declared overrides aside),TRUE,""
+B1,'e2_base' configuration equals its source (declared overrides aside),TRUE,""
+B1,'e2_dgp2' configuration equals its source (declared overrides aside),TRUE,""
+B1,'e6' configuration equals its source (declared overrides aside),TRUE,""
+B1,'e4_base' configuration equals its source (declared overrides aside),TRUE,""
+B1,'e4_prior' configuration equals its source (declared overrides aside),TRUE,""
+B2,"'e2_base' reference sample has 20,000 documents, with stored SEs",TRUE,J_truth = 20000
+B2,"'e2_dgp2' reference sample has 20,000 documents, with stored SEs",TRUE,J_truth = 20000
+B3,"'mdna': delta = 1, unrefined grid, same evaluation data",TRUE,"c = 1, |K| = 20"
+B3,"'mdna_c05': delta = 1, unrefined grid, same evaluation data",TRUE,"c = 0.5, |K| = 20"
+B3,"'mdna_c2': delta = 1, unrefined grid, same evaluation data",TRUE,"c = 2, |K| = 20"
+B3,"'mdna_g100': delta = 1, unrefined grid, same evaluation data",TRUE,"c = 1, |K| = 10"
+B4,"MD&A diagnostics kept at K in {40,50,60,170,180,190}",TRUE,"40,50,60,170,180,190"
+C1,D_null('condition') = 9562.168059 from the definition (legacy 8771.558890),TRUE,definition 9562.168059 | pipeline 9562.168059 (all 20 K) | log-only 8771.558890
+D1,"E6 Lemma S1: document total == package word totals, every unit",TRUE,max |rel| 4.3e-15 over 20 units
+D2,"E6 raw word discrepancies kept for every K, both scenarios, both samples",TRUE,"2,000,000 rows"
+D3,MD&A word-level summaries at K = 50 equal the verified rev1 values,TRUE,Micro 0.3531 / Macro 0.2204 on 17047 words
+D4,MD&A raw word discrepancies kept at every K (held-out and training),TRUE,"551,520 held-out rows"
+E1,MD&A document-level indices reproduce the published cache,TRUE,max |diff| 5.4e-13 over 180 rows
+E2,"MD&A Tests 1-2 reproduce the published cache (K = 40, 50, 60)",TRUE,max rel diff 0.0e+00
+E3,MD&A corrected Test 3 equals the verified values at the six K,TRUE,"K=40: 15.67, K=50: 16.90, K=60: 19.88, K=170: 38.75, K=180: 35.67, K=190: 45.99"
+E4,MD&A selections under the three rules equal the verified values,TRUE,50/80/180/80/80/180
+E5,'e1_base' indices and pointwise selections reproduce the published cache,TRUE,max |diff| 9.2e-13; 10 replicates under all rules
+E5,'e1_dgp2' indices and pointwise selections reproduce the published cache,TRUE,max |diff| 0.0e+00; 10 replicates under all rules
+E6,'e2_base' evaluation-replicate estimates reproduce the published cache,TRUE,max |diff| 5.4e-14 over 3000 replicate rows (targets differ by design)
+E6,'e2_dgp2' evaluation-replicate estimates reproduce the published cache,TRUE,max |diff| 0.0e+00 over 3000 replicate rows (targets differ by design)
+E7,'e4_base': Tests 1-2 and Test 3 at the smallest K reproduce; Test 3 at K* changes,TRUE,unchanged rows: max rel diff 7.2e-14; Test 3 at K > 10 changed in 100% of 5000 rows
+E7,'e4_prior': Tests 1-2 and Test 3 at the smallest K reproduce; Test 3 at K* changes,TRUE,unchanged rows: max rel diff 8.5e-14; Test 3 at K > 10 changed in 100% of 5000 rows
+E8,E6 in-sample word curves reproduce the published cache,TRUE,max |diff| 0.0e+00
+E9,selreps: pointwise selections reproduce; all three rules for every replication,TRUE,100 replications x 3 rules
+E10,restarts scored on the support of the production grid and the restarts,TRUE,harmonised over the production grid and the restarts
+E11,"unbinned comparator: three floors, both protocols, every candidate",TRUE,3 sources
+E12,'mdna' carries support-resolution rows,TRUE,"138,640 rows"
+E12,'e1_base' carries support-resolution rows,TRUE,"1,000,000 rows"
+E12,'e5_resolution' carries support-resolution rows,TRUE,"46,000 rows"
+F1,every cached fit is byte-identical to the pre-revision manifest,TRUE,"3076 files; 0 missing, 0 changed"

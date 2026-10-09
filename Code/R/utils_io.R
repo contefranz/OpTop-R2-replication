@@ -116,6 +116,7 @@ cache_path <- function(cfg, name) {
 run_meta <- function(cfg) {
   list(
     config     = cfg,
+    scoring = if (exists("revision_provenance")) revision_provenance() else NULL,
     timestamp  = format(Sys.time(), "%Y-%m-%d %H:%M:%S"),
     r_version  = R.version.string,
     packages   = sapply(
@@ -127,7 +128,11 @@ run_meta <- function(cfg) {
 
 cache_put <- function(obj, path, cfg = NULL) {
   attr(obj, "run_meta") <- run_meta(cfg)
-  qs2::qs_save(obj, path)
+  dir.create(dirname(path), recursive = TRUE, showWarnings = FALSE)
+  tmp <- tempfile("result-", tmpdir = dirname(path))
+  on.exit(unlink(tmp), add = TRUE)
+  qs2::qs_save(obj, tmp)
+  if (!file.rename(tmp, path)) stop("Cannot publish result: ", path)
   invisible(path)
 }
 

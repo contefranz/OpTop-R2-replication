@@ -29,9 +29,10 @@ R_SEL <- as.integer(cli$overrides$R_sel %||% "10")
 cli$overrides$R_sel <- NULL
 stopifnot(R_SEL >= 1L)
 
-cfg <- get_config("E1", PROFILE)
-cfg <- apply_overrides(cfg, cli$overrides, strict = FALSE)
-cfg$label <- run_label(cfg, cli$overrides, cli$label)
+rc <- resolve_cfg(cli, "E1", PROFILE)          # honours cfg_from= / out_suffix=
+cfg <- rc$cfg; SFX <- rc$out_suffix
+if (!rc$from_cache || !is.null(cli$label))
+  cfg$label <- run_label(cfg, rc$overrides, cli$label)
 TAG <- run_tag(cfg)
 setup_parallel(cli$workers)
 log_msg("=== E1-selreps [%s] tag=%s S=%d x R_sel=%d ===",
@@ -66,6 +67,7 @@ log_msg("scoring pass (%d jobs): tail -f %s", cfg$S * R_SEL,
 grid <- CJ(r = seq_len(cfg$S), rep = seq_len(R_SEL))
 
 score_job <- function(i) {
+  revision_checkpoint("E1_selreps", list(cfg = cfg, R_sel = R_SEL), paste0("unit_", i), {
   r <- grid$r[i]; rep <- grid$rep[i]
   t0 <- proc.time()[["elapsed"]]
   seeds <- make_seeds(cfg$seed_base, r)
@@ -94,6 +96,21 @@ score_job <- function(i) {
                  rule = sprintf("eps_%s", num2tag(eps)))]
     }
   }
+  # all-pairs gains + the three rules for every replicate (see run_E1.R), and
+  # the per-K summary, whose completion Micro index gives the protocol-matched
+  # log-score optimum
+  rep_v <- rep      # never write `rep = rep` inside `:=` (column/function clash)
+  pairs_all <- rbindlist(lapply(names(modes), function(mn)
+    { # no rows when the support collapses (fewer than two retained documents)
+      pa <- paired_gains_all(modes[[mn]]$doc, cfg$sel_alpha, NULL, "all_pairs")
+      if (nrow(pa)) pa[, `:=`(eval = mn, replicate = r, rep = rep_v)] else NULL
+    }), use.names = TRUE)
+  sel_all <- rbindlist(lapply(names(modes), function(mn)
+    select_k_all_rules(modes[[mn]]$doc, cfg$eps_grid, cfg$sel_alpha)[
+      , `:=`(eval = mn, replicate = r, rep = rep_v)]), use.names = TRUE)
+  summ <- rbindlist(lapply(names(modes), function(mn)
+    copy(modes[[mn]]$summary)[, `:=`(eval = mn, replicate = r, rep = rep_v)]))
+
   comp <- comparator_metrics(fits, sim_tr$dtm, sim_ev$dtm)
   sel <- select_from_metrics(comp)
   # plain constructor: "eval"/"rep" as literal column names break inside .()
@@ -111,16 +128,23 @@ score_job <- function(i) {
   }))
   scoring_log("E1-selreps r%d rep%d DONE in %.0fs", r, rep,
               proc.time()[["elapsed"]] - t0)
-  list(khat = rbindlist(khat, fill = TRUE), qc = qc)
+  list(khat = rbindlist(khat, fill = TRUE), qc = qc, pairs_all = pairs_all,
+       sel_all = sel_all, summary = summ)
+  })
 }
 
 res <- future_lapply(seq_len(nrow(grid)), score_job, future.seed = NULL)
 khat <- rbindlist(lapply(res, `[[`, "khat"), fill = TRUE)
 qc <- rbindlist(lapply(res, `[[`, "qc"), fill = TRUE)
 
-out <- list(khat = khat, qc = qc, R_sel = R_SEL, config = cfg)
-cache_put(out, p_data("E1", sprintf("e1_selreps_%s.qs2", TAG)), cfg)
-write_result(khat, "e1_selreps_khat", cfg)
+out <- list(khat = khat, qc = qc,
+            pairs_all = rbindlist(lapply(res, `[[`, "pairs_all"), use.names = TRUE),
+            sel_all = rbindlist(lapply(res, `[[`, "sel_all"), use.names = TRUE),
+            summary = rbindlist(lapply(res, `[[`, "summary"), use.names = TRUE),
+            R_sel = R_SEL, config = cfg)
+cache_put(out, p_data("E1", sprintf("e1_selreps_%s%s.qs2", TAG, SFX)), cfg)
+write_result(khat, paste0("e1_selreps_khat", SFX), cfg)
+write_result(out$sel_all, paste0("e1_selreps_selection_rules", SFX), cfg)
 
 shares <- khat[rule == "eps_0p01" & metric == "dev",
                .(pr_exact = mean(K_hat == cfg$K_true, na.rm = TRUE),

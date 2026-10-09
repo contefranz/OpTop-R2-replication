@@ -1,8 +1,13 @@
 # =============================================================================
 # make_figures.R -- all Section 5 figures (F1-F12) from saved results only.
 # Usage:  Rscript Code/make_figures.R [smoke|pilot|full] [exp=E3,E6] [label=name]
+#                                     [in_suffix=_rev1]
 #   exp=   restrict to a subset of experiments (default: all)
 #   label= output tree Results/Figures/<label>/ (default: profile[+overrides])
+#   in_suffix= read the re-scored objects <tag><in_suffix>.qs2; an experiment
+#          without one falls back to its original object (logged). Unless label=
+#          is given the suffix is appended to the run label, so the pre-revision
+#          figure tree is never overwritten.
 # Skips any figure whose inputs are missing; never recomputes.
 # =============================================================================
 
@@ -14,7 +19,10 @@ PROFILE <- cli$profile
 # experiment selector: strip exp= before it can reach the label or apply_overrides
 sel_exp <- setdiff(toupper(strsplit(cli$overrides$exp %||% "", ",")[[1]]), "")
 cli$overrides$exp <- NULL
+IN_SFX <- cli$overrides$in_suffix %||% ""
+cli$overrides$in_suffix <- NULL
 RUN_LABEL <- run_label(list(profile = PROFILE), cli$overrides, cli$label)
+if (nzchar(IN_SFX) && is.null(cli$label)) RUN_LABEL <- paste0(RUN_LABEL, IN_SFX)
 log_msg("figures for run label '%s'%s", RUN_LABEL,
         if (length(sel_exp)) sprintf(" (experiments: %s)",
                                      paste(sel_exp, collapse = ",")) else "")
@@ -22,7 +30,18 @@ log_msg("figures for run label '%s'%s", RUN_LABEL,
 load_results <- function(exp) {
   if (length(sel_exp) && !toupper(exp) %in% sel_exp) return(NULL)
   cfg <- apply_overrides(get_config(exp, PROFILE), cli$overrides, strict = FALSE)
-  f <- p_data(exp, sprintf("%s_results_%s.qs2", tolower(exp), run_tag(cfg)))
+  f0 <- p_data(exp, sprintf("%s_results_%s.qs2", tolower(exp), run_tag(cfg)))
+  f <- sub("\\.qs2$", paste0(IN_SFX, ".qs2"), f0)
+  if (nzchar(IN_SFX) && !file.exists(f)) {
+    # An experiment requested explicitly with exp= must not fall back silently: the
+    # figures would be drawn from the pre-revision object into the <label> tree.
+    if (length(sel_exp))
+      stop(sprintf(paste0("%s: the '%s' object %s is missing (fetch the result objects first: ",
+                          "./reproduce.sh fetch results); refusing to fall back to %s"),
+                   exp, IN_SFX, basename(f), basename(f0)), call. = FALSE)
+    log_msg("%s: no '%s' object -- using the original %s", exp, IN_SFX, basename(f0))
+    f <- f0
+  }
   if (!file.exists(f)) { log_msg("skip %s (no results: %s)", exp, basename(f)); return(NULL) }
   cache_get(f)
 }
@@ -75,20 +94,35 @@ if (!is.null(e1)) {
     eval_lab = droplevels(factor(eval_label(eval), levels = EVAL_LEVELS)),
     metric_lab = factor(metric_label(metric), levels = METRIC_LEVELS))]
   g1 <- gm_labs(copy(e1$gains)[replicate == 1L])
-  kh <- gm_labs(copy(e1$khat)[replicate == 1L & rule == "eps_0p01" &
-                                metric %in% c("dev", "chisq", "se")])
+  g1[, M := .N, by = c("metric", "eval")]
+  g1[, ub_simul := delta_mean + qnorm(1 - e1$config$sel_alpha / M) * se]
+  # Selections under the CERTIFIED rules (revised Definition 1) for the seed
+  # shown; the pointwise first crossing is exploratory and is not marked.
+  ex <- if (!is.null(e1$sel_all)) e1$sel_all[replicate == 1L & eps == 0.01] else
+    rbindlist(lapply(c("ho_reconstruction", "ho_completion"), function(mn)
+      select_k_all_rules(e1$doc_rep1[eval == mn], 0.01, e1$config$sel_alpha)[
+        , eval := mn]), use.names = TRUE)
+  ex <- gm_labs(copy(ex)[rule != "adjacent_pointwise" & !is.na(K_hat)])
+  ex[, rule_lab := factor(ifelse(rule == "total_gain", "total gain",
+                                 "simultaneous adjacent"),
+                          levels = c("simultaneous adjacent", "total gain"))]
   p2 <- ggplot(g1, aes(x = K, y = delta_mean)) +
     geom_hline(yintercept = 0, colour = "grey60") +
     geom_hline(yintercept = c(0.01, 0.005), linetype = "dashed", colour = "grey40") +
+    geom_errorbar(aes(ymin = lwr, ymax = ub_simul), width = 0, colour = "grey65",
+                  linewidth = 1.1) +
     geom_errorbar(aes(ymin = lwr, ymax = ub_onesided), width = 0.3, colour = "grey25") +
     geom_point(size = 1.5) +
-    geom_vline(data = kh[!is.na(K_hat)], aes(xintercept = K_hat),
-               linetype = "dotdash", colour = "grey20") +
+    geom_vline(data = ex, aes(xintercept = K_hat, linetype = rule_lab),
+               colour = "grey20") +
+    scale_linetype_manual(values = c("simultaneous adjacent" = "dotdash",
+                                     "total gain" = "solid"),
+                          name = "Selection (eps = 0.01)") +
     facet_grid(eval_lab ~ metric_lab, scales = "free_y") +
     labs(x = "Number of topics (K); gain to the next grid point",
          y = expression(Delta * R^2),
-         title = "Held-out adjacent gains with one-sided upper bounds",
-         subtitle = "Deviance is the selection index; dashed: eps = 0.01, 0.005; dot-dash: selected K-hat (eps = 0.01)") +
+         title = "Held-out adjacent gains with upper bounds (one training seed)",
+         subtitle = "Thin whisker: pointwise one-sided bound; thick grey: simultaneous bound; dashed: eps = 0.01, 0.005") +
     theme_paper()
   save_fig(p2, "F2_adjacent_gains", "E1", width = 11, height = 6)
 }
@@ -117,23 +151,37 @@ if (!is.null(e2)) {
 # ==================== F4: moment-test power curves (E4) ============================
 if (!is.null(e4) && nrow(e4$power)) {
   K_true <- e4$config$K_true
-  pw <- e4$power_tab[K == K_true]
+  # "ctm" is the config key of the EXCHANGEABLE LOGISTIC-NORMAL arm (the common
+  # Gaussian component cancels in the softmax: it is a concentration alternative,
+  # not a correlated-topic one). The key is kept so fit caches stay reachable.
+  ALT_LAB <- c(contamination = "Contamination (refit)",
+               contamination_eval = "Contamination (evaluation only)",
+               burstiness = "Burstiness (refit); tau",
+               drift = "Vocabulary drift (evaluation only)",
+               ctm = "Exchangeable logistic-normal (refit); rho",
+               group_vocab = "Group vocabulary (refit)")
+  alt_f <- function(a) factor(ifelse(a %in% names(ALT_LAB), ALT_LAB[a], a),
+                              levels = c(ALT_LAB, setdiff(unique(a), names(ALT_LAB))))
+  pw <- copy(e4$power_tab[K == K_true])[, alt := alt_f(alt)]
   sz <- e4$size_tab[K == K_true]
   if (!"size_raw" %in% names(sz)) sz[, size_raw := size]  # pre-revision objects
   # a line needs >=2 strengths; single-strength alternatives render as points
   # only (.SD[cond] keeps the columns even when EVERY alt is single-strength,
   # e.g. the smoke profile -- `if (cond) .SD` would drop them and break aes())
   pw_line <- pw[, .SD[uniqueN(strength) > 1], by = alt]
+  TEST_LAB <- c(T1_freq_contrast = "Test 1: frequency contrast",
+                T2_freq_strata = "Test 2: frequency strata",
+                T3_fit_strata = "Test 3: fit strata")
   p4 <- ggplot(pw, aes(x = strength, y = power, colour = test, group = test)) +
     geom_hline(data = sz, aes(yintercept = size_raw, colour = test),
                linetype = "dotted") +
     geom_hline(yintercept = 0.05, colour = "grey70") +
     geom_line(data = pw_line, linewidth = 0.8) + geom_point(size = 1.8) +
     facet_wrap(~alt, scales = "free_x") +
-    scale_colour_grey(start = 0, end = 0.6, name = "Test") +
-    labs(x = "Misspecification strength", y = "Rejection rate (5% level)",
-         title = sprintf("Power of the moment tests at K = %d", K_true),
-         subtitle = "Dotted: raw rejection under the correct DGP (conditional null); grey: nominal 5%") +
+    scale_colour_grey(start = 0, end = 0.6, name = "Test", labels = TEST_LAB) +
+    labs(x = "Strength of the alternative", y = "Raw rejection rate (5% level)",
+         title = sprintf("Rejection of the moment tests at K = %d", K_true),
+         subtitle = "Dotted: rejection under correctly specified LDA data (not the size of a test under a satisfied null); grey: nominal 5%") +
     theme_paper()
   save_fig(p4, "F4_power_curves", "E4", width = 9.2)
 }
@@ -142,19 +190,23 @@ if (!is.null(e4) && nrow(e4$power)) {
 if (!is.null(e4) && nrow(e4$r2)) {
   K_true <- e4$config$K_true
   r2a <- e4$r2_tab[K == K_true]
-  pw <- e4$power_tab[K == K_true, .(power = mean(power)), by = .(alt, strength)]
+  # Test 1 is a coordinate of Test 2 (nested), so the average is over Tests 2
+  # and 3 only; averaging all three would double-weight the frequency family.
+  pw <- e4$power_tab[K == K_true & test != "T1_freq_contrast",
+                     .(power = mean(power)), by = .(alt, strength)]
   both <- merge(r2a, pw, by = c("alt", "strength"))
   b_long <- melt(both, id.vars = c("alt", "strength"),
                  measure.vars = c("r2_macro", "power"),
                  variable.name = "what")
-  b_long[, what := fifelse(what == "r2_macro",
-                           "Held-out Macro R2 (Dev)", "Moment-test power")]
+  b_long[, what := fifelse(what == "r2_macro", "Held-out Macro R2 (Deviance)",
+                           "Raw rejection rate, mean of Tests 2 and 3")]
+  if (exists("alt_f")) b_long[, alt := alt_f(alt)]   # defined in the F4 block
   bl_line <- b_long[, .SD[uniqueN(strength) > 1], by = alt]
   p5a <- ggplot(b_long, aes(x = strength, y = value, linetype = what)) +
     geom_line(data = bl_line, linewidth = 0.8) + geom_point(size = 1.8) +
     facet_wrap(~alt, scales = "free_x") +
-    labs(x = "Misspecification strength", y = NULL, linetype = NULL,
-         title = "Overall fit vs specification tests under misspecification") +
+    labs(x = "Strength of the alternative", y = NULL, linetype = NULL,
+         title = "Overall fit and moment-test rejection under the alternatives") +
     theme_paper()
   save_fig(p5a, "F5_fit_vs_tests", "E4", width = 9.2)
 
@@ -215,7 +267,7 @@ if (!is.null(e3)) {
     facet_wrap(~scenario, labeller =
                  as_labeller(sapply(e3$config$scenarios, `[[`, "label"))) +
     labs(x = "Number of topics (K)", y = "Gap contribution",
-         title = "Exact channel decomposition of the gap (Corollary 1)",
+         title = "Exact channel decomposition of the gap (Proposition 1)",
          subtitle = "Solid line: total gap") +
     theme_paper()
   save_fig(p6b, "F6b_gap_decomposition", "E3", width = 9.6)
@@ -251,16 +303,18 @@ if (!is.null(e3) && nrow(e3$scatter)) {
 # ========================= F9: design sensitivity (E5) =============================
 if (!is.null(e5)) {
   K_true <- e5$config$K_true
+  GRID_LAB <- c(g10_100 = "grid 10-100", g10_160 = "grid 10-160")
   p9a <- ggplot(e5$grid_curves[metric == "dev"],
                 aes(x = K, y = r2_micro, colour = grid)) +
     geom_line(linewidth = 0.8) + geom_point(aes(shape = grid), size = 1.7) +
     geom_vline(xintercept = K_true, linetype = "dashed", colour = "grey40") +
-    scale_colour_grey(start = 0, end = 0.65, name = "Estimation grid") +
-    scale_shape(name = "Estimation grid") +
+    scale_colour_grey(start = 0, end = 0.65, name = "Estimation grid", labels = GRID_LAB) +
+    scale_shape(name = "Estimation grid", labels = GRID_LAB) +
     labs(x = "Number of topics (K)", y = expression(R["Dev,Micro"]^2),
-         title = "Grid-extension sensitivity of the harmonized support") +
+         title = "Grid-extension sensitivity of the harmonised support") +
     theme_paper()
-  cc <- e5$c_curves
+  # c = 5 retains no document at this design point: no curve, so no legend entry
+  cc <- e5$c_curves[is.finite(r2_micro)]
   p9b <- ggplot(cc, aes(x = K, y = r2_micro,
                         linetype = factor(c_value))) +
     geom_line(linewidth = 0.8) +
@@ -268,9 +322,9 @@ if (!is.null(e5)) {
     geom_vline(xintercept = K_true, linetype = "dashed", colour = "grey40") +
     facet_wrap(~metric, labeller = as_labeller(metric_label)) +
     scale_shape(name = "c") +
-    labs(x = "Number of topics (K)", y = expression(R^2),
+    labs(x = "Number of topics (K)", y = "Micro index",
          linetype = "c",
-         title = "Threshold sensitivity: c = 1 vs c = 5") +
+         title = "Threshold sensitivity: c = 1 (c = 5 retains no document)") +
     theme_paper()
   save_fig(p9a + p9b, "F9_design_sensitivity", "E5", width = 11, height = 4.6)
 }
@@ -320,10 +374,11 @@ if (!is.null(e6)) {
     geom_line(linewidth = 0.8) + geom_point(size = 1.4) +
     geom_vline(xintercept = K_true, linetype = "dashed", colour = "grey40") +
     scale_linetype_manual(values = c(w_Micro = "solid", w_Macro = "dotted"),
+                          labels = c(w_Micro = "word-level Micro", w_Macro = "word-level Macro"),
                           name = "Aggregation") +
     labs(x = "Number of topics (K)", y = expression(R["Dev,w"]^2),
-         title = "Word-level dual perspective: w-Micro vs w-Macro over K",
-         subtitle = "Shaded = w-Micro - w-Macro gap (frequency-space twin of the length-bias gap)") +
+         title = "Word-level Micro and Macro Deviance indices over K",
+         subtitle = "Shaded: word-level Micro minus Macro") +
     theme_paper()
   save_fig(p11, "F11_word_micro_macro", "E6", width = 7.4)
 
@@ -338,7 +393,7 @@ if (!is.null(e6)) {
         labs(x = expression(log[10]("document frequency + 1")),
              y = bquote(R["Dev,w"]^2 ~ "at K =" ~ .(K_true)),
              title = "Word-level held-out fit vs frequency",
-             subtitle = "Fit concentrates in the common vocabulary; the rare tail is estimation-hard") +
+             subtitle = sprintf("Per-word held-out fit rises with document frequency (one training fit, K = %d)", K_true)) +
         theme_paper()
       save_fig(p12, "F12_word_fit_vs_freq", "E6", width = 7.4)
     }

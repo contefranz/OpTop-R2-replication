@@ -1,0 +1,68 @@
+{
+  "at": "2026-09-20T12:44:20",
+  "blocked": [],
+  "failed": [],
+  "fits_unchanged": true,
+  "new_fit_files": [],
+  "production_complete": [
+    "mdna",
+    "mdna_c05",
+    "mdna_c2",
+    "mdna_g100",
+    "e2_base",
+    "e2_dgp2",
+    "e1_base",
+    "e1_dgp2",
+    "e6",
+    "e4_base",
+    "e4_prior",
+    "selreps",
+    "e5_resolution",
+    "unbinned",
+    "restarts",
+    "post_e4_base",
+    "post_e4_prior",
+    "post_e2_base",
+    "post_e2_dgp2",
+    "acceptance"
+  ],
+  "production_outstanding": [],
+  "ran_now": [
+    "post_e4_base",
+    "post_e4_prior",
+    "post_e2_base",
+    "post_e2_dgp2",
+    "acceptance"
+  ],
+  "selected": [
+    "acceptance",
+    "post_e2_base",
+    "post_e2_dgp2",
+    "post_e4_base",
+    "post_e4_prior",
+    "smoke",
+    "units"
+  ],
+  "skipped_not_selected": [
+    "mdna",
+    "mdna_c05",
+    "mdna_c2",
+    "mdna_g100",
+    "e2_base",
+    "e2_dgp2",
+    "e1_base",
+    "e1_dgp2",
+    "e6",
+    "e5_resolution",
+    "unbinned",
+    "restarts",
+    "e4_base",
+    "e4_prior",
+    "selreps"
+  ],
+  "suffix": "_rev2",
+  "verified_complete": [
+    "units",
+    "smoke"
+  ]
+}

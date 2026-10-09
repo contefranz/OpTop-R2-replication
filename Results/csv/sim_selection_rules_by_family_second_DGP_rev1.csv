@@ -1,0 +1,13 @@
+metric,eval,eps,n,pw_mode,pw_exact,pw_mean,sa_mode,sa_exact,sa_mean,sa_na
+chisq,ho_reconstruction,0.01,10,20,1,20,20,1,20,0
+chisq,ho_reconstruction,0.005,10,20,1,20,20,1,20,0
+dev,ho_reconstruction,0.01,10,20,1,20,20,1,20,0
+dev,ho_reconstruction,0.005,10,20,1,20,20,1,20,0
+se,ho_reconstruction,0.01,10,10,0.1,13,10,0.1,16,0
+se,ho_reconstruction,0.005,10,10,0,15,10,0,17.5,0
+chisq,ho_completion,0.01,1,30,0,30,,0,,1
+chisq,ho_completion,0.005,1,45,0,45,,0,,1
+dev,ho_completion,0.01,1,30,0,30,,0,,1
+dev,ho_completion,0.005,1,30,0,30,,0,,1
+se,ho_completion,0.01,1,15,0,15,45,0,45,0
+se,ho_completion,0.005,1,15,0,15,45,0,45,0

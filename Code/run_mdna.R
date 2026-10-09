@@ -24,6 +24,13 @@
 # Usage:
 #   Rscript Code/run_mdna.R [y1=2015] [y2=2016] [workers=4] [K_grid=25:200:25]
 #                           [refine_step=10] [refine_span=25] [sample_n=0]
+#                           [tests_K=hat|all|40,50,60] [c_part=1] [min_null=1]
+#                           [out_suffix=]
+#   c_part    support threshold c: which cells are scored individually;
+#   min_null  discrepancy floor delta: which documents enter the relative-fit
+#             estimand. The two are SEPARATE choices. A design comparison over c
+#             holds delta fixed (delta = 1) and uses refine_span=0, so that the
+#             same candidate grid enters every harmonised support.
 # =============================================================================
 
 suppressMessages({library(data.table); library(Matrix); library(qs2)})
@@ -34,13 +41,15 @@ source(here::here("Code", "config", "configs.R"))
 .args <- commandArgs(trailingOnly = TRUE)
 P <- list(y1 = 2015L, y2 = 2016L, workers = 4L, K_grid = "25:200:25",
           refine_step = 10L, refine_span = 25L, sample_n = 0L,
-          tests_K = "hat",   # "hat" = K-hat + neighbors; "all" = whole grid
+          tests_K = "hat",   # "hat" = K-hat + neighbors; "all" = whole grid;
+                             # "40,50,60" = exactly these (plus K-hat)
           c_part = 1,        # harmonised-support threshold c (sensitivity runs)
+          min_null = 1,      # discrepancy floor delta, independent of c
           out_suffix = "")   # appended to the output TAG only; fit cache and
                              # evaluation data are untouched, so sensitivity
                              # runs never overwrite the baseline results
 .str_keys <- c("K_grid", "tests_K", "out_suffix")
-.num_keys <- c("c_part")
+.num_keys <- c("c_part", "min_null")
 for (a in .args) {
   kv <- strsplit(a, "=", fixed = TRUE)[[1L]]
   if (length(kv) != 2L || !kv[1L] %in% names(P))
@@ -50,7 +59,9 @@ for (a in .args) {
                  else if (kv[1L] %in% .num_keys) as.numeric(kv[2L])
                  else as.integer(kv[2L])
 }
-stopifnot(P$tests_K %in% c("hat", "all"))
+stopifnot(P$tests_K %in% c("hat", "all") || grepl("^[0-9]+(,[0-9]+)*$", P$tests_K))
+stopifnot(is.finite(P$min_null), P$min_null >= 0)
+options(optop.revision_suffix = P$out_suffix)
 K_coarse <- .parse_override_value(P$K_grid)
 SEED_BASE <- 1970L
 EPS_GRID <- c(0.01, 0.005); SEL_ALPHA <- 0.05; C_PART <- P$c_part
@@ -77,19 +88,33 @@ fit_grid <- function(K_set) {
   get_fits_cached(dtm_tr, K_set, "WarpLDA", 3L, SEED_BASE, sig)
 }
 
+# full-input hashes: checkpoint identity here, verification fields in the output
+HASH_TR <- digest::digest(dtm_tr, algo = "xxhash64")
+HASH_EV <- digest::digest(dtm_ev, algo = "xxhash64")
+
 score_all <- function(fits, word_at = NULL) {
   base_tr <- OpTop::optop_make_baseline(dtm_tr)
   pi_tr <- base_tr$pi_glob
-  ins <- score_insample(fits, dtm_tr, C_PART, c("dev", "chisq", "se"),
-                        word_at = word_at)
+  # one checkpoint per scoring pass (the three passes are the expensive part of
+  # this driver); the number of workers is not part of what defines a score
+  ck <- list(params = P[setdiff(names(P), "workers")], grid = names(fits),
+             word_at = word_at, train = HASH_TR, eval = HASH_EV)
+  drop_part <- function(ans) { ans$partition <- NULL; ans }   # dense J x W mask
+  ins <- revision_checkpoint("MDNA", ck, "ins", drop_part(
+    score_insample(fits, dtm_tr, C_PART, c("dev", "chisq", "se"),
+                   word_at = word_at, min_null = P$min_null)))
   scoring_log("MDNA: in-sample scored (|K|=%d)", length(fits))
-  rec <- score_heldout(fits, dtm_ev, dtm_ev, pi_tr, C_PART,
-                       c("dev", "chisq", "se"), word_at = word_at,
-                       foldin_seed = SEED_BASE)
+  rec <- revision_checkpoint("MDNA", ck, "rec", drop_part(
+    score_heldout(fits, dtm_ev, dtm_ev, pi_tr, C_PART,
+                  c("dev", "chisq", "se"), word_at = word_at,
+                  foldin_seed = SEED_BASE, min_null = P$min_null,
+                  resolution = TRUE)))
   scoring_log("MDNA: reconstruction scored")
   spl <- split_tokens_binomial(dtm_ev, 0.5, seed = SEED_BASE)
-  com <- score_heldout(fits, spl$foldin, spl$score, pi_tr, C_PART,
-                       c("dev", "chisq", "se"), foldin_seed = SEED_BASE + 1L)
+  com <- revision_checkpoint("MDNA", ck, "com", drop_part(
+    score_heldout(fits, spl$foldin, spl$score, pi_tr, C_PART,
+                  c("dev", "chisq", "se"), foldin_seed = SEED_BASE + 1L,
+                  min_null = P$min_null, resolution = TRUE)))
   scoring_log("MDNA: completion scored")
   list(ins = ins, rec = rec, com = com, pi_tr = pi_tr)
 }
@@ -135,17 +160,26 @@ pick_khat <- function(kh, gains_dt, K_set) {
 # ------------------------- A. fit & selection ----------------------------------
 log_msg("A: coarse grid %s", paste(range(K_coarse), collapse = "-"))
 fits_c <- fit_grid(K_coarse)
-sc_c <- score_all(fits_c$models)
-gains_c <- gains_of(sc_c)
-kh_c <- khat_from_gains(gains_c)
-K_hat_c <- pick_khat(kh_c, gains_c, K_coarse)
-log_msg("A: coarse selection K-hat = %s -> refining +/- %d by %d",
-        K_hat_c, P$refine_span, P$refine_step)
-
-K_ref <- seq(max(min(K_coarse), K_hat_c - P$refine_span),
-             min(max(K_coarse), K_hat_c + P$refine_span), by = P$refine_step)
-K_all <- sort(union(K_coarse, K_ref))
-fits_out <- fit_grid(K_all)
+if (P$refine_span > 0L) {
+  sc_c <- score_all(fits_c$models)
+  gains_c <- gains_of(sc_c)
+  kh_c <- khat_from_gains(gains_c)
+  K_hat_c <- pick_khat(kh_c, gains_c, K_coarse)
+  log_msg("A: coarse selection K-hat = %s -> refining +/- %d by %d",
+          K_hat_c, P$refine_span, P$refine_step)
+  K_ref <- seq(max(min(K_coarse), K_hat_c - P$refine_span),
+               min(max(K_coarse), K_hat_c + P$refine_span), by = P$refine_step)
+  K_all <- sort(union(K_coarse, K_ref))
+  rm(sc_c); invisible(gc())
+} else {
+  # refine_span = 0: the final grid IS the coarse grid, so the exploratory
+  # coarse scoring pass would only repeat the final one. NOTE for sensitivity
+  # runs: refining changes the set of models entering the harmonised support,
+  # so a design comparison is like for like only with refine_span = 0.
+  K_all <- sort(K_coarse)
+  log_msg("A: refine_span = 0 -> single scoring pass on the coarse grid")
+}
+fits_out <- if (setequal(K_all, K_coarse)) fits_c else fit_grid(K_all)
 fits <- fits_out$models
 
 # word-level tracked at every K on the final grid (used by C)
@@ -200,6 +234,10 @@ scoring_log("MDNA: C done (word curves + worst-fit vocabulary)")
 i_hat <- which(K_all == K_hat)
 K_test <- if (P$tests_K == "all") {
   K_all   # tests over the whole grid: does more K repair the violations?
+} else if (P$tests_K != "hat") {
+  requested <- as.integer(strsplit(P$tests_K, ",", fixed = TRUE)[[1L]])
+  stopifnot(all(requested %in% K_all))
+  sort(unique(c(requested, K_hat)))
 } else {
   sort(unique(c(K_hat, K_all[pmax(1L, i_hat - 1L)],
                 K_all[pmin(length(K_all), i_hat + 1L)])))
@@ -207,16 +245,18 @@ K_test <- if (P$tests_K == "all") {
 log_msg("D: moment tests on held-out set at K in {%s} (tests_K=%s)",
         paste(K_test, collapse = ", "), P$tests_K)
 
+# Test 3 strata come from the training word scores of the SAME K that is being
+# tested (shared, shadow-proof builder; see make_instruments_by_K()).
 word_tr <- sc$ins$word
-Zs_by_K <- lapply(K_test, function(K) {
-  ws <- word_tr[K == K & metric == "dev", .(word_id, r2_word)]
-  make_instrument_set(dtm_tr, ws, B = B_STRATA, S = S_STRATA,
-                      min_docfreq = MIN_DOCFREQ)
-})
-names(Zs_by_K) <- as.character(K_test)
+Zs_by_K <- make_instruments_by_K(dtm_tr, word_tr, K_test, B = B_STRATA,
+                                 S = S_STRATA, min_docfreq = MIN_DOCFREQ)
 
 blocks <- split(seq_len(nrow(dtm_ev)), ceiling(seq_len(nrow(dtm_ev)) / 1500L))
 tests_ho <- list(); strata_ho <- list(); resid_sum <- NULL; resid_n <- 0L
+resid_by_K <- list()   # mean held-out residual per word at EVERY tested K (the
+                       # normalisation-free residual-mass summaries need it)
+moments_ho <- list()   # J x q moment matrices per (K, test): tiny, and they are
+                       # what cluster-robust / re-centred Wald tests need later
 for (K in K_test) {
   k <- as.character(K)
   phi_k <- phi_from_fit(fits[[k]])
@@ -228,8 +268,9 @@ for (K in K_test) {
                        seed = SEED_BASE + bi)
     E <- resid_heldout(th, phi_k, dtm_ev[rows, , drop = FALSE])
     for (nm in names(Zs)) Gs[[nm]] <- rbind(Gs[[nm]], E %*% t(Zs[[nm]]))
-    if (K == K_hat) {   # signed residual ranking accumulated at K-hat only
-      cs <- colSums(E)
+    cs <- colSums(E)
+    resid_by_K[[k]] <- if (is.null(resid_by_K[[k]])) cs else resid_by_K[[k]] + cs
+    if (K == K_hat) {   # signed residual ranking reported at K-hat
       resid_sum <- if (is.null(resid_sum)) cs else resid_sum + cs
       resid_n <- resid_n + length(rows)
     }
@@ -239,6 +280,8 @@ for (K in K_test) {
   mt <- lapply(names(Zs), function(nm) moment_test_from_G(Gs[[nm]], nm))
   tests_ho[[k]] <- rbindlist(lapply(mt, `[[`, "result"), fill = TRUE)[, K := K]
   strata_ho[[k]] <- rbindlist(lapply(mt, `[[`, "strata"))[, K := K]
+  moments_ho[[k]] <- lapply(Gs, function(G) {
+    rownames(G) <- rownames(dtm_ev); G })
 }
 tests_ho <- rbindlist(tests_ho)
 strata_ho <- rbindlist(strata_ho)
@@ -249,7 +292,19 @@ freq_share <- function(m) Matrix::colSums(m) / sum(m)
 resid_words[, `:=`(share_train = freq_share(dtm_tr)[word],
                    share_ho = freq_share(dtm_ev)[word])]
 setorder(resid_words, -resid_mean)
+resid_words_by_K <- rbindlist(lapply(names(resid_by_K), function(k)
+  data.table(K = as.integer(k), word = colnames(dtm_ev),
+             resid_mean = resid_by_K[[k]] / nrow(dtm_ev))))
 log_msg("D: done; top over-observed word: '%s'", resid_words$word[1L])
+
+# Acceptance value for the held-out word-level baseline deviance (Poisson form on
+# the scored tokens; it does not depend on K). On the full 2015-16 corpus under
+# reconstruction the word "condition" has 9562.168059; the legacy log-only form
+# gives 8771.558890. Logged here, enforced by finalize_revision.R.
+if ("condition" %in% sc$rec$word$word_id)
+  log_msg("C: D_null('condition', reconstruction) = %.6f [convention: %s]",
+          sc$rec$word[word_id == "condition", d_null][1L],
+          sc$rec$scoring$word_null_convention %||% "unstamped")
 
 # ------------------------- save --------------------------------------------------
 out <- list(
@@ -261,9 +316,25 @@ out <- list(
   optimal_topic = ot[c("K_hat", "all_rejected")],
   battery_ci = battery_ci, gap = gap, decomp = decomp,
   boilerplate = boilerplate, bp_doc = bp_doc,
-  wcurve = wcurve, wstar = wstar,
+  wcurve = wcurve, wstar = wstar, word_rec = sc$rec$word, word_train = sc$ins$word,
+  resolution = rbindlist(list(copy(sc$rec$resolution)[, eval := "rec"],
+                               copy(sc$com$resolution)[, eval := "com"])),
+  sel_all = rbindlist(lapply(c("rec", "com"), function(mn)
+    select_k_all_rules(sc[[mn]]$doc, EPS_GRID, SEL_ALPHA)[, eval := mn])),
   tests_ho = tests_ho, strata_ho = strata_ho, resid_words = resid_words,
-  diagnostics = fits_out$diagnostics, prep_report = prep$report
+  resid_words_by_K = resid_words_by_K, moments_ho = moments_ho,
+  scoring = sc$rec$scoring,
+  diagnostics = fits_out$diagnostics, prep_report = prep$report,
+  # Verification fields (NOT part of any cache key, so existing fits stay
+  # reachable): the fit-cache `dtm_hash` above covers only the dimensions, 20
+  # row sums and 50 vocabulary entries, and the output TAG omits the scoring
+  # settings. Record full-input hashes and the settings that define the scores
+  # so a reused result can be checked against the data it claims to describe.
+  input_check = list(
+    dtm_train_hash = HASH_TR, dtm_ev_hash = HASH_EV,
+    c_part = C_PART, min_null = P$min_null,
+    eps_grid = EPS_GRID, sel_alpha = SEL_ALPHA, seed_base = SEED_BASE,
+    B_strata = B_STRATA, S_strata = S_STRATA, min_docfreq = MIN_DOCFREQ)
 )
 f <- p_data("MDNA", sprintf("mdna_results_%s.qs2", TAG))
 cache_put(out, f, list(experiment = "MDNA", profile = "real", tag = TAG))

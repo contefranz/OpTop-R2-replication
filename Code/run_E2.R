@@ -18,9 +18,10 @@ source(here::here("Code", "config", "configs.R"))
 
 cli <- parse_cli(args)
 PROFILE <- cli$profile
-cfg <- get_config("E2", PROFILE)
-cfg <- apply_overrides(cfg, cli$overrides, strict = FALSE)
-cfg$label <- run_label(cfg, cli$overrides, cli$label)
+rc <- resolve_cfg(cli, "E2", PROFILE)          # honours cfg_from= / out_suffix=
+cfg <- rc$cfg; SFX <- rc$out_suffix
+if (!rc$from_cache || !is.null(cli$label))
+  cfg$label <- run_label(cfg, rc$overrides, cli$label)
 TAG <- run_tag(cfg)
 setup_parallel(cli$workers)
 log_msg("=== E2 [%s] tag=%s S_train=%d R=%d ===", PROFILE, TAG,
@@ -52,24 +53,37 @@ for (t in seq_len(cfg$S_train)) {
   log_msg("E2 corpus %d/%d: conditional truth (fold-in on J=%d eval set)",
           t, cfg$S_train, cfg$J_truth)
   t_tru <- proc.time()[["elapsed"]]
+  truth_block <- revision_checkpoint("E2", cfg, paste0("truth_", t), {
   sim_mega <- sim_lda_corpus(cfg$J_truth, cfg$W, cfg$K_true,
                              cfg$alpha_DGP, cfg$beta_DGP, cfg$length_spec,
                              seed = seeds$eval_seed, Phi = sim_tr$Phi,
                              doc_prefix = "mega")
   tru <- score_heldout_blocked(fits, sim_mega$dtm, sim_mega$dtm, pi_tr,
                                cfg$c, metrics = "dev",
-                               foldin_seed = seeds$eval_seed)
+                               foldin_seed = seeds$eval_seed, parallel = TRUE)
   log_msg("E2 corpus %d/%d: conditional truth done in %.1f min",
           t, cfg$S_train, (proc.time()[["elapsed"]] - t_tru) / 60)
-  mu_true <- tru$summary[metric == "dev", .(K, mu = r2_macro)]
-  gains_true <- paired_gains(tru$doc)[, .(K, delta_true = delta_mean)]
-  gap_true <- micro_macro_gap_ci(tru$doc)[, .(K, gap_true = gap)]
+  # The "truth" is the mean of ONE reference sample of J_truth documents, so it
+  # carries sampling error of its own. Its standard errors are stored: coverage
+  # of a noisy target is NOT coverage of a known parameter, and the reference
+  # precision must be reportable (J_truth = 2000 gives a reference SE of half
+  # the evaluation SE at J_ev = 500).
+  mu_true <- macro_ci(tru$doc)[metric == "dev", .(K, mu = r2_macro, mu_se = se,
+                                                  n_ref = n)]
+  gains_true <- paired_gains(tru$doc)[, .(K, delta_true = delta_mean,
+                                          delta_true_se = se)]
+  gap_true <- micro_macro_gap_ci(tru$doc)[, .(K, gap_true = gap,
+                                              gap_true_se = se)]
+  list(mu_true = mu_true, gains_true = gains_true, gap_true = gap_true)
+  })
+  mu_true <- truth_block$mu_true; gains_true <- truth_block$gains_true
+  gap_true <- truth_block$gap_true
   acc$truth[[t]] <- cbind(
     train_seed = t,
     Reduce(function(a, b) merge(a, b, by = "K", all = TRUE),
            list(mu_true, gains_true, gap_true))
   )
-  rm(sim_mega); gc()
+  invisible(gc())
 
   # --- replicated evaluation sets ----------------------------------------------
   for (ji in seq_along(cfg$J_ev_grid)) {
@@ -77,6 +91,7 @@ for (t in seq_len(cfg$S_train)) {
     log_msg("E2 corpus %d/%d: J_ev=%d, %d eval replications (fold-in scoring, 0 new fits)",
             t, cfg$S_train, J_ev, cfg$R_eval)
     reps <- future_lapply(seq_len(cfg$R_eval), function(rep) {
+      revision_checkpoint("E2", cfg, sprintf("t%d_j%d_r%d", t, ji, rep), {
       ev_seed <- seeds$eval_seed + 100000L * ji + 17L * rep
       sim_ev <- sim_lda_corpus(J_ev, cfg$W, cfg$K_true,
                                cfg$alpha_DGP, cfg$beta_DGP,
@@ -89,20 +104,25 @@ for (t in seq_len(cfg$S_train)) {
       gp <- micro_macro_gap_ci(sc$doc)
       kh <- rbindlist(lapply(cfg$eps_grid, function(e)
         select_k_epsilon(g, e, cfg$sel_alpha)))
+      sa <- select_k_all_rules(sc$doc, cfg$eps_grid, cfg$sel_alpha)
       scoring_log("E2 corpus %d J_ev=%d: rep %d/%d done", t, J_ev, rep,
                   cfg$R_eval)
       list(
         ci = ci[, .(K, r2_macro, se, lwr, upr)][, rep := rep],
         g = g[, .(K, delta_mean, se, ub_onesided)][, rep := rep],
         gp = gp[, .(K, gap, se, lwr, upr)][, rep := rep],
-        kh = kh[, rep := rep]
+        kh = kh[, rep := rep],
+        sa = sa[, rep := rep]
       )
+      })
     })
     lab <- function(x) x[, `:=`(train_seed = t, J_ev = J_ev)]
     ci_all <- lab(rbindlist(lapply(reps, `[[`, "ci")))
     g_all  <- lab(rbindlist(lapply(reps, `[[`, "g")))
     gp_all <- lab(rbindlist(lapply(reps, `[[`, "gp")))
     kh_all <- lab(rbindlist(lapply(reps, `[[`, "kh")))
+    acc$sel_all[[length(acc$sel_all) + 1L]] <-
+      lab(rbindlist(lapply(reps, `[[`, "sa"), use.names = TRUE))
 
     ci_all <- ci_all[mu_true, on = "K"]
     ci_all[, `:=`(cover = lwr <= mu & mu <= upr, t_stat = (r2_macro - mu) / se)]
@@ -137,9 +157,10 @@ khat_tab <- khat[, .N, by = .(J_ev, eps, K_hat)][order(J_ev, eps, K_hat)]
 
 out <- list(truth = rbindlist(acc$truth), cover = cover, gains = gains,
             gap = gap, khat = khat,
+            sel_all = rbindlist(acc$sel_all, use.names = TRUE),
             cover_tab = cover_tab, size_tab = size_tab, power_tab = power_tab,
             gap_tab = gap_tab, khat_tab = khat_tab, config = cfg)
-cache_put(out, p_data("E2", sprintf("e2_results_%s.qs2", TAG)), cfg)
-write_result(cover_tab, "e2_coverage", cfg)
-write_result(khat_tab, "e2_khat_distribution", cfg)
+cache_put(out, p_data("E2", sprintf("e2_results_%s%s.qs2", TAG, SFX)), cfg)
+write_result(cover_tab, paste0("e2_coverage", SFX), cfg)
+write_result(khat_tab, paste0("e2_khat_distribution", SFX), cfg)
 log_msg("=== E2 [%s] complete ===", PROFILE)

@@ -1,0 +1,243 @@
+{
+  "commands": {
+    "acceptance": [
+      "Rscript",
+      "Code/finalize_revision.R",
+      "suffix=_rev2"
+    ],
+    "e1_base": [
+      "Rscript",
+      "Code/run_E1.R",
+      "full",
+      "8",
+      "cfg_from=Data/E1/e1_results_E1_full_Kstar40_J1000_W5000_a0p5_b0p01_k10-100by10_warplda_fa0p1_fb0p01.qs2",
+      "out_suffix=_rev2"
+    ],
+    "e1_dgp2": [
+      "Rscript",
+      "Code/run_E1.R",
+      "full",
+      "8",
+      "cfg_from=Data/E1/e1_results_E1_full_Kstar20_J1000_W10000_a0p5_b0p01_k5-50by5_warplda_fa0p1_fb0p01.qs2",
+      "out_suffix=_rev2"
+    ],
+    "e2_base": [
+      "Rscript",
+      "Code/run_E2.R",
+      "full",
+      "8",
+      "cfg_from=Data/E2/e2_results_E2_full_Kstar40_J1000_W5000_a0p5_b0p01_k10-100by10_warplda_fa0p1_fb0p01.qs2",
+      "out_suffix=_rev2",
+      "J_truth=20000"
+    ],
+    "e2_dgp2": [
+      "Rscript",
+      "Code/run_E2.R",
+      "full",
+      "8",
+      "cfg_from=Data/E2/e2_results_E2_full_Kstar20_J1000_W10000_a0p5_b0p01_k5-50by5_warplda_fa0p1_fb0p01.qs2",
+      "out_suffix=_rev2",
+      "J_truth=20000"
+    ],
+    "e4_base": [
+      "Rscript",
+      "Code/run_E4.R",
+      "full",
+      "8",
+      "cfg_from=Data/E4/e4_results_E4_full_Kstar40_J1000_W5000_a0p5_b0p01_k10-100by10_warplda_fa0p1_fb0p01.qs2",
+      "out_suffix=_rev2"
+    ],
+    "e4_prior": [
+      "Rscript",
+      "Code/run_E4.R",
+      "full",
+      "8",
+      "cfg_from=Data/E4/e4_results_E4_full_Kstar40_J1000_W5000_a0p5_b0p01_k10-100by10_warplda_fa0p5_fb0p01.qs2",
+      "out_suffix=_rev2"
+    ],
+    "e5_resolution": [
+      "Rscript",
+      "Code/run_revision_diagnostics.R",
+      "8",
+      "mode=e5",
+      "input=Data/E5/e5_results_E5_full_Kstar40_J1000_W5000_a0p5_b0p01_k10-100by10_warplda_fa0p1_fb0p01.qs2",
+      "out_suffix=_rev2"
+    ],
+    "e6": [
+      "Rscript",
+      "Code/run_E6.R",
+      "full",
+      "8",
+      "cfg_from=Data/E6/e6_results_E6_full_Kstar40_J1000_W5000_a0p5_b0p01_k10-100by10_warplda_fa0p1_fb0p01.qs2",
+      "out_suffix=_rev2"
+    ],
+    "mdna": [
+      "Rscript",
+      "Code/run_mdna.R",
+      "workers=8",
+      "K_grid=10:200:10",
+      "refine_span=0",
+      "tests_K=40,50,60,170,180,190",
+      "c_part=1",
+      "min_null=1",
+      "out_suffix=_rev2"
+    ],
+    "mdna_c05": [
+      "Rscript",
+      "Code/run_mdna.R",
+      "workers=8",
+      "K_grid=10:200:10",
+      "refine_span=0",
+      "tests_K=40,50,60,170,180,190",
+      "c_part=0.5",
+      "min_null=1",
+      "out_suffix=_c05_rev2"
+    ],
+    "mdna_c2": [
+      "Rscript",
+      "Code/run_mdna.R",
+      "workers=8",
+      "K_grid=10:200:10",
+      "refine_span=0",
+      "tests_K=40,50,60,170,180,190",
+      "c_part=2",
+      "min_null=1",
+      "out_suffix=_c2_rev2"
+    ],
+    "mdna_g100": [
+      "Rscript",
+      "Code/run_mdna.R",
+      "workers=8",
+      "K_grid=10:100:10",
+      "refine_span=0",
+      "tests_K=40,50,60",
+      "c_part=1",
+      "min_null=1",
+      "out_suffix=_g100_rev2"
+    ],
+    "post_e2_base": [
+      "Rscript",
+      "Code/postprocess_e2_gap.R",
+      "file=Data/E2/e2_results_E2_full_Kstar40_J1000_W5000_a0p5_b0p01_k10-100by10_warplda_fa0p1_fb0p01_rev2.qs2"
+    ],
+    "post_e2_dgp2": [
+      "Rscript",
+      "Code/postprocess_e2_gap.R",
+      "file=Data/E2/e2_results_E2_full_Kstar20_J1000_W10000_a0p5_b0p01_k5-50by5_warplda_fa0p1_fb0p01_rev2.qs2"
+    ],
+    "post_e4_base": [
+      "Rscript",
+      "Code/postprocess_e4.R",
+      "file=Data/E4/e4_results_E4_full_Kstar40_J1000_W5000_a0p5_b0p01_k10-100by10_warplda_fa0p1_fb0p01_rev2.qs2"
+    ],
+    "post_e4_prior": [
+      "Rscript",
+      "Code/postprocess_e4.R",
+      "file=Data/E4/e4_results_E4_full_Kstar40_J1000_W5000_a0p5_b0p01_k10-100by10_warplda_fa0p5_fb0p01_rev2.qs2"
+    ],
+    "restarts": [
+      "Rscript",
+      "Code/run_mdna_restarts.R",
+      "workers=8",
+      "common=2",
+      "out_suffix=_rev2"
+    ],
+    "selreps": [
+      "Rscript",
+      "Code/run_E1_selreps.R",
+      "full",
+      "8",
+      "cfg_from=Data/E1/e1_results_E1_full_Kstar40_J1000_W5000_a0p5_b0p01_k10-100by10_warplda_fa0p1_fb0p01.qs2",
+      "out_suffix=_rev2",
+      "R_sel=10"
+    ],
+    "smoke": [
+      "bash",
+      "Code/revision_smoke.sh",
+      "2",
+      "_rev2"
+    ],
+    "unbinned": [
+      "Rscript",
+      "Code/run_revision_diagnostics.R",
+      "8",
+      "mode=unbinned",
+      "out_suffix=_rev2"
+    ],
+    "units": [
+      "Rscript",
+      "Code/tests_unit.R"
+    ]
+  },
+  "core_code": {
+    "Code/R/source_all.R": "444cdac2d55546577f48ceaf2281234d68c578136feeed41903f8f087f426198",
+    "Code/R/theme_paper.R": "6c4ac198c1cde06393f91f9f61d6c9fa154c6a1e707faeb3319587f92a555f0e",
+    "Code/R/utils_comparators.R": "899c3346770c5504d78f48e7a24621ccb5c946a55a9d399e9a43c39016402f63",
+    "Code/R/utils_dgp.R": "05de5daafa194c52b598e780e37197a1225bb1bfa4bcfe09b95ba7e5d97e077e",
+    "Code/R/utils_fit.R": "118c3340a55de5bf07c42dcb67968696bebdaaaa5651a1decbe85c3a58f62e64",
+    "Code/R/utils_heldout.R": "ebbf34ba15923ba419a496808ff352e0324a62f995e16d16582777d53dc9519e",
+    "Code/R/utils_inference.R": "2d8ae3f13be7d1abdda9e7022b13720b8873240412ac741cb7cceb75b71a30da",
+    "Code/R/utils_io.R": "44b0c8b1ecb695cc8b686cc450a218d1c89c2b12d8cd5fa657f1ceba508ec03b",
+    "Code/R/utils_moment_tests.R": "4a3fa2653033ab4ca9e96253e3ced43163ae80ac520a124f868679a5227e1709",
+    "Code/R/utils_revision.R": "cb0f08e18c9aaec22b661d364f110473f87cbff51179d3fb4318e3d9c0165cbf",
+    "Code/config/configs.R": "5c2336a0a013813f067a97a145f21f7aa4381009332955811b041979a4a3af91"
+  },
+  "outputs": {
+    "acceptance": [
+      "Results/revision_rev2/acceptance.json"
+    ],
+    "e1_base": [
+      "Data/E1/e1_results_E1_full_Kstar40_J1000_W5000_a0p5_b0p01_k10-100by10_warplda_fa0p1_fb0p01_rev2.qs2"
+    ],
+    "e1_dgp2": [
+      "Data/E1/e1_results_E1_full_Kstar20_J1000_W10000_a0p5_b0p01_k5-50by5_warplda_fa0p1_fb0p01_rev2.qs2"
+    ],
+    "e2_base": [
+      "Data/E2/e2_results_E2_full_Kstar40_J1000_W5000_a0p5_b0p01_k10-100by10_warplda_fa0p1_fb0p01_rev2.qs2"
+    ],
+    "e2_dgp2": [
+      "Data/E2/e2_results_E2_full_Kstar20_J1000_W10000_a0p5_b0p01_k5-50by5_warplda_fa0p1_fb0p01_rev2.qs2"
+    ],
+    "e4_base": [
+      "Data/E4/e4_results_E4_full_Kstar40_J1000_W5000_a0p5_b0p01_k10-100by10_warplda_fa0p1_fb0p01_rev2.qs2"
+    ],
+    "e4_prior": [
+      "Data/E4/e4_results_E4_full_Kstar40_J1000_W5000_a0p5_b0p01_k10-100by10_warplda_fa0p5_fb0p01_rev2.qs2"
+    ],
+    "e5_resolution": [
+      "Data/E5/e5_resolution_rev2.qs2"
+    ],
+    "e6": [
+      "Data/E6/e6_results_E6_full_Kstar40_J1000_W5000_a0p5_b0p01_k10-100by10_warplda_fa0p1_fb0p01_rev2.qs2"
+    ],
+    "mdna": [
+      "Data/MDNA/mdna_results_MDNA_2015_2016_rev2.qs2"
+    ],
+    "mdna_c05": [
+      "Data/MDNA/mdna_results_MDNA_2015_2016_c05_rev2.qs2"
+    ],
+    "mdna_c2": [
+      "Data/MDNA/mdna_results_MDNA_2015_2016_c2_rev2.qs2"
+    ],
+    "mdna_g100": [
+      "Data/MDNA/mdna_results_MDNA_2015_2016_g100_rev2.qs2"
+    ],
+    "post_e2_base": [],
+    "post_e2_dgp2": [],
+    "post_e4_base": [],
+    "post_e4_prior": [],
+    "restarts": [
+      "Data/MDNA/mdna_restarts_MDNA_2015_2016_rev2.qs2"
+    ],
+    "selreps": [
+      "Data/E1/e1_selreps_E1_full_Kstar40_J1000_W5000_a0p5_b0p01_k10-100by10_warplda_fa0p1_fb0p01_rev2.qs2"
+    ],
+    "smoke": [],
+    "unbinned": [
+      "Data/MDNA/unbinned_comparator_rev2.qs2"
+    ],
+    "units": []
+  },
+  "package": "0.20.1 cba1273ea8061d3afb7cb26344779d95c492c90f",
+  "suffix": "_rev2"
+}

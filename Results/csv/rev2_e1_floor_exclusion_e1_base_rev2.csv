@@ -1,0 +1,10 @@
+metric,eval,excl_mean,excl_min,excl_max
+dev,insample,0,0,0
+chisq,insample,0,0,0
+se,insample,0,0,0
+dev,ho_reconstruction,0,0,0
+chisq,ho_reconstruction,0,0,0
+se,ho_reconstruction,0,0,0
+dev,ho_completion,0.1134,0.0566,0.2024
+chisq,ho_completion,0.10704,0.0522,0.1926
+se,ho_completion,0.07434,0.0284,0.1418

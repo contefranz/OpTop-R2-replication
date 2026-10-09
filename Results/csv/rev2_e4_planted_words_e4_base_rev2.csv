@@ -1,0 +1,2 @@
+convention,n_words,n_planted,precision_at_n,recall_top50,median_rank_planted,min_r2
+poisson_scored_tokens,3268,37,0.135135135135135,0.162162162162162,213,-0.344267427075096

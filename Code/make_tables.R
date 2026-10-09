@@ -4,7 +4,12 @@
 #   * CSV copies                       -> Results/csv/<name>_<profile>.csv
 #   * ONE Excel workbook per profile   -> Results/xlsx/Section5_tables_<profile>.xlsx
 #     (one sheet per table, unrounded values)
-# Usage:  Rscript Code/make_tables.R [smoke|pilot|full]
+# Usage:  Rscript Code/make_tables.R [smoke|pilot|full] [exp=E1,E4] [label=name]
+#                                    [in_suffix=_rev1]
+#   in_suffix= read the re-scored objects <tag><in_suffix>.qs2; an experiment
+#          without one falls back to its original object (logged). Unless label=
+#          is given the suffix is appended to the run label, so the pre-revision
+#          tex / csv / workbook are never overwritten.
 # =============================================================================
 
 args <- commandArgs(trailingOnly = TRUE)
@@ -14,7 +19,10 @@ cli <- parse_cli(args)
 PROFILE <- cli$profile
 sel_exp <- setdiff(toupper(strsplit(cli$overrides$exp %||% "", ",")[[1]]), "")
 cli$overrides$exp <- NULL
+IN_SFX <- cli$overrides$in_suffix %||% ""
+cli$overrides$in_suffix <- NULL
 RUN_LABEL <- run_label(list(profile = PROFILE), cli$overrides, cli$label)
+if (nzchar(IN_SFX) && is.null(cli$label)) RUN_LABEL <- paste0(RUN_LABEL, IN_SFX)
 log_msg("tables for run label '%s'%s", RUN_LABEL,
         if (length(sel_exp)) sprintf(" (experiments: %s)",
                                      paste(sel_exp, collapse = ",")) else "")
@@ -25,7 +33,12 @@ library(tinytable)
 load_results <- function(exp) {
   if (length(sel_exp) && !toupper(exp) %in% sel_exp) return(NULL)
   cfg <- apply_overrides(get_config(exp, PROFILE), cli$overrides, strict = FALSE)
-  f <- p_data(exp, sprintf("%s_results_%s.qs2", tolower(exp), run_tag(cfg)))
+  f0 <- p_data(exp, sprintf("%s_results_%s.qs2", tolower(exp), run_tag(cfg)))
+  f <- sub("\\.qs2$", paste0(IN_SFX, ".qs2"), f0)
+  if (nzchar(IN_SFX) && !file.exists(f)) {
+    log_msg("%s: no '%s' object -- using the original %s", exp, IN_SFX, basename(f0))
+    f <- f0
+  }
   if (!file.exists(f)) { log_msg("skip %s tables", exp); return(NULL) }
   cache_get(f)
 }
@@ -56,14 +69,37 @@ if (!is.null(e1)) {
     n = .N,
     mode_K = { tb <- table(K_hat)
                if (length(tb)) as.integer(names(tb)[which.max(tb)]) else NA_integer_ },
-    pct_correct = mean(K_hat == K_true, na.rm = TRUE),
-    pct_within1 = mean(abs(K_hat - K_true) <= 1, na.rm = TRUE),
+    # a replicate with no selection counts as a miss (denominator = all
+    # replicates); mean_K is over the replicates that returned a selection
+    pct_correct = mean(!is.na(K_hat) & K_hat == K_true),
+    pct_within1 = mean(!is.na(K_hat) & abs(K_hat - K_true) <= 1),
     mean_K = mean(K_hat, na.rm = TRUE),
     pct_na = mean(is.na(K_hat))
   ), by = rule_full][order(rule_full)]
   emit(t1, "T1_khat_distribution",
        sprintf("Selection distribution across %d replicates (K* = %d)",
                e1$config$S, K_true))
+
+  # T1r: the three selection rules of the revised Definition 1 (total-gain
+  # adequacy, simultaneous adjacent, pointwise adjacent), present only in objects
+  # written by the revised driver. "None certified" is a miss, never K_max.
+  if (!is.null(e1$sel_all) && nrow(e1$sel_all)) {
+    sa <- copy(e1$sel_all)
+    t1r <- sa[, .(
+      n = .N,
+      mode_K = { tb <- table(K_hat)
+                 if (length(tb)) as.integer(names(tb)[which.max(tb)]) else NA_integer_ },
+      pct_correct = mean(!is.na(K_hat) & K_hat == K_true),
+      pct_within1 = mean(!is.na(K_hat) & abs(K_hat - K_true) <= 1),
+      mean_K = mean(K_hat, na.rm = TRUE),
+      pct_none = mean(is.na(K_hat))
+    ), by = c("eval", "metric", "rule", "eps")]
+    setorderv(t1r, c("eval", "metric", "rule", "eps"))
+    emit(t1r, "T1r_selection_rules",
+         sprintf(paste("Selection under the three rules across %d replicates (K* = %d);",
+                       "no certified candidate counts as a miss"),
+                 e1$config$S, K_true))
+  }
 
   # T1b: per-K held-out Macro by family and target + the completion share of
   # documents excluded by the 0.14.1 null-discrepancy floor (D_null < c).

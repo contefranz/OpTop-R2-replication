@@ -18,6 +18,10 @@ suppressPackageStartupMessages({
   library(qs2)
 })
 
+# Evaluation-only runs (the revision batch) export OPTOP_NO_FIT=1: a fit-cache
+# miss then stops the run instead of estimating a model (see prefit_pool()).
+if (nzchar(Sys.getenv("OPTOP_NO_FIT"))) options(optop.no_fit = TRUE)
+
 # explicit seeds are set inside every stochastic helper; silence future's
 # RNG-misuse heuristic (fits use topicmodels' own seeded RNG)
 options(future.rng.onMisuse = "ignore",
@@ -25,7 +29,7 @@ options(future.rng.onMisuse = "ignore",
 
 for (f in c("utils_io.R", "theme_paper.R", "utils_dgp.R", "utils_fit.R",
             "utils_heldout.R", "utils_inference.R", "utils_moment_tests.R",
-            "utils_comparators.R")) {
+            "utils_comparators.R", "utils_revision.R")) {
   source(here::here("Code", "R", f))
 }
 
@@ -59,6 +63,31 @@ parse_cli <- function(args, default_profile = Sys.getenv("OPTOP_PROFILE",
     overrides = overrides,
     label = label
   )
+}
+
+#' Resolve a driver's configuration.
+#'   cfg_from=<results.qs2>  take the config STORED in an earlier result object
+#'       instead of rebuilding it from CLI overrides. Re-scoring runs use this so
+#'       the corpus signature, seeds and fit spec -- hence every fit-cache key --
+#'       are exactly those of the run that produced the cached models;
+#'   out_suffix=<_tag>       appended to every output file name, so a re-run
+#'       never overwrites the object it was configured from.
+#' Both keys are stripped before the remaining overrides are applied.
+resolve_cfg <- function(cli, experiment, profile) {
+  ov <- cli$overrides
+  cfg_from <- ov$cfg_from; out_suffix <- ov$out_suffix
+  ov$cfg_from <- NULL; ov$out_suffix <- NULL
+  cfg <- if (!is.null(cfg_from)) {
+    if (!file.exists(cfg_from)) stop("cfg_from not found: ", cfg_from, call. = FALSE)
+    c0 <- qs2::qs_read(cfg_from)$config
+    if (is.null(c0)) stop("no $config in ", cfg_from, call. = FALSE)
+    log_msg("config taken from %s", basename(cfg_from))
+    c0
+  } else get_config(experiment, profile)
+  options(optop.revision_suffix = out_suffix %||% "")
+  list(cfg = apply_overrides(cfg, ov, strict = FALSE), overrides = ov,
+       out_suffix = if (is.null(out_suffix)) "" else out_suffix,
+       from_cache = !is.null(cfg_from))
 }
 
 setup_parallel <- function(workers = NULL) {
@@ -152,6 +181,17 @@ prefit_pool <- function(jobs) {
     }
   }
   if (!length(todo)) { log_msg("fit pool: all %d grids cached", length(jobs)); return(invisible(0L)) }
+  # No-fit guard: evaluation-only scripts (postprocessing, rescoring, the
+  # revision batch) set options(optop.no_fit = TRUE). A cache miss then means
+  # the corpus signature or fit spec drifted from the run that produced the
+  # cached models, and must never be "repaired" by silently estimating new ones.
+  if (isTRUE(getOption("optop.no_fit", FALSE))) {
+    miss <- vapply(todo, function(jb) basename(jb$path), "")
+    stop(sprintf(paste0("optop.no_fit is set but %d fit(s) are missing from ",
+                        "Data/FITS (first: %s). Refusing to estimate models; ",
+                        "check the corpus signature / fit spec."),
+                 length(miss), miss[1L]), call. = FALSE)
+  }
   # longest jobs first so the parallel tail stays short
   todo <- todo[order(-vapply(todo, `[[`, 1L, "K"))]
 

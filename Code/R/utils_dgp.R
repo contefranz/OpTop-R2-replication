@@ -204,7 +204,9 @@ make_stopword_dist <- function(W, n_stop = 50L, seed = 1L) {
 }
 
 #' Document-group x vocabulary-block assignment for the E4 group_vocab
-#' alternative: G groups of documents, G contiguous vocabulary blocks.
+#' alternative: G groups of documents, G equal-sized INTERLEAVED vocabulary
+#' blocks (word w belongs to block ((w - 1) mod G) + 1; rep_len below), not
+#' contiguous ranges.
 make_group_vocab <- function(J, W, G = 4L, weight = 0.1, seed = 1L) {
   set.seed(seed)
   doc_group <- sample(rep_len(seq_len(G), J))
@@ -221,7 +223,15 @@ drift_phi <- function(Phi, delta, beta, seed) {
   out / rowSums(out)
 }
 
-#' Correlated topics: logistic-normal theta with exchangeable correlation rho.
+#' Exchangeable logistic-normal theta (config key "ctm", kept so existing fit
+#' caches stay reachable). NOT a correlated-topic alternative: with
+#' Z ~ N(0, sigma^2 [(1 - rho) I + rho 11']) write
+#' Z_k = sigma sqrt(rho) U + sigma sqrt(1 - rho) e_k; the common term U cancels
+#' in the softmax, so theta = softmax(Z) has the law of independent logits with
+#' variance sigma^2 (1 - rho). Raising rho therefore only CONCENTRATES theta
+#' around the uniform mixture (documents look alike and relative fit collapses);
+#' it induces no topic-specific association. A genuine correlation alternative
+#' needs a non-exchangeable covariance.
 theta_logistic_normal <- function(rho, sigma = 1) {
   function(J, K, seed) {
     set.seed(seed)

@@ -1,0 +1,4 @@
+eval,n,exact,mean_K,dist,perplexity_dist,seeds_perplexity_eq_micro_rec
+insample,10,0.4,60,40:4 50:2 60:1 90:2 100:1,90:1 100:9,8
+ho_reconstruction,10,0,99,90:1 100:9,90:1 100:9,8
+ho_completion,10,0.3,54,40:3 50:4 60:1 70:1 90:1,90:1 100:9,8

@@ -1,0 +1,2150 @@
+{
+ "description": "Machine checks of the manuscript against this package (9 Oct 2026): every check compares a number or exhibit printed in main_short.tex / supplement_short.tex with the CSV, figure or object listed below (sha256 at check time). Run by the authors' editorial validator on the final LaTeX sources.",
+ "passed": 524,
+ "failed": 0,
+ "checks": [
+  {
+   "check": "accepted rev2: 67 checks, zero failed",
+   "pass": true
+  },
+  {
+   "check": "main_rev.tex remains byte-for-byte unchanged",
+   "pass": true
+  },
+  {
+   "check": "supplement_rev.tex remains byte-for-byte unchanged",
+   "pass": true
+  },
+  {
+   "check": "eight main exhibits: four tables and four figures",
+   "pass": true
+  },
+  {
+   "check": "four main propositions",
+   "pass": true
+  },
+  {
+   "check": "no pending numerical markers",
+   "pass": true
+  },
+  {
+   "check": "Table 2: Total gain Completion",
+   "pass": true
+  },
+  {
+   "check": "Table 2: Total gain Reconstruction",
+   "pass": true
+  },
+  {
+   "check": "Table 2: Adjacent, simultaneous Completion",
+   "pass": true
+  },
+  {
+   "check": "Table 2: Adjacent, simultaneous Reconstruction",
+   "pass": true
+  },
+  {
+   "check": "Table 2: Adjacent, pointwise Completion",
+   "pass": true
+  },
+  {
+   "check": "Table 2: Adjacent, pointwise Reconstruction",
+   "pass": true
+  },
+  {
+   "check": "tighter-tolerance total-gain shares",
+   "pass": true
+  },
+  {
+   "check": "matched completion optimum comparator",
+   "pass": true
+  },
+  {
+   "check": "100 reconstruction perplexity optima",
+   "pass": true
+  },
+  {
+   "check": "Table 2 Macro maximum ho_completion",
+   "pass": true
+  },
+  {
+   "check": "Table 2 Macro maximum ho_reconstruction",
+   "pass": true
+  },
+  {
+   "check": "Supplement exact gap table: A",
+   "pass": true
+  },
+  {
+   "check": "gap channels add: A",
+   "pass": true
+  },
+  {
+   "check": "Supplement exact gap table: B",
+   "pass": true
+  },
+  {
+   "check": "gap channels add: B",
+   "pass": true
+  },
+  {
+   "check": "Supplement exact gap table: C",
+   "pass": true
+  },
+  {
+   "check": "gap channels add: C",
+   "pass": true
+  },
+  {
+   "check": "Moment-test table: Correctly specified: raw",
+   "pass": true
+  },
+  {
+   "check": "Moment-test table: Correctly specified: centred",
+   "pass": true
+  },
+  {
+   "check": "Moment-test table power: contamination_eval",
+   "pass": true
+  },
+  {
+   "check": "Moment-test table Macro: contamination_eval",
+   "pass": true
+  },
+  {
+   "check": "Moment-test table power: drift",
+   "pass": true
+  },
+  {
+   "check": "Moment-test table Macro: drift",
+   "pass": true
+  },
+  {
+   "check": "Moment-test table power: contamination",
+   "pass": true
+  },
+  {
+   "check": "Moment-test table Macro: contamination",
+   "pass": true
+  },
+  {
+   "check": "Moment-test table power: ctm",
+   "pass": true
+  },
+  {
+   "check": "Moment-test table Macro: ctm",
+   "pass": true
+  },
+  {
+   "check": "Moment-test table power: group_vocab",
+   "pass": true
+  },
+  {
+   "check": "Moment-test table Macro: group_vocab",
+   "pass": true
+  },
+  {
+   "check": "Empirical table statistic: T1_freq_contrast, K=50",
+   "pass": true
+  },
+  {
+   "check": "Empirical table clustered p: T1_freq_contrast, K=50",
+   "pass": true
+  },
+  {
+   "check": "Empirical table statistic: T1_freq_contrast, K=180",
+   "pass": true
+  },
+  {
+   "check": "Empirical table clustered p: T1_freq_contrast, K=180",
+   "pass": true
+  },
+  {
+   "check": "Empirical table statistic: T2_freq_strata, K=50",
+   "pass": true
+  },
+  {
+   "check": "Empirical table clustered p: T2_freq_strata, K=50",
+   "pass": true
+  },
+  {
+   "check": "Empirical table statistic: T2_freq_strata, K=180",
+   "pass": true
+  },
+  {
+   "check": "Empirical table clustered p: T2_freq_strata, K=180",
+   "pass": true
+  },
+  {
+   "check": "Empirical table statistic: T3_fit_strata, K=50",
+   "pass": true
+  },
+  {
+   "check": "Empirical table clustered p: T3_fit_strata, K=50",
+   "pass": true
+  },
+  {
+   "check": "Empirical table statistic: T3_fit_strata, K=180",
+   "pass": true
+  },
+  {
+   "check": "Empirical table clustered p: T3_fit_strata, K=180",
+   "pass": true
+  },
+  {
+   "check": "Empirical table displaced mass: training frequency (Test 2), K=50",
+   "pass": true
+  },
+  {
+   "check": "Empirical table displaced mass: training fit (Test 3), K=50",
+   "pass": true
+  },
+  {
+   "check": "Empirical table displaced mass: training frequency (Test 2), K=180",
+   "pass": true
+  },
+  {
+   "check": "Empirical table displaced mass: training fit (Test 3), K=180",
+   "pass": true
+  },
+  {
+   "check": "Empirical table selections: total_gain",
+   "pass": true
+  },
+  {
+   "check": "Empirical table selections: adjacent_simultaneous",
+   "pass": true
+  },
+  {
+   "check": "Empirical table selections: adjacent_pointwise",
+   "pass": true
+  },
+  {
+   "check": "coverage average fit (Macro), J=100",
+   "pass": true
+  },
+  {
+   "check": "coverage average fit (Macro), J=250",
+   "pass": true
+  },
+  {
+   "check": "coverage average fit (Macro), J=500",
+   "pass": true
+  },
+  {
+   "check": "coverage Micro-Macro gap, J=100",
+   "pass": true
+  },
+  {
+   "check": "coverage Micro-Macro gap, J=250",
+   "pass": true
+  },
+  {
+   "check": "coverage Micro-Macro gap, J=500",
+   "pass": true
+  },
+  {
+   "check": "unbinned optima across floors: E1_Kstar40_W5000 com",
+   "pass": true
+  },
+  {
+   "check": "unbinned optima across floors: E1_Kstar40_W5000 rec",
+   "pass": true
+  },
+  {
+   "check": "unbinned optima across floors: E1_Kstar20_W10000 com",
+   "pass": true
+  },
+  {
+   "check": "unbinned optima across floors: E1_Kstar20_W10000 rec",
+   "pass": true
+  },
+  {
+   "check": "unbinned optima across floors: MDNA com",
+   "pass": true
+  },
+  {
+   "check": "unbinned optima across floors: MDNA rec",
+   "pass": true
+  },
+  {
+   "check": "floor change: five additional documents from delta=1",
+   "pass": true
+  },
+  {
+   "check": "floor change: Macro .440 to .274",
+   "pass": true
+  },
+  {
+   "check": "support-only sensitivity c=0.5",
+   "pass": true
+  },
+  {
+   "check": "support-only sensitivity c=1",
+   "pass": true
+  },
+  {
+   "check": "support-only sensitivity c=2",
+   "pass": true
+  },
+  {
+   "check": "empirical gain/bound delta_mean at K=50",
+   "pass": true
+  },
+  {
+   "check": "empirical gain/bound ub_pointwise at K=50",
+   "pass": true
+  },
+  {
+   "check": "empirical gain/bound ub_adjacent_simul at K=50",
+   "pass": true
+  },
+  {
+   "check": "empirical gain/bound total_gain_max at K=50",
+   "pass": true
+  },
+  {
+   "check": "empirical gain/bound total_gain_max at K=80",
+   "pass": true
+  },
+  {
+   "check": "empirical gain/bound total_gain_ub at K=170",
+   "pass": true
+  },
+  {
+   "check": "empirical gain/bound total_gain_ub at K=180",
+   "pass": true
+  },
+  {
+   "check": "empirical gain/bound total_gain_ub at K=190",
+   "pass": true
+  },
+  {
+   "check": "support-resolution summary rev2_support_resolution_e1_base_rev2.csv{'K': 10, 'eval': 'ho_completion'}",
+   "pass": true
+  },
+  {
+   "check": "support-resolution summary rev2_support_resolution_e1_base_rev2.csv{'K': 10, 'eval': 'ho_reconstruction'}",
+   "pass": true
+  },
+  {
+   "check": "support-resolution summary rev2_support_resolution_e1_dgp2_rev2.csv{'K': 5, 'eval': 'ho_completion'}",
+   "pass": true
+  },
+  {
+   "check": "support-resolution summary rev2_support_resolution_mdna_rev2.csv{'K': 50, 'eval': 'com'}",
+   "pass": true
+  },
+  {
+   "check": "support-resolution summary rev2_support_resolution_mdna_rev2.csv{'K': 50, 'eval': 'rec'}",
+   "pass": true
+  },
+  {
+   "check": "figure plotting data: F1_panel_A.csv",
+   "pass": true
+  },
+  {
+   "check": "figure plotting data: F1_panel_B.csv",
+   "pass": true
+  },
+  {
+   "check": "figure plotting data: F2_data.csv",
+   "pass": true
+  },
+  {
+   "check": "Figure 1 MC interval insample K=10",
+   "pass": true
+  },
+  {
+   "check": "Figure 1 MC interval insample K=20",
+   "pass": true
+  },
+  {
+   "check": "Figure 1 MC interval insample K=30",
+   "pass": true
+  },
+  {
+   "check": "Figure 1 MC interval insample K=40",
+   "pass": true
+  },
+  {
+   "check": "Figure 1 MC interval insample K=50",
+   "pass": true
+  },
+  {
+   "check": "Figure 1 MC interval insample K=60",
+   "pass": true
+  },
+  {
+   "check": "Figure 1 MC interval insample K=70",
+   "pass": true
+  },
+  {
+   "check": "Figure 1 MC interval insample K=80",
+   "pass": true
+  },
+  {
+   "check": "Figure 1 MC interval insample K=90",
+   "pass": true
+  },
+  {
+   "check": "Figure 1 MC interval insample K=100",
+   "pass": true
+  },
+  {
+   "check": "Figure 1 MC interval ho_reconstruction K=10",
+   "pass": true
+  },
+  {
+   "check": "Figure 1 MC interval ho_reconstruction K=20",
+   "pass": true
+  },
+  {
+   "check": "Figure 1 MC interval ho_reconstruction K=30",
+   "pass": true
+  },
+  {
+   "check": "Figure 1 MC interval ho_reconstruction K=40",
+   "pass": true
+  },
+  {
+   "check": "Figure 1 MC interval ho_reconstruction K=50",
+   "pass": true
+  },
+  {
+   "check": "Figure 1 MC interval ho_reconstruction K=60",
+   "pass": true
+  },
+  {
+   "check": "Figure 1 MC interval ho_reconstruction K=70",
+   "pass": true
+  },
+  {
+   "check": "Figure 1 MC interval ho_reconstruction K=80",
+   "pass": true
+  },
+  {
+   "check": "Figure 1 MC interval ho_reconstruction K=90",
+   "pass": true
+  },
+  {
+   "check": "Figure 1 MC interval ho_reconstruction K=100",
+   "pass": true
+  },
+  {
+   "check": "Figure 1 MC interval ho_completion K=10",
+   "pass": true
+  },
+  {
+   "check": "Figure 1 MC interval ho_completion K=20",
+   "pass": true
+  },
+  {
+   "check": "Figure 1 MC interval ho_completion K=30",
+   "pass": true
+  },
+  {
+   "check": "Figure 1 MC interval ho_completion K=40",
+   "pass": true
+  },
+  {
+   "check": "Figure 1 MC interval ho_completion K=50",
+   "pass": true
+  },
+  {
+   "check": "Figure 1 MC interval ho_completion K=60",
+   "pass": true
+  },
+  {
+   "check": "Figure 1 MC interval ho_completion K=70",
+   "pass": true
+  },
+  {
+   "check": "Figure 1 MC interval ho_completion K=80",
+   "pass": true
+  },
+  {
+   "check": "Figure 1 MC interval ho_completion K=90",
+   "pass": true
+  },
+  {
+   "check": "Figure 1 MC interval ho_completion K=100",
+   "pass": true
+  },
+  {
+   "check": "Figure 2 in-sample curve remains descriptive K=10",
+   "pass": true
+  },
+  {
+   "check": "Figure 2 in-sample curve remains descriptive K=20",
+   "pass": true
+  },
+  {
+   "check": "Figure 2 in-sample curve remains descriptive K=30",
+   "pass": true
+  },
+  {
+   "check": "Figure 2 in-sample curve remains descriptive K=40",
+   "pass": true
+  },
+  {
+   "check": "Figure 2 in-sample curve remains descriptive K=50",
+   "pass": true
+  },
+  {
+   "check": "Figure 2 in-sample curve remains descriptive K=60",
+   "pass": true
+  },
+  {
+   "check": "Figure 2 in-sample curve remains descriptive K=70",
+   "pass": true
+  },
+  {
+   "check": "Figure 2 in-sample curve remains descriptive K=80",
+   "pass": true
+  },
+  {
+   "check": "Figure 2 in-sample curve remains descriptive K=90",
+   "pass": true
+  },
+  {
+   "check": "Figure 2 in-sample curve remains descriptive K=100",
+   "pass": true
+  },
+  {
+   "check": "Figure 2 in-sample curve remains descriptive K=110",
+   "pass": true
+  },
+  {
+   "check": "Figure 2 in-sample curve remains descriptive K=120",
+   "pass": true
+  },
+  {
+   "check": "Figure 2 in-sample curve remains descriptive K=130",
+   "pass": true
+  },
+  {
+   "check": "Figure 2 in-sample curve remains descriptive K=140",
+   "pass": true
+  },
+  {
+   "check": "Figure 2 in-sample curve remains descriptive K=150",
+   "pass": true
+  },
+  {
+   "check": "Figure 2 in-sample curve remains descriptive K=160",
+   "pass": true
+  },
+  {
+   "check": "Figure 2 in-sample curve remains descriptive K=170",
+   "pass": true
+  },
+  {
+   "check": "Figure 2 in-sample curve remains descriptive K=180",
+   "pass": true
+  },
+  {
+   "check": "Figure 2 in-sample curve remains descriptive K=190",
+   "pass": true
+  },
+  {
+   "check": "Figure 2 in-sample curve remains descriptive K=200",
+   "pass": true
+  },
+  {
+   "check": "Figure 2 pointwise interval rec K=10",
+   "pass": true
+  },
+  {
+   "check": "Figure 2 pointwise interval rec K=20",
+   "pass": true
+  },
+  {
+   "check": "Figure 2 pointwise interval rec K=30",
+   "pass": true
+  },
+  {
+   "check": "Figure 2 pointwise interval rec K=40",
+   "pass": true
+  },
+  {
+   "check": "Figure 2 pointwise interval rec K=50",
+   "pass": true
+  },
+  {
+   "check": "Figure 2 pointwise interval rec K=60",
+   "pass": true
+  },
+  {
+   "check": "Figure 2 pointwise interval rec K=70",
+   "pass": true
+  },
+  {
+   "check": "Figure 2 pointwise interval rec K=80",
+   "pass": true
+  },
+  {
+   "check": "Figure 2 pointwise interval rec K=90",
+   "pass": true
+  },
+  {
+   "check": "Figure 2 pointwise interval rec K=100",
+   "pass": true
+  },
+  {
+   "check": "Figure 2 pointwise interval rec K=110",
+   "pass": true
+  },
+  {
+   "check": "Figure 2 pointwise interval rec K=120",
+   "pass": true
+  },
+  {
+   "check": "Figure 2 pointwise interval rec K=130",
+   "pass": true
+  },
+  {
+   "check": "Figure 2 pointwise interval rec K=140",
+   "pass": true
+  },
+  {
+   "check": "Figure 2 pointwise interval rec K=150",
+   "pass": true
+  },
+  {
+   "check": "Figure 2 pointwise interval rec K=160",
+   "pass": true
+  },
+  {
+   "check": "Figure 2 pointwise interval rec K=170",
+   "pass": true
+  },
+  {
+   "check": "Figure 2 pointwise interval rec K=180",
+   "pass": true
+  },
+  {
+   "check": "Figure 2 pointwise interval rec K=190",
+   "pass": true
+  },
+  {
+   "check": "Figure 2 pointwise interval rec K=200",
+   "pass": true
+  },
+  {
+   "check": "Figure 2 pointwise interval com K=10",
+   "pass": true
+  },
+  {
+   "check": "Figure 2 pointwise interval com K=20",
+   "pass": true
+  },
+  {
+   "check": "Figure 2 pointwise interval com K=30",
+   "pass": true
+  },
+  {
+   "check": "Figure 2 pointwise interval com K=40",
+   "pass": true
+  },
+  {
+   "check": "Figure 2 pointwise interval com K=50",
+   "pass": true
+  },
+  {
+   "check": "Figure 2 pointwise interval com K=60",
+   "pass": true
+  },
+  {
+   "check": "Figure 2 pointwise interval com K=70",
+   "pass": true
+  },
+  {
+   "check": "Figure 2 pointwise interval com K=80",
+   "pass": true
+  },
+  {
+   "check": "Figure 2 pointwise interval com K=90",
+   "pass": true
+  },
+  {
+   "check": "Figure 2 pointwise interval com K=100",
+   "pass": true
+  },
+  {
+   "check": "Figure 2 pointwise interval com K=110",
+   "pass": true
+  },
+  {
+   "check": "Figure 2 pointwise interval com K=120",
+   "pass": true
+  },
+  {
+   "check": "Figure 2 pointwise interval com K=130",
+   "pass": true
+  },
+  {
+   "check": "Figure 2 pointwise interval com K=140",
+   "pass": true
+  },
+  {
+   "check": "Figure 2 pointwise interval com K=150",
+   "pass": true
+  },
+  {
+   "check": "Figure 2 pointwise interval com K=160",
+   "pass": true
+  },
+  {
+   "check": "Figure 2 pointwise interval com K=170",
+   "pass": true
+  },
+  {
+   "check": "Figure 2 pointwise interval com K=180",
+   "pass": true
+  },
+  {
+   "check": "Figure 2 pointwise interval com K=190",
+   "pass": true
+  },
+  {
+   "check": "Figure 2 pointwise interval com K=200",
+   "pass": true
+  },
+  {
+   "check": "Figure 2 full comparison family",
+   "pass": true
+  },
+  {
+   "check": "Figure 2 maximum bound K=10",
+   "pass": true
+  },
+  {
+   "check": "Figure 2 maximum bound K=20",
+   "pass": true
+  },
+  {
+   "check": "Figure 2 maximum bound K=30",
+   "pass": true
+  },
+  {
+   "check": "Figure 2 maximum bound K=40",
+   "pass": true
+  },
+  {
+   "check": "Figure 2 maximum bound K=50",
+   "pass": true
+  },
+  {
+   "check": "Figure 2 maximum bound K=60",
+   "pass": true
+  },
+  {
+   "check": "Figure 2 maximum bound K=70",
+   "pass": true
+  },
+  {
+   "check": "Figure 2 maximum bound K=80",
+   "pass": true
+  },
+  {
+   "check": "Figure 2 maximum bound K=90",
+   "pass": true
+  },
+  {
+   "check": "Figure 2 maximum bound K=100",
+   "pass": true
+  },
+  {
+   "check": "Figure 2 maximum bound K=110",
+   "pass": true
+  },
+  {
+   "check": "Figure 2 maximum bound K=120",
+   "pass": true
+  },
+  {
+   "check": "Figure 2 maximum bound K=130",
+   "pass": true
+  },
+  {
+   "check": "Figure 2 maximum bound K=140",
+   "pass": true
+  },
+  {
+   "check": "Figure 2 maximum bound K=150",
+   "pass": true
+  },
+  {
+   "check": "Figure 2 maximum bound K=160",
+   "pass": true
+  },
+  {
+   "check": "Figure 2 maximum bound K=170",
+   "pass": true
+  },
+  {
+   "check": "Figure 2 maximum bound K=180",
+   "pass": true
+  },
+  {
+   "check": "Figure 2 maximum bound K=190",
+   "pass": true
+  },
+  {
+   "check": "Figure 2 first crossing 0.01",
+   "pass": true
+  },
+  {
+   "check": "Figure 2 first crossing 0.005",
+   "pass": true
+  },
+  {
+   "check": "Figure 2 no boundary certificate",
+   "pass": true
+  },
+  {
+   "check": "gap figure mean A gap",
+   "pass": true
+  },
+  {
+   "check": "gap figure mean A ch_length",
+   "pass": true
+  },
+  {
+   "check": "gap figure mean A ch_atypicality",
+   "pass": true
+  },
+  {
+   "check": "gap figure mean A ch_interaction",
+   "pass": true
+  },
+  {
+   "check": "gap figure interval A",
+   "pass": true
+  },
+  {
+   "check": "gap figure mean B gap",
+   "pass": true
+  },
+  {
+   "check": "gap figure mean B ch_length",
+   "pass": true
+  },
+  {
+   "check": "gap figure mean B ch_atypicality",
+   "pass": true
+  },
+  {
+   "check": "gap figure mean B ch_interaction",
+   "pass": true
+  },
+  {
+   "check": "gap figure interval B",
+   "pass": true
+  },
+  {
+   "check": "gap figure mean C gap",
+   "pass": true
+  },
+  {
+   "check": "gap figure mean C ch_length",
+   "pass": true
+  },
+  {
+   "check": "gap figure mean C ch_atypicality",
+   "pass": true
+  },
+  {
+   "check": "gap figure mean C ch_interaction",
+   "pass": true
+  },
+  {
+   "check": "gap figure interval C",
+   "pass": true
+  },
+  {
+   "check": "Figure 4 ten fixed-frequency group masses",
+   "pass": true
+  },
+  {
+   "check": "residual figure mass 50 1",
+   "pass": true
+  },
+  {
+   "check": "residual figure mass 50 2",
+   "pass": true
+  },
+  {
+   "check": "residual figure mass 50 3",
+   "pass": true
+  },
+  {
+   "check": "residual figure mass 50 4",
+   "pass": true
+  },
+  {
+   "check": "residual figure mass 50 5",
+   "pass": true
+  },
+  {
+   "check": "residual figure mass 180 1",
+   "pass": true
+  },
+  {
+   "check": "residual figure mass 180 2",
+   "pass": true
+  },
+  {
+   "check": "residual figure mass 180 3",
+   "pass": true
+  },
+  {
+   "check": "residual figure mass 180 4",
+   "pass": true
+  },
+  {
+   "check": "residual figure mass 180 5",
+   "pass": true
+  },
+  {
+   "check": "residual figure mass balance 50",
+   "pass": true
+  },
+  {
+   "check": "residual figure H 50",
+   "pass": true
+  },
+  {
+   "check": "residual figure mass balance 180",
+   "pass": true
+  },
+  {
+   "check": "residual figure H 180",
+   "pass": true
+  },
+  {
+   "check": "Figure 4 eight frequency contrasts",
+   "pass": true
+  },
+  {
+   "check": "Figure 4 saved contrast 50 f1_vs_f5",
+   "pass": true
+  },
+  {
+   "check": "Figure 4 retains original iid uncertainty 50 f1_vs_f5",
+   "pass": true
+  },
+  {
+   "check": "Figure 4 independent cross-panel identity 50 f1_vs_f5",
+   "pass": true
+  },
+  {
+   "check": "Figure 4 saved contrast 50 f2_vs_f5",
+   "pass": true
+  },
+  {
+   "check": "Figure 4 retains original iid uncertainty 50 f2_vs_f5",
+   "pass": true
+  },
+  {
+   "check": "Figure 4 independent cross-panel identity 50 f2_vs_f5",
+   "pass": true
+  },
+  {
+   "check": "Figure 4 saved contrast 50 f3_vs_f5",
+   "pass": true
+  },
+  {
+   "check": "Figure 4 retains original iid uncertainty 50 f3_vs_f5",
+   "pass": true
+  },
+  {
+   "check": "Figure 4 independent cross-panel identity 50 f3_vs_f5",
+   "pass": true
+  },
+  {
+   "check": "Figure 4 saved contrast 50 f4_vs_f5",
+   "pass": true
+  },
+  {
+   "check": "Figure 4 retains original iid uncertainty 50 f4_vs_f5",
+   "pass": true
+  },
+  {
+   "check": "Figure 4 independent cross-panel identity 50 f4_vs_f5",
+   "pass": true
+  },
+  {
+   "check": "Figure 4 saved contrast 180 f1_vs_f5",
+   "pass": true
+  },
+  {
+   "check": "Figure 4 retains original iid uncertainty 180 f1_vs_f5",
+   "pass": true
+  },
+  {
+   "check": "Figure 4 independent cross-panel identity 180 f1_vs_f5",
+   "pass": true
+  },
+  {
+   "check": "Figure 4 saved contrast 180 f2_vs_f5",
+   "pass": true
+  },
+  {
+   "check": "Figure 4 retains original iid uncertainty 180 f2_vs_f5",
+   "pass": true
+  },
+  {
+   "check": "Figure 4 independent cross-panel identity 180 f2_vs_f5",
+   "pass": true
+  },
+  {
+   "check": "Figure 4 saved contrast 180 f3_vs_f5",
+   "pass": true
+  },
+  {
+   "check": "Figure 4 retains original iid uncertainty 180 f3_vs_f5",
+   "pass": true
+  },
+  {
+   "check": "Figure 4 independent cross-panel identity 180 f3_vs_f5",
+   "pass": true
+  },
+  {
+   "check": "Figure 4 saved contrast 180 f4_vs_f5",
+   "pass": true
+  },
+  {
+   "check": "Figure 4 retains original iid uncertainty 180 f4_vs_f5",
+   "pass": true
+  },
+  {
+   "check": "Figure 4 independent cross-panel identity 180 f4_vs_f5",
+   "pass": true
+  },
+  {
+   "check": "Figure 4 frequency contrast sign reversal",
+   "pass": true
+  },
+  {
+   "check": "Figure 4 K180 fourth group distinction",
+   "pass": true
+  },
+  {
+   "check": "Figure 4 K180 three marginal rejections",
+   "pass": true
+  },
+  {
+   "check": "Figure 4 fixed group sizes",
+   "pass": true
+  },
+  {
+   "check": "Figure 4 firm count and correction 50",
+   "pass": true
+  },
+  {
+   "check": "Figure 4 clustered Wald matches accepted 50",
+   "pass": true
+  },
+  {
+   "check": "Figure 4 within-firm mass balance 50",
+   "pass": true
+  },
+  {
+   "check": "Figure 4 centred firm sums 50c1",
+   "pass": true
+  },
+  {
+   "check": "Figure 4 firm-clustered interval 50c1",
+   "pass": true
+  },
+  {
+   "check": "Figure 4 clustered marginal p 50c1",
+   "pass": true
+  },
+  {
+   "check": "Figure 4 centred firm sums 50c2",
+   "pass": true
+  },
+  {
+   "check": "Figure 4 firm-clustered interval 50c2",
+   "pass": true
+  },
+  {
+   "check": "Figure 4 clustered marginal p 50c2",
+   "pass": true
+  },
+  {
+   "check": "Figure 4 centred firm sums 50c3",
+   "pass": true
+  },
+  {
+   "check": "Figure 4 firm-clustered interval 50c3",
+   "pass": true
+  },
+  {
+   "check": "Figure 4 clustered marginal p 50c3",
+   "pass": true
+  },
+  {
+   "check": "Figure 4 centred firm sums 50c4",
+   "pass": true
+  },
+  {
+   "check": "Figure 4 firm-clustered interval 50c4",
+   "pass": true
+  },
+  {
+   "check": "Figure 4 clustered marginal p 50c4",
+   "pass": true
+  },
+  {
+   "check": "Figure 4 centred firm sums 50m1",
+   "pass": true
+  },
+  {
+   "check": "Figure 4 firm-clustered interval 50m1",
+   "pass": true
+  },
+  {
+   "check": "Figure 4 centred firm sums 50m2",
+   "pass": true
+  },
+  {
+   "check": "Figure 4 firm-clustered interval 50m2",
+   "pass": true
+  },
+  {
+   "check": "Figure 4 centred firm sums 50m3",
+   "pass": true
+  },
+  {
+   "check": "Figure 4 firm-clustered interval 50m3",
+   "pass": true
+  },
+  {
+   "check": "Figure 4 centred firm sums 50m4",
+   "pass": true
+  },
+  {
+   "check": "Figure 4 firm-clustered interval 50m4",
+   "pass": true
+  },
+  {
+   "check": "Figure 4 centred firm sums 50m5",
+   "pass": true
+  },
+  {
+   "check": "Figure 4 firm-clustered interval 50m5",
+   "pass": true
+  },
+  {
+   "check": "Figure 4 firm count and correction 180",
+   "pass": true
+  },
+  {
+   "check": "Figure 4 clustered Wald matches accepted 180",
+   "pass": true
+  },
+  {
+   "check": "Figure 4 within-firm mass balance 180",
+   "pass": true
+  },
+  {
+   "check": "Figure 4 centred firm sums 180c1",
+   "pass": true
+  },
+  {
+   "check": "Figure 4 firm-clustered interval 180c1",
+   "pass": true
+  },
+  {
+   "check": "Figure 4 clustered marginal p 180c1",
+   "pass": true
+  },
+  {
+   "check": "Figure 4 centred firm sums 180c2",
+   "pass": true
+  },
+  {
+   "check": "Figure 4 firm-clustered interval 180c2",
+   "pass": true
+  },
+  {
+   "check": "Figure 4 clustered marginal p 180c2",
+   "pass": true
+  },
+  {
+   "check": "Figure 4 centred firm sums 180c3",
+   "pass": true
+  },
+  {
+   "check": "Figure 4 firm-clustered interval 180c3",
+   "pass": true
+  },
+  {
+   "check": "Figure 4 clustered marginal p 180c3",
+   "pass": true
+  },
+  {
+   "check": "Figure 4 centred firm sums 180c4",
+   "pass": true
+  },
+  {
+   "check": "Figure 4 firm-clustered interval 180c4",
+   "pass": true
+  },
+  {
+   "check": "Figure 4 clustered marginal p 180c4",
+   "pass": true
+  },
+  {
+   "check": "Figure 4 centred firm sums 180m1",
+   "pass": true
+  },
+  {
+   "check": "Figure 4 firm-clustered interval 180m1",
+   "pass": true
+  },
+  {
+   "check": "Figure 4 centred firm sums 180m2",
+   "pass": true
+  },
+  {
+   "check": "Figure 4 firm-clustered interval 180m2",
+   "pass": true
+  },
+  {
+   "check": "Figure 4 centred firm sums 180m3",
+   "pass": true
+  },
+  {
+   "check": "Figure 4 firm-clustered interval 180m3",
+   "pass": true
+  },
+  {
+   "check": "Figure 4 centred firm sums 180m4",
+   "pass": true
+  },
+  {
+   "check": "Figure 4 firm-clustered interval 180m4",
+   "pass": true
+  },
+  {
+   "check": "Figure 4 centred firm sums 180m5",
+   "pass": true
+  },
+  {
+   "check": "Figure 4 firm-clustered interval 180m5",
+   "pass": true
+  },
+  {
+   "check": "Figure 4 clustered three rejections and p=.099",
+   "pass": true
+  },
+  {
+   "check": "Figure 4 K180 mass signs with uncertainty",
+   "pass": true
+  },
+  {
+   "check": "Figure 4 source remains unchanged Data/MDNA/mdna_results_MDNA_2015_2016_rev2.qs2",
+   "pass": true
+  },
+  {
+   "check": "Figure 4 source remains unchanged Data/MDNA/mdna_prep_2015_2016.qs2",
+   "pass": true
+  },
+  {
+   "check": "Figure 4 labels defined in main text",
+   "pass": true
+  },
+  {
+   "check": "Figure 4 clustered inference explained",
+   "pass": true
+  },
+  {
+   "check": "Figure 4 descriptive H without equivalence",
+   "pass": true
+  },
+  {
+   "check": "main_short.tex: no external-document machinery",
+   "pass": true
+  },
+  {
+   "check": "main_short.tex: independent auxiliary inputs",
+   "pass": true
+  },
+  {
+   "check": "supplement_short.tex: no external-document machinery",
+   "pass": true
+  },
+  {
+   "check": "supplement_short.tex: independent auxiliary inputs",
+   "pass": true
+  },
+  {
+   "check": "manual cross-reference still current: main_short.tex ass:iid",
+   "pass": true
+  },
+  {
+   "check": "manual cross-reference still current: main_short.tex def:eps_adequacy",
+   "pass": true
+  },
+  {
+   "check": "manual cross-reference still current: main_short.tex fig:e1_curves",
+   "pass": true
+  },
+  {
+   "check": "manual cross-reference still current: main_short.tex fig:gap_channels",
+   "pass": true
+  },
+  {
+   "check": "manual cross-reference still current: main_short.tex fig:mdna_fit",
+   "pass": true
+  },
+  {
+   "check": "manual cross-reference still current: main_short.tex fig:mdna_mass",
+   "pass": true
+  },
+  {
+   "check": "manual cross-reference still current: main_short.tex pr:decomposition",
+   "pass": true
+  },
+  {
+   "check": "manual cross-reference still current: main_short.tex prop:macro_clt",
+   "pass": true
+  },
+  {
+   "check": "manual cross-reference still current: main_short.tex prop:selection_certificate",
+   "pass": true
+  },
+  {
+   "check": "manual cross-reference still current: main_short.tex prop:spec",
+   "pass": true
+  },
+  {
+   "check": "manual cross-reference still current: main_short.tex sec:empirical",
+   "pass": true
+  },
+  {
+   "check": "manual cross-reference still current: main_short.tex sec:simulations",
+   "pass": true
+  },
+  {
+   "check": "manual cross-reference still current: main_short.tex ssec:asymptotics",
+   "pass": true
+  },
+  {
+   "check": "manual cross-reference still current: main_short.tex ssec:discrepancy_families",
+   "pass": true
+  },
+  {
+   "check": "manual cross-reference still current: main_short.tex ssec:mdna_data",
+   "pass": true
+  },
+  {
+   "check": "manual cross-reference still current: main_short.tex ssec:mdna_hetero",
+   "pass": true
+  },
+  {
+   "check": "manual cross-reference still current: main_short.tex ssec:mdna_tests",
+   "pass": true
+  },
+  {
+   "check": "manual cross-reference still current: main_short.tex ssec:residuals",
+   "pass": true
+  },
+  {
+   "check": "manual cross-reference still current: main_short.tex ssec:selection",
+   "pass": true
+  },
+  {
+   "check": "manual cross-reference still current: main_short.tex ssec:sim_design",
+   "pass": true
+  },
+  {
+   "check": "manual cross-reference still current: main_short.tex ssec:study1",
+   "pass": true
+  },
+  {
+   "check": "manual cross-reference still current: main_short.tex ssec:study2",
+   "pass": true
+  },
+  {
+   "check": "manual cross-reference still current: main_short.tex ssec:study4",
+   "pass": true
+  },
+  {
+   "check": "manual cross-reference still current: main_short.tex ssec:tests",
+   "pass": true
+  },
+  {
+   "check": "manual cross-reference still current: main_short.tex ssec:word_level_agg",
+   "pass": true
+  },
+  {
+   "check": "manual cross-reference still current: main_short.tex tab:e1_khat",
+   "pass": true
+  },
+  {
+   "check": "manual cross-reference still current: main_short.tex tab:tests_summary",
+   "pass": true
+  },
+  {
+   "check": "manual cross-reference still current: supplement_short.tex sec:S_crossfit",
+   "pass": true
+  },
+  {
+   "check": "manual cross-reference still current: supplement_short.tex sec:S_proofs",
+   "pass": true
+  },
+  {
+   "check": "manual cross-reference still current: supplement_short.tex sec:S_tests23",
+   "pass": true
+  },
+  {
+   "check": "manual cross-reference still current: supplement_short.tex sec:S_word",
+   "pass": true
+  },
+  {
+   "check": "manual cross-reference still current: supplement_short.tex ssec:S_corpus_design",
+   "pass": true
+  },
+  {
+   "check": "manual cross-reference still current: supplement_short.tex ssec:S_emp_moments",
+   "pass": true
+  },
+  {
+   "check": "manual cross-reference still current: supplement_short.tex ssec:S_emp_sens",
+   "pass": true
+  },
+  {
+   "check": "manual cross-reference still current: supplement_short.tex ssec:S_emp_word",
+   "pass": true
+  },
+  {
+   "check": "manual cross-reference still current: supplement_short.tex ssec:S_pf_prop_micro",
+   "pass": true
+  },
+  {
+   "check": "manual cross-reference still current: supplement_short.tex ssec:S_study1",
+   "pass": true
+  },
+  {
+   "check": "manual cross-reference still current: supplement_short.tex ssec:S_study2",
+   "pass": true
+  },
+  {
+   "check": "manual cross-reference still current: supplement_short.tex ssec:S_study3",
+   "pass": true
+  },
+  {
+   "check": "manual cross-reference still current: supplement_short.tex tab:S_e1_r2",
+   "pass": true
+  },
+  {
+   "check": "manual cross-reference still current: supplement_short.tex tab:S_e2_falsecert",
+   "pass": true
+  },
+  {
+   "check": "manual cross-reference still current: supplement_short.tex tab:S_e5",
+   "pass": true
+  },
+  {
+   "check": "manual cross-reference still current: supplement_short.tex tab:S_gap_channels",
+   "pass": true
+  },
+  {
+   "check": "manual cross-reference still current: supplement_short.tex tab:S_mdna_completion",
+   "pass": true
+  },
+  {
+   "check": "manual cross-reference still current: supplement_short.tex tab:S_mdna_joint",
+   "pass": true
+  },
+  {
+   "check": "manual cross-reference still current: supplement_short.tex tab:S_mdna_mass",
+   "pass": true
+  },
+  {
+   "check": "manual cross-reference still current: supplement_short.tex tab:S_mdna_word",
+   "pass": true
+  },
+  {
+   "check": "manual cross-reference still current: supplement_short.tex tab:S_resolution",
+   "pass": true
+  },
+  {
+   "check": "main_short.tex: unchanged formal proposition",
+   "pass": true
+  },
+  {
+   "check": "main_short.tex: unchanged formal assumption",
+   "pass": true
+  },
+  {
+   "check": "main_short.tex: unchanged formal proof",
+   "pass": true
+  },
+  {
+   "check": "main_short.tex: unchanged formal lemma",
+   "pass": true
+  },
+  {
+   "check": "main_short.tex: unchanged formal corollary",
+   "pass": true
+  },
+  {
+   "check": "main_short.tex: unchanged formal definition",
+   "pass": true
+  },
+  {
+   "check": "main_short.tex: unchanged formal restatement",
+   "pass": true
+  },
+  {
+   "check": "supplement_short.tex: unchanged formal proposition",
+   "pass": true
+  },
+  {
+   "check": "supplement_short.tex: unchanged formal assumption",
+   "pass": true
+  },
+  {
+   "check": "supplement_short.tex: unchanged formal proof",
+   "pass": true
+  },
+  {
+   "check": "supplement_short.tex: unchanged formal lemma",
+   "pass": true
+  },
+  {
+   "check": "supplement_short.tex: unchanged formal corollary",
+   "pass": true
+  },
+  {
+   "check": "supplement_short.tex: unchanged formal definition",
+   "pass": true
+  },
+  {
+   "check": "supplement_short.tex: unchanged formal restatement",
+   "pass": true
+  },
+  {
+   "check": "new literature/package citation hansen2011model",
+   "pass": true
+  },
+  {
+   "check": "new literature/package citation moran2024holdout",
+   "pass": true
+  },
+  {
+   "check": "new literature/package citation grossetti2026optop",
+   "pass": true
+  },
+  {
+   "check": "package reference version and URL",
+   "pass": true
+  },
+  {
+   "check": "explicit concluding section",
+   "pass": true
+  },
+  {
+   "check": "main_short: references and citations resolve",
+   "pass": true
+  },
+  {
+   "check": "main_short: no overfull boxes",
+   "pass": true
+  },
+  {
+   "check": "main_short: no float too large for the page",
+   "pass": true
+  },
+  {
+   "check": "main_short: page count",
+   "pass": true
+  },
+  {
+   "check": "supplement_short: references and citations resolve",
+   "pass": true
+  },
+  {
+   "check": "supplement_short: no overfull boxes",
+   "pass": true
+  },
+  {
+   "check": "supplement_short: no float too large for the page",
+   "pass": true
+  },
+  {
+   "check": "supplement_short: page count",
+   "pass": true
+  },
+  {
+   "check": "main_short.tex: British prose spellings",
+   "pass": true
+  },
+  {
+   "check": "supplement_short.tex: British prose spellings",
+   "pass": true
+  },
+  {
+   "check": "main_short.tex: no mid-line comments in the body",
+   "pass": true
+  },
+  {
+   "check": "supplement_short.tex: no mid-line comments in the body",
+   "pass": true
+  },
+  {
+   "check": "Section 6.1 resolution sentences present in source",
+   "pass": true
+  },
+  {
+   "check": "Section 6.1 resolution sentences present in the built PDF",
+   "pass": true
+  },
+  {
+   "check": "Section 6.3 closing sentence (Stage 2c wording) in the built PDF",
+   "pass": true
+  },
+  {
+   "check": "completion reference: ten fits, 20,000 documents",
+   "pass": true
+  },
+  {
+   "check": "Table S5 Panel A fit 1",
+   "pass": true
+  },
+  {
+   "check": "Table S5 Panel A fit 2",
+   "pass": true
+  },
+  {
+   "check": "Table S5 Panel A fit 3",
+   "pass": true
+  },
+  {
+   "check": "Table S5 Panel A fit 4",
+   "pass": true
+  },
+  {
+   "check": "Table S5 Panel A fit 5",
+   "pass": true
+  },
+  {
+   "check": "Table S5 Panel A fit 6",
+   "pass": true
+  },
+  {
+   "check": "Table S5 Panel A fit 7",
+   "pass": true
+  },
+  {
+   "check": "Table S5 Panel A fit 8",
+   "pass": true
+  },
+  {
+   "check": "Table S5 Panel A fit 9",
+   "pass": true
+  },
+  {
+   "check": "Table S5 Panel A fit 10",
+   "pass": true
+  },
+  {
+   "check": "completion: K* adequate at both tolerances in every fit",
+   "pass": true
+  },
+  {
+   "check": "Table S5 completion row adjacent_pointwise 0.005",
+   "pass": true
+  },
+  {
+   "check": "Table S5 completion row adjacent_pointwise 0.01",
+   "pass": true
+  },
+  {
+   "check": "Table S5 completion row adjacent_simultaneous 0.005",
+   "pass": true
+  },
+  {
+   "check": "Table S5 completion row adjacent_simultaneous 0.01",
+   "pass": true
+  },
+  {
+   "check": "Table S5 completion row total_gain 0.005",
+   "pass": true
+  },
+  {
+   "check": "Table S5 completion row total_gain 0.01",
+   "pass": true
+  },
+  {
+   "check": "completion: no false certificate under any rule",
+   "pass": true
+  },
+  {
+   "check": "880 total-gain certificates, none false",
+   "pass": true
+  },
+  {
+   "check": "Table S5 Panel B total_gain 0.01 100",
+   "pass": true
+  },
+  {
+   "check": "Table S5 Panel B total_gain 0.01 250",
+   "pass": true
+  },
+  {
+   "check": "Table S5 Panel B total_gain 0.01 500",
+   "pass": true
+  },
+  {
+   "check": "Table S5 Panel B total_gain 0.01 5000",
+   "pass": true
+  },
+  {
+   "check": "Table S5 Panel B total_gain 0.005 100",
+   "pass": true
+  },
+  {
+   "check": "Table S5 Panel B total_gain 0.005 250",
+   "pass": true
+  },
+  {
+   "check": "Table S5 Panel B total_gain 0.005 500",
+   "pass": true
+  },
+  {
+   "check": "Table S5 Panel B total_gain 0.005 5000",
+   "pass": true
+  },
+  {
+   "check": "Table S5 Panel B adjacent_simultaneous 0.01 100",
+   "pass": true
+  },
+  {
+   "check": "Table S5 Panel B adjacent_simultaneous 0.01 250",
+   "pass": true
+  },
+  {
+   "check": "Table S5 Panel B adjacent_simultaneous 0.01 500",
+   "pass": true
+  },
+  {
+   "check": "Table S5 Panel B adjacent_simultaneous 0.01 5000",
+   "pass": true
+  },
+  {
+   "check": "Table S5 Panel B adjacent_simultaneous 0.005 100",
+   "pass": true
+  },
+  {
+   "check": "Table S5 Panel B adjacent_simultaneous 0.005 250",
+   "pass": true
+  },
+  {
+   "check": "Table S5 Panel B adjacent_simultaneous 0.005 500",
+   "pass": true
+  },
+  {
+   "check": "Table S5 Panel B adjacent_simultaneous 0.005 5000",
+   "pass": true
+  },
+  {
+   "check": "Table S5 Panel B adjacent_pointwise 0.01 100",
+   "pass": true
+  },
+  {
+   "check": "Table S5 Panel B adjacent_pointwise 0.01 250",
+   "pass": true
+  },
+  {
+   "check": "Table S5 Panel B adjacent_pointwise 0.01 500",
+   "pass": true
+  },
+  {
+   "check": "Table S5 Panel B adjacent_pointwise 0.01 5000",
+   "pass": true
+  },
+  {
+   "check": "Table S5 Panel B adjacent_pointwise 0.005 100",
+   "pass": true
+  },
+  {
+   "check": "Table S5 Panel B adjacent_pointwise 0.005 250",
+   "pass": true
+  },
+  {
+   "check": "Table S5 Panel B adjacent_pointwise 0.005 500",
+   "pass": true
+  },
+  {
+   "check": "Table S5 Panel B adjacent_pointwise 0.005 5000",
+   "pass": true
+  },
+  {
+   "check": "total-gain rule: no false certificate in any cell",
+   "pass": true
+  },
+  {
+   "check": "adjacent simultaneous false-certification rate 0.07 to 0.50 at eps=0.01",
+   "pass": true
+  },
+  {
+   "check": "K* adequate at 0.01 in four of ten fits",
+   "pass": true
+  },
+  {
+   "check": "Section 5.1 per-fit sentence present",
+   "pass": true
+  },
+  {
+   "check": "Table 2 across-fit MC SE at most 0.16",
+   "pass": true
+  },
+  {
+   "check": "Table S25 reconstruction 50 T1_freq_contrast",
+   "pass": true
+  },
+  {
+   "check": "Table S25 reconstruction 50 T2_freq_strata",
+   "pass": true
+  },
+  {
+   "check": "Table S25 reconstruction 50 T3_fit_strata",
+   "pass": true
+  },
+  {
+   "check": "Table S25 completion 50 T1_freq_contrast",
+   "pass": true
+  },
+  {
+   "check": "Table S25 completion 50 T2_freq_strata",
+   "pass": true
+  },
+  {
+   "check": "Table S25 completion 50 T3_fit_strata",
+   "pass": true
+  },
+  {
+   "check": "Table S25 completion 180 T1_freq_contrast",
+   "pass": true
+  },
+  {
+   "check": "Table S25 completion 180 T2_freq_strata",
+   "pass": true
+  },
+  {
+   "check": "Table S25 completion 180 T3_fit_strata",
+   "pass": true
+  },
+  {
+   "check": "Table S25 reconstruction 180 T1_freq_contrast",
+   "pass": true
+  },
+  {
+   "check": "Table S25 reconstruction 180 T2_freq_strata",
+   "pass": true
+  },
+  {
+   "check": "Table S25 reconstruction 180 T3_fit_strata",
+   "pass": true
+  },
+  {
+   "check": "completion residuals: same rejections as reconstruction",
+   "pass": true
+  },
+  {
+   "check": "Table S20 present-firm row total_gain",
+   "pass": true
+  },
+  {
+   "check": "Table S20 present-firm row adjacent_simultaneous",
+   "pass": true
+  },
+  {
+   "check": "Table S20 present-firm row adjacent_pointwise",
+   "pass": true
+  },
+  {
+   "check": "present vs absent completion Macro within 0.004",
+   "pass": true
+  },
+  {
+   "check": "H bootstrap interval H_K50 [0.046,0.108]",
+   "pass": true
+  },
+  {
+   "check": "H bootstrap interval H_K180 [0.051,0.099]",
+   "pass": true
+  },
+  {
+   "check": "H bootstrap interval H_K50_minus_H_K180 [-0.049,0.052]",
+   "pass": true
+  },
+  {
+   "check": "firm-clustered gap SE ratio 7-12%",
+   "pass": true
+  },
+  {
+   "check": "firm-clustered gap intervals at K=50",
+   "pass": true
+  },
+  {
+   "check": "no author-confirmation flags left in the sources",
+   "pass": true
+  },
+  {
+   "check": "supplement figure files all present",
+   "pass": true
+  },
+  {
+   "check": "figure text free of retired labels: F2_adjacent_gains.pdf",
+   "pass": true
+  },
+  {
+   "check": "figure text free of retired labels: F3_coverage_qq.pdf",
+   "pass": true
+  },
+  {
+   "check": "figure text free of retired labels: F6_gap_ci.pdf",
+   "pass": true
+  },
+  {
+   "check": "figure text free of retired labels: F6b_gap_decomposition.pdf",
+   "pass": true
+  },
+  {
+   "check": "figure text free of retired labels: F7_doc_scatters.pdf",
+   "pass": true
+  },
+  {
+   "check": "figure text free of retired labels: F11_word_micro_macro.pdf",
+   "pass": true
+  },
+  {
+   "check": "figure text free of retired labels: F12_word_fit_vs_freq.pdf",
+   "pass": true
+  },
+  {
+   "check": "figure text free of retired labels: F4_power_curves.pdf",
+   "pass": true
+  },
+  {
+   "check": "figure text free of retired labels: F5_fit_vs_tests.pdf",
+   "pass": true
+  },
+  {
+   "check": "figure text free of retired labels: F5b_word_ranks.pdf",
+   "pass": true
+  },
+  {
+   "check": "figure text free of retired labels: F9_design_sensitivity.pdf",
+   "pass": true
+  },
+  {
+   "check": "figure text free of retired labels: R1b_micro_macro_gap.pdf",
+   "pass": true
+  },
+  {
+   "check": "figure text free of retired labels: R4_moment_diagnostics.pdf",
+   "pass": true
+  },
+  {
+   "check": "figure text updated: F4_power_curves",
+   "pass": true
+  },
+  {
+   "check": "figure text updated: F5_fit_vs_tests",
+   "pass": true
+  },
+  {
+   "check": "figure text updated: F6b_gap_decomposition",
+   "pass": true
+  },
+  {
+   "check": "figure text updated: F9_design_sensitivity",
+   "pass": true
+  },
+  {
+   "check": "figure text updated: F11_word_micro_macro",
+   "pass": true
+  },
+  {
+   "check": "figure text updated: F12_word_fit_vs_freq",
+   "pass": true
+  },
+  {
+   "check": "figure text updated: R1b_micro_macro_gap",
+   "pass": true
+  },
+  {
+   "check": "Fig S9 caption averages over Tests 2 and 3",
+   "pass": true
+  },
+  {
+   "check": "Fig S12 drawn from the rev2 object",
+   "pass": true
+  },
+  {
+   "check": "main figure in the package: Figures/F1_selection_support.pdf",
+   "pass": true
+  },
+  {
+   "check": "main figure in the package: Figures/gap_decomposition.pdf",
+   "pass": true
+  },
+  {
+   "check": "main figure in the package: Figures/F2_mdna_fit.pdf",
+   "pass": true
+  },
+  {
+   "check": "main figure in the package: Figures/residual_mass.pdf",
+   "pass": true
+  },
+  {
+   "check": "supplement figure in the package: Figures/F2_adjacent_gains.pdf",
+   "pass": true
+  },
+  {
+   "check": "supplement figure in the package: Figures/F3_coverage_qq.pdf",
+   "pass": true
+  },
+  {
+   "check": "supplement figure in the package: Figures/F6_gap_ci.pdf",
+   "pass": true
+  },
+  {
+   "check": "supplement figure in the package: Figures/F6b_gap_decomposition.pdf",
+   "pass": true
+  },
+  {
+   "check": "supplement figure in the package: Figures/F7_doc_scatters.pdf",
+   "pass": true
+  },
+  {
+   "check": "supplement figure in the package: Figures/F11_word_micro_macro.pdf",
+   "pass": true
+  },
+  {
+   "check": "supplement figure in the package: Figures/F12_word_fit_vs_freq.pdf",
+   "pass": true
+  },
+  {
+   "check": "supplement figure in the package: Figures/F4_power_curves.pdf",
+   "pass": true
+  },
+  {
+   "check": "supplement figure in the package: Figures/F5_fit_vs_tests.pdf",
+   "pass": true
+  },
+  {
+   "check": "supplement figure in the package: Figures/F5b_word_ranks.pdf",
+   "pass": true
+  },
+  {
+   "check": "supplement figure in the package: Figures/F9_design_sensitivity.pdf",
+   "pass": true
+  },
+  {
+   "check": "supplement figure in the package: Figures/R1b_micro_macro_gap.pdf",
+   "pass": true
+  },
+  {
+   "check": "supplement figure in the package: Figures/R4_moment_diagnostics.pdf",
+   "pass": true
+  },
+  {
+   "check": "main pointer to Tables S15 and S16",
+   "pass": true
+  },
+  {
+   "check": "completion fit 7: A_D(40)=0.00474 and distance 0.00026",
+   "pass": true
+  },
+  {
+   "check": "completion fit 8: A_D(50)=0.0147",
+   "pass": true
+  },
+  {
+   "check": "completion fit 7 paired SE about 0.00086",
+   "pass": true
+  },
+  {
+   "check": "S6.4 additive split at K=50",
+   "pass": true
+  },
+  {
+   "check": "S6.4 additive split at K=180",
+   "pass": true
+  },
+  {
+   "check": "S6.4 joint vs marginal",
+   "pass": true
+  },
+  {
+   "check": "S6.4 three lowest contrasts at K=50",
+   "pass": true
+  },
+  {
+   "check": "S6.4 homogeneity at K=50",
+   "pass": true
+  },
+  {
+   "check": "Section 6.3 equal-weight contrast and homogeneity at K=180",
+   "pass": true
+  }
+ ],
+ "source_sha256": {
+  "Results/csv/rev2_selreps_selection_rules_rev2.csv": "5c41417cc732faa91563949c1714d26506a230905f567ac59f17bf99ae01b6f6",
+  "Results/csv/rev2_e1_matched_optimum_e1_base_rev2.csv": "801dda120b7f51af7521b565942829fef0c97e3fd5ddd0a5cb22af5347cef751",
+  "Results/csv/e1_selreps_khat_rev2_E1_full_Kstar40_J1000_W5000_a0p5_b0p01_k10-100by10_warplda_fa0p1_fb0p01.csv": "52f0b183c96339181e5769e5d0040e9f874138b4a187e30eb4e201b398b8a613",
+  "Results/csv/e3_gap_decomposition_E3_full_Kstar40_J1000_W5000_a0p5_b0p01_k10-100by10_warplda_fa0p1_fb0p01.csv": "4c1bd401fc7407d31d2579e2fc368d182c96f9bf761d93fe963cb49b7dabb14c",
+  "Results/csv/rev2_e4_size_e4_base_rev2.csv": "8add8d82eb1dce7256cd754164a0cd61970c0d6f17bbff73dc0199fc293cbb8b",
+  "Results/csv/e4_power_sizeadj_rev2_E4_full_Kstar40_J1000_W5000_a0p5_b0p01_k10-100by10_warplda_fa0p1_fb0p01.csv": "b2cd47c8aaf5bc1c4e888c2516fef02be82554ef3409324d6d2ddb437f95f9bf",
+  "Results/csv/rev2_e4_r2_e4_base_rev2.csv": "438835c1a5150befc601c435eb67619b3b327cf649760dec1ad7ae3d96a190da",
+  "Results/csv/rev2_mdna_moment_tests_rev2.csv": "26d337288afc8a47f00618b51776c6e72447d542fe8a818139e310891d283ea7",
+  "Results/csv/rev2_mdna_residual_mass_rev2.csv": "3a443e96270fbe170f3bd388ca7d3a70f99e4a4576116cdf5d47478841ca7d03",
+  "Results/csv/mdna_selection_rules_rev1.csv": "4206ae48b686174bbafc9c00c0df09ea486f05571add99bea34bbd1ff2ca766d",
+  "Results/csv/rev2_e2_coverage_e2_base_rev2.csv": "ce0af0619ee019e229942a02e6076f3a7799008548e9a0c48ce4ef218418220e",
+  "Results/csv/rev2_unbinned_comparator_optima_rev2.csv": "d2f97b5124b7d808bfd77a2c3e39007d36caaf07a0acc9a1c0b5647237cbbefd",
+  "Results/csv/mdna_delta_sensitivity_rev1.csv": "fe4cbcaf6fea82ea925398989dbdc897b5c33318825adef97aa96a190d714ea9",
+  "Results/csv/rev2_mdna_design_sensitivity_rev2.csv": "0a982a02f12ce931dbf2f7cf3140aa8f9ffc13980e44c93b9e40d9818b992264",
+  "Results/csv/mdna_gain_profile_rev1.csv": "c8ea65017afdbac4d84310d9cb3ab7455a61045c872096786571c5355a5b0f97",
+  "Results/csv/rev2_support_resolution_e1_base_rev2.csv": "96d9402e0e52588bad631bfeb4cb4757b808c34d6ae4e05bee01173a2c9906d8",
+  "Results/csv/rev2_support_resolution_e1_dgp2_rev2.csv": "d0618229903af543f2c59d7b4000113aa284f36475673883ac1f4b11179d543e",
+  "Results/csv/rev2_support_resolution_mdna_rev2.csv": "e0f448a2cb769944a5045867dde4c6de15a967376f1e857689d3e95e47a835a5",
+  "Results/csv/rev2_mdna_moment_strata_rev2.csv": "482ac204ca13c8fff685bcaf2b7d503589522a9fc3549f6cb631b86cecceb67e",
+  "Results/manuscript/stage3/stage3_completion_reference_curves.csv": "a144ce7a3c072ff9526e3bae0005b0e43e7b8a901696506d3c2c1ec7f2ff55bf",
+  "Results/manuscript/stage3/stage3_falsecert_fits.csv": "c474ab1c9152ecc218a8e0e39480ff5916d3fa2b91394bc3c7bbc6737bd19b8b",
+  "Results/manuscript/stage3/stage3_completion_falsecert.csv": "433e3f3a8894aa86cc3336e0cbce795cdeee5e3194b64c002e02e72b41130a37",
+  "Results/manuscript/stage3/stage3_falsecert_table.csv": "65778ef024c865ccd7e05e5c0fd75441ff42ca370390bc2660b3b2fdf197dc70",
+  "Results/manuscript/stage3/stage3_e2_reference_curves.csv": "7fbbee222e0b5344b9230255881484f791c8525ffe677f4b61d43cd0492c584f",
+  "Results/manuscript/stage3/stage3_e1_table2_mcse.csv": "4d793ed7dd1a8c4e6d4fb11524991c7cb12746ac1f401376870f4453a1168f61",
+  "Results/manuscript/stage3/stage3_mdna_completion_tests.csv": "e548c0046f8deb8ea331b2aea373ff9e5905c141a8935937b0497bad8dec02fe",
+  "Results/manuscript/stage3/stage3_mdna_subsample_selections.csv": "8e385bed0ae2f6ca783d5a948074dce8d42576e20dc4b02ad05cab413aca045c",
+  "Results/manuscript/stage3/stage3_mdna_subsample_levels.csv": "60aa95045df8175bbccbbaf994aac4d309c9c28d8a420d9dabfade41c5a14d81",
+  "Results/manuscript/stage3/stage3_mdna_H_bootstrap.csv": "5083d015c52b65267ce5945a288b208f51301f7644c589a0d11c3023be22f823",
+  "Results/manuscript/stage3/stage3_mdna_gap_cluster.csv": "7bb18a39a63ff41beae1c3bb19ef650a05d8b037544500fbf8fea4afda3caa91",
+  "Results/Figures/warptestFULL_NULL_rev2/E1/F2_adjacent_gains.pdf": "f3849427a4a2332e9a9198b0d74776e7c4b6d53e0093b2b08a283dcda8f8e057",
+  "Results/Figures/warptestFULL_NULL_rev2/E2/F3_coverage_qq.pdf": "94d54f7fcc8d9ded27267f559ef4065536ec0dfcd45e4f0173bac7fcd4fc162f",
+  "Results/Figures/warptestFULL_NULL/E3/F6_gap_ci.pdf": "8ac2261bad475ff55154f0fe6c07be54539d7256648490f786b5b11e2a206e50",
+  "Results/Figures/warptestFULL_NULL/E3/F6b_gap_decomposition.pdf": "ba460f22aecd26dcf4dc2249f1e734016f3e81677e7e3388c6cd43668c6c2486",
+  "Results/Figures/warptestFULL_NULL/E3/F7_doc_scatters.pdf": "ff3a182f7382c344f56f88e987edd098d7ae649053ad7986b1d8aae059a2acb8",
+  "Results/Figures/warptestFULL_NULL_rev2/E6/F11_word_micro_macro.pdf": "7549beb86b0e6701e437ea028339c48152b5eb48318ae60663057df7d3c74ce1",
+  "Results/Figures/warptestFULL_NULL_rev2/E6/F12_word_fit_vs_freq.pdf": "42395c51b7ef90582c7abaef99798c2d9f57c0cd0ba5d8bd7423201c960430f3",
+  "Results/Figures/warptestFULL_NULL_rev2/E4/F4_power_curves.pdf": "16c1008c52eb92e824334addbc9a613f19463bccae3d0b9bfae0a7f81eae2494",
+  "Results/Figures/warptestFULL_NULL_rev2/E4/F5_fit_vs_tests.pdf": "6056ca2478555c4b7915e2484260970f8e488822549926db3e181d04af33c0cd",
+  "Results/Figures/warptestFULL_NULL_rev2/E4/F5b_word_ranks.pdf": "dfac4b9f5e9ba896f94b686224c35bd859cf1382a7cd7fec5e26654e76f83ef2",
+  "Results/Figures/warptestFULL_NULL/E5/F9_design_sensitivity.pdf": "b85799834f1bcabfba04a26e642f34ee0f09f3dfdf8622dfb5ce374240f81b8c",
+  "Results/Figures/mdna_2015_2016_rev2/MDNA/R1b_micro_macro_gap.pdf": "fdc50564d710490a482e8a2191178a530b0882f06b0493f49d4f46f32210af31",
+  "Results/Figures/mdna_2015_2016_rev1/MDNA/R4_moment_diagnostics.pdf": "4bd70acb8e44ef8f45ac0ab5b758e88bb45401d86a949b2e1a529d8d2de08a09",
+  "Results/manuscript/stage3/stage3_completion_paired_se.csv": "f68af4a7083eecb83dbedfb60550f125280a61159c81295b3cb19dde5b557a1c",
+  "Results/manuscript/stage3/stage3_mdna_s64_wald_subtests.csv": "bd2c32ade150c9123ddb4f46fe5bc17335b979b17abb3bc901779868b29dbd25"
+ }
+}

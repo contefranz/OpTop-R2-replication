@@ -9,6 +9,14 @@ output:
 ---
 # Simulation Pipeline
 
+> **Read `../README.md` first.** This is the development manual of the pipeline (CLI grammar, override keys,
+> engines, monitoring, design notes), written while the experiments were designed. The commands behind the
+> manuscript are those of `../README.md` and `../reproduce.sh`. In particular, the published simulation design
+> is K\* = 40, W = 5,000, J_train = 1,000, grid K = 10,...,100, WarpLDA with fitted priors alpha = 0.1 and
+> beta = 0.01, ten training seeds (overrides `K_true=40 W=5000 K_grid=10:100:10 fit_method=WarpLDA alpha=0.1
+> beta=0.01`); statements below about K\* = 10, VEM, 50 seeds or the `full` profile's defaults describe
+> exploratory configurations, not the published runs. Run times for the published design are in `../README.md`.
+
 Replication code for the simulation experiments of *"Goodness-of-Fit Indices
 and Diagnostics for Topic Models"* (Lewis & Grossetti). Everything below runs
 from the **project root**. Command grammar (all entry points):
@@ -432,6 +440,123 @@ plus a small grid to the driver (`K_grid=10:30:10 refine_span=0`) — 200 docs
 per fiscal year end-to-end in minutes. Monitoring: `tail -f Data/scoring.log`
 as usual.
 
+`make_mdna_outputs.R` also takes `in_suffix=` (read a re-scored object, e.g.
+`in_suffix=_rev1`), `out_label=` (explicit output label) and `K_ref=` (the
+reference fit whose diagnostics are drawn; must equal the object's `K_hat`).
+Figures, csv, tex **and the workbook** follow the label, so a run on a re-scored
+object never overwrites the baseline exhibits.
+
+## September 2026 revision tooling (evaluation only — no model is estimated)
+
+Two defects were fixed and the selection rule was revised; every recomputation
+reuses the cached fits in `Data/FITS`.
+
+* **Test-3 instruments.** The fit-stratified instruments were built from the
+  strata of the *smallest* tested K for every K (a `data.table` scoping defect:
+  a closure argument named like a column is shadowed by the column —
+  `word_tr[K == K & …]` in `run_mdna.R`, `word_tr_l[list(K), ws]` in
+  `run_E4.R`). Both drivers now call `make_instruments_by_K()`
+  (`R/utils_moment_tests.R`); gate **U17** tests the drivers' code path. Tests
+  1–2, every fit index and Test 3 at the smallest tested K were never affected.
+* **Selection rules** (`R/utils_inference.R`): `paired_gains_all()`,
+  `select_k_total_gain()` (primary: Bonferroni over all m(m−1)/2 pairs),
+  `select_k_adjacent()` / `select_k_adjacent_simultaneous()` (local companion),
+  `select_k_all_rules()` (all three, incl. the original pointwise rule, now
+  exploratory). "None certified" is `NA`, never the grid maximum; optional
+  cluster-robust standard errors (`cluster=`). Gate **U18**.
+* **Held-out word-level Deviance** uses the Poisson-form baseline deviance
+  `2 Σ_j [N log(N/B) − (N − B)]` on the *scored* tokens
+  (`.word_null_dev_poisson`, gates **U19**, **U25**). OpTop ≤ 0.20.1 omits the
+  linear term in the word-level null (zero in-sample, non-zero held-out);
+  0.20.1 raises a classed warning (`optop_word_null_baseline`) and leaves the
+  kernel unchanged, so the pipeline keeps its own null. The warning is muffled
+  only in the branch that replaces that null (gate **U20**).
+* **One convention, applied once** (`R/utils_revision.R`). Every new result
+  object is stamped (`run_meta$scoring`: `word_null_convention =
+  "poisson_scored_tokens"`, OpTop version and commit). Post-processing converts
+  a word-level null only when the input is a *registered* pre-revision object,
+  identified by content hash (`LEGACY_WORD_NULL_INPUTS`); a stamped object
+  passes through unchanged and anything else is an error (gate **U23**).
+* **c and δ are separate.** `run_mdna.R` takes `c_part=` (support threshold)
+  and `min_null=` (discrepancy floor); design comparisons over c hold δ = 1 and
+  use `refine_span=0`, so the same candidates enter every harmonised support
+  (gate **U21**).
+* **Intermediates kept.** MD&A and E6: per-word fitted and null discrepancies at
+  every K. E4: conditional centres and, per replication, the projected-moment
+  summaries (n, mean, covariance, centre) from which every Wald statistic can be
+  recomputed. E1/E2: all-pairs gains and the selections under the three rules.
+  E1/MD&A/E5: support-resolution rows (`support_resolution()`, gate **U24**).
+* **Checkpoints** (`revision_checkpoint()`): with an `out_suffix`, drivers store
+  each completed seed / battery / evaluation block under
+  `Data/Checkpoints/<suffix>/` and reuse it only when configuration, package and
+  *scoring* code are identical; a mismatch is an error (gate **U22**).
+* **No-fit guard.** `options(optop.no_fit = TRUE)` or `OPTOP_NO_FIT=1` turns a
+  fit-cache miss into an error (`prefit_pool()`), so a drifted configuration can
+  never start estimating models silently.
+* **Driver options.** `cfg_from=<results.qs2>` reuses the configuration stored in
+  a cached result object (identical corpus signature, seeds and fit spec, hence
+  identical fit-cache keys); `out_suffix=` namespaces every output. Nothing
+  produced for the revision overwrites a pre-revision object: outputs carry
+  `_rev1` (fast phase) or `_rev2` (batch).
+
+```sh
+Rscript Code/tests_unit.R                                  # U1-U25 (~10 s)
+Rscript Code/postprocess_revision.R                        # cache-only, 19 gates (~1 min)
+Rscript Code/rescore_revision.R stages=tests,restarts,lemma,wordfloor   # ~15 min
+Rscript Code/make_revision_tex.R                           # Results/tex/rev1_*.tex
+Rscript Code/make_revision_figures.R                       # Results/Figures/*_rev1/
+# the long evaluation-only re-runs: resumable, verified, fit cache hashed
+bash Code/run_revision_batch.sh 8 A                        # MD&A, E2, E1, E6, diagnostics (~15 h)
+bash Code/run_revision_batch.sh 8 B                        # E4 both arms, E1 10 x 10 (~18 h)
+bash Code/run_revision_batch.sh 8 final                    # post-processing + acceptance
+bash Code/run_revision_batch.sh 8 all _rev2 --dry-run      # what is complete, what would run
+```
+
+**The batch** (`revision_batch.py`, launched by `run_revision_batch.sh`). A stage
+is complete only if it exited 0, its declared outputs exist, and its identity —
+command, input hashes, package, and the code that determines its result — is the
+one on disk. Identity is per stage: the shared modules (`R/*.R`),
+`config/configs.R` and the script the stage runs, so repairing an exhibit
+script, or a different driver, never invalidates a night of scoring. Unit gates and the toy smoke run
+(`revision_smoke.sh`: every driver, the resume path, `cfg_from=` under the no-fit
+guard) are prerequisites and re-run automatically when the scoring code or the
+package changes. Every production stage runs with `OPTOP_NO_FIT=1`; the sha256
+of every cached fit is compared with `Results/csv/fit_manifest_rev1.csv` before
+and after. Completed, verified, failed, blocked and skipped stages are reported
+separately (`Results/revision_rev2/summary.json`, `stages.json`, one log per
+stage); the runner never reports completion of stages it did not run.
+
+| id | key | what |
+|---|---|---|
+| 2 | `mdna` | MD&A rescoring over K = 10–200: word curves and raw word discrepancies, tests at K ∈ {40,50,60,170,180,190}, support resolution |
+| 3 | `mdna_c05`, `mdna_c2`, `mdna_g100` | c ∈ {0.5, 2} at δ = 1 on the same 20-model grid; grid truncated at 100 |
+| 4 | `e2_base`, `e2_dgp2` | 20,000 reference documents per training fit, reference SEs, three rules |
+| 5 | `e1_base`, `e1_dgp2` | ten seeds: all-pairs gains, three rules, support resolution |
+| 6 | `e6` | word study with corrected nulls, raw discrepancies, independent Lemma S1 check |
+| 7 | `e4_base`, `e4_prior` | K-specific Test-3 strata; centres and moment summaries kept |
+| 8 | `selreps` | 10 × 10 evaluation corpora, three rules |
+| 9–11 | `e5_resolution`, `unbinned`, `restarts` | `run_revision_diagnostics.R` (E5 support resolution; unbinned protocol-matched comparator with φ floored at 10⁻¹², 10⁻¹⁴, 10⁻¹⁰ and renormalised); restarts on the support of the production grid and the restarts |
+| 12–13 | `post_*`, `acceptance` | `postprocess_e4.R`, `postprocess_e2_gap.R`; `finalize_revision.R` → `acceptance.json` |
+
+* `postprocess_revision.R` — selections under the three rules (MD&A, E1, second
+  DGP), firm-cluster standard errors, δ and design sensitivity, residual mass by
+  frequency group, E2 coverage calibration against a noisy reference, planted
+  words. Stops on a failed regression gate. → `Results/csv/*_rev1.csv`,
+  `Data/MDNA/revision_postprocess_rev1.qs2`.
+* `rescore_revision.R` — corrected MD&A moment tests at K ∈ {40, 50, 60, 170,
+  180, 190} with iid and firm-clustered covariance, restarts on a common
+  support, the Lemma-S1 cross-path check, word-level conventions. Its first gate
+  forces the K = 10 strata and must reproduce the *published* Test 3 exactly
+  before any corrected value is written. → `Data/MDNA/mdna_rescore_rev1.qs2`.
+* `finalize_revision.R` — acceptance checks on the batch outputs, read from the
+  explicit paths the runner recorded: stamps, configurations, the held-out
+  baseline deviance of the word "condition" recomputed from the definition
+  (9562.168059; legacy 8771.558890), E6 Lemma S1 across code paths, untouched
+  scores against the published caches, corrected MD&A Test 3 against the
+  verified values, fit hashes.
+
+Provenance of every number in the manuscript: `../README.md`, Section 6 (exhibit map) and `Results/manuscript_files.csv`.
+
 ## Layout
 
 ```
@@ -445,6 +570,8 @@ Code/
     utils_inference.R Prop-2 CIs, paired gains, ε-rule, gap SE, Prop-1iii
     utils_moment_tests.R  §4 instruments + Wald tests (raw and centered)
     utils_comparators.R   perplexity/NPMI (NLPstudio), optimal_topic (OpTop)
+    utils_revision.R  scoring provenance, word-null convention guard,
+                      checkpoints, support resolution
     theme_paper.R     shared ggplot style/encodings
   config/configs.R    all parameters; profiles smoke / pilot / full
   run_E1.R … run_E6.R experiment drivers (idempotent, cache-backed)
@@ -456,6 +583,16 @@ Code/
   postprocess_e2_gap.R gap-CI coverage diagnosis from a saved E2 object
   run_tonight.sh      one-shot robustness batch (stages 0-7, resilient,
                       resumable: `bash Code/run_tonight.sh <workers> <from>`)
+  postprocess_revision.R  Sept-2026 revision: cache-only recomputations (gated)
+  rescore_revision.R      Sept-2026 revision: short re-scoring on cached fits
+  make_revision_tex.R     Sept-2026 revision: table bodies -> Results/tex/rev1_*
+  make_revision_figures.R Sept-2026 revision: changed figures -> Figures/*_rev1
+  run_revision_batch.sh   Sept-2026 revision: launcher of the evaluation-only
+                          batch (`bash Code/run_revision_batch.sh <workers> <A|B|final|all>`)
+  revision_batch.py       stage table, identities, verified resume, fit hashing
+  revision_smoke.sh       toy end-to-end run of every batch driver
+  run_revision_diagnostics.R  E5 support resolution; unbinned comparator
+  finalize_revision.R     acceptance checks on the batch outputs
   tests_unit.R        correctness gates (run first; non-zero exit on failure)
   make_figures.R      F1–F12 from saved results only
   make_tables.R       T1–T9 (tinytable tex + CSV + one Excel workbook)
@@ -562,7 +699,7 @@ sweeps, and as an extra estimator-robustness overlay.
 
 ## Dependencies
 
-R $\ge$ 4.6 with: OpTop (0.20.0, pinned by `install.R`; 0.14.1 also verified),
+R $\ge$ 4.6 with: OpTop (0.20.1, pinned by `install.R`; 0.20.0 and 0.14.1 also verified for everything but gate U20),
 NLPstudio (1.2.0, pinned; 1.1.1 also verified), topicmodels, quanteda,
 data.table, Matrix, future.apply, ggplot2, patchwork, qs2, tinytable, writexl,
 here, digest, MASS.

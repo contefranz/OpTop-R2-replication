@@ -1,0 +1,37 @@
+sample,protocol,rule,eps,K_hat,certified,n_comparisons,max_ub,M
+"full sample, document-level SE",com,adjacent_pointwise,0.01,50,TRUE,1,0.00963427659925599,1
+"full sample, document-level SE",com,adjacent_simultaneous,0.01,80,TRUE,1,0.00733955858797348,19
+"full sample, document-level SE",com,total_gain,0.01,180,TRUE,2,0.00818636362529191,190
+"full sample, document-level SE",com,adjacent_pointwise,0.005,120,TRUE,1,0.0016743043332516,1
+"full sample, document-level SE",com,adjacent_simultaneous,0.005,120,TRUE,1,0.00316571051094393,19
+"full sample, document-level SE",com,total_gain,0.005,190,TRUE,1,0.0019936067061329,190
+"full sample, document-level SE",rec,adjacent_pointwise,0.01,80,TRUE,1,0.00899117333695474,1
+"full sample, document-level SE",rec,adjacent_simultaneous,0.01,80,TRUE,1,0.00971565287743449,19
+"full sample, document-level SE",rec,total_gain,0.01,180,TRUE,2,0.00803439364459961,190
+"full sample, document-level SE",rec,adjacent_pointwise,0.005,120,TRUE,1,0.0016954184990407,1
+"full sample, document-level SE",rec,adjacent_simultaneous,0.005,120,TRUE,1,0.0024287033457491,19
+"full sample, document-level SE",rec,total_gain,0.005,190,TRUE,1,0.00167332984676523,190
+"full sample, firm-cluster SE",com,adjacent_pointwise,0.01,50,TRUE,1,0.00973147042220741,1
+"full sample, firm-cluster SE",com,adjacent_simultaneous,0.01,80,TRUE,1,0.00745977517086976,19
+"full sample, firm-cluster SE",com,total_gain,0.01,180,TRUE,2,0.00840891102047364,190
+"full sample, firm-cluster SE",com,adjacent_pointwise,0.005,120,TRUE,1,0.00172713941705797,1
+"full sample, firm-cluster SE",com,adjacent_simultaneous,0.005,120,TRUE,1,0.00325534445369883,19
+"full sample, firm-cluster SE",com,total_gain,0.005,190,TRUE,1,0.00230400375854853,190
+"full sample, firm-cluster SE",rec,adjacent_pointwise,0.01,80,TRUE,1,0.00910092460671682,1
+"full sample, firm-cluster SE",rec,adjacent_simultaneous,0.01,80,TRUE,1,0.00990184429272936,19
+"full sample, firm-cluster SE",rec,total_gain,0.01,180,TRUE,2,0.00816289825142384,190
+"full sample, firm-cluster SE",rec,adjacent_pointwise,0.005,120,TRUE,1,0.00180601060300925,1
+"full sample, firm-cluster SE",rec,adjacent_simultaneous,0.005,120,TRUE,1,0.00261632122391106,19
+"full sample, firm-cluster SE",rec,total_gain,0.005,190,TRUE,1,0.00187817349773439,190
+"firms absent from training, firm-cluster SE",com,adjacent_pointwise,0.01,50,TRUE,1,0.00738605874983369,1
+"firms absent from training, firm-cluster SE",com,adjacent_simultaneous,0.01,50,TRUE,1,0.0092160494213369,19
+"firms absent from training, firm-cluster SE",com,total_gain,0.01,190,TRUE,1,0.00611290107184057,190
+"firms absent from training, firm-cluster SE",com,adjacent_pointwise,0.005,120,TRUE,1,0.00362073883242238,1
+"firms absent from training, firm-cluster SE",com,adjacent_simultaneous,0.005,140,TRUE,1,0.00250039185394422,19
+"firms absent from training, firm-cluster SE",com,total_gain,0.005,,FALSE,,,190
+"firms absent from training, firm-cluster SE",rec,adjacent_pointwise,0.01,50,TRUE,1,0.00821992827686677,1
+"firms absent from training, firm-cluster SE",rec,adjacent_simultaneous,0.01,50,TRUE,1,0.00974757840067709,19
+"firms absent from training, firm-cluster SE",rec,total_gain,0.01,190,TRUE,1,0.0037082706669929,190
+"firms absent from training, firm-cluster SE",rec,adjacent_pointwise,0.005,120,TRUE,1,0.00425958070245263,1
+"firms absent from training, firm-cluster SE",rec,adjacent_simultaneous,0.005,150,TRUE,1,0.00478296450044003,19
+"firms absent from training, firm-cluster SE",rec,total_gain,0.005,190,TRUE,1,0.0037082706669929,190

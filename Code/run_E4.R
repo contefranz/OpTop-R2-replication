@@ -27,9 +27,10 @@ source(here::here("Code", "config", "configs.R"))
 
 cli <- parse_cli(args)
 PROFILE <- cli$profile
-cfg <- get_config("E4", PROFILE)
-cfg <- apply_overrides(cfg, cli$overrides, strict = FALSE)
-cfg$label <- run_label(cfg, cli$overrides, cli$label)
+rc <- resolve_cfg(cli, "E4", PROFILE)          # honours cfg_from= / out_suffix=
+cfg <- rc$cfg; SFX <- rc$out_suffix
+if (!rc$from_cache || !is.null(cli$label))
+  cfg$label <- run_label(cfg, rc$overrides, cli$label)
 # the battery is evaluated at K_true too, and only at grid members (the null
 # branch reuses the full-grid fits, so K_test must be a subset of K_grid)
 cfg$K_test <- sort(intersect(unique(c(cfg$K_test, cfg$K_true)), cfg$K_grid))
@@ -43,28 +44,23 @@ log_msg(paste("E4 plan: null arm fits |K|=%d once per corpus (%d corpora);",
         length(cfg$K_grid), cfg$S_train)
 log_msg("per-rep scoring ticks: tail -f %s", proj_path("Data", "scoring.log"))
 
-#' Keyed lookup: training word-level deviance scores per tested K (Test 3).
-make_word_lookup <- function(word_ins, K_test) {
-  out <- data.table(K = K_test)
-  out[, ws := lapply(K, function(k)
-    word_ins[K == k & metric == "dev", .(word_id, r2_word)])]
-  setkey(out, K)
-  out
-}
-
-#' Instrument sets per tested K (training-only construction).
-instruments_by_K <- function(train_dtm, word_tr_l, K_test) {
-  out <- lapply(K_test, function(K)
-    make_instrument_set(train_dtm, word_tr_l[list(K), ws][[1L]],
-                        B = cfg$B_strata, S = cfg$S_strata,
-                        min_docfreq = cfg$min_docfreq))
-  names(out) <- as.character(K_test)
-  out
+#' Instrument sets per tested K (training-only construction). Delegates to the
+#' shared make_instruments_by_K() (utils_moment_tests.R). The former local
+#' version looked the scores up with `word_tr_l[list(K), ws][[1L]]` inside a
+#' closure whose argument was also named K: data.table resolved `list(K)` to
+#' the COLUMN, i.e. a self-join over every K, and `[[1L]]` then returned the
+#' smallest K's scores -- so Test 3 at K = K_true ran on the K = min(K_test)
+#' strata. Results produced before this fix are wrong for Test 3 at every
+#' tested K except the smallest; Tests 1-2 were never affected.
+instruments_by_K <- function(train_dtm, word_ins, K_test) {
+  make_instruments_by_K(train_dtm, word_ins, K_test, B = cfg$B_strata,
+                        S = cfg$S_strata, min_docfreq = cfg$min_docfreq)
 }
 
 #' Conditional-truth moment centers from one large evaluation set.
 estimate_centers <- function(fits_sub, phi_list, Zs_by_K, sim_eval_fun,
                              J_center, seed) {
+  revision_checkpoint("E4_centers", cfg, paste0("seed_", seed), {
   ev <- sim_eval_fun(seed, J_center)
   centers <- lapply(names(fits_sub), function(k) {
     th <- foldin_theta(fits_sub[[k]], ev$dtm, seed = seed)
@@ -73,6 +69,7 @@ estimate_centers <- function(fits_sub, phi_list, Zs_by_K, sim_eval_fun,
   })
   names(centers) <- names(fits_sub)
   centers
+  })
 }
 
 #' Replicated evaluation battery; one fold-in per (rep, K). `label` names the
@@ -84,10 +81,19 @@ run_battery <- function(fits_sub, phi_list, Zs_by_K, pi_tr, sim_eval_fun,
     ev <- sim_eval_fun(eval_seed0 + 17L * rep, cfg$J_ev)
     theta_list <- lapply(fits_sub, foldin_theta, newdata_dtm = ev$dtm,
                          seed = eval_seed0 + rep)
+    # Projected-moment summaries (n, mean, covariance, centre) per (K, test):
+    # sufficient to recompute every Wald statistic -- raw, centred, or with
+    # another reference distribution -- without touching the fits again.
+    moment_summaries <- list()
     tests <- rbindlist(lapply(as.character(K_test), function(k) {
       E <- resid_heldout(theta_list[[k]], phi_list[[k]], ev$dtm)
-      run_moment_battery(Zs_by_K[[k]], E,
-                         centers = centers[[k]])$results[, K := as.integer(k)]
+      gs <- lapply(Zs_by_K[[k]], function(Z) E %*% t(Z))
+      moment_summaries[[k]] <<- lapply(names(gs), function(nm)
+        list(test = nm, n = nrow(gs[[nm]]), mean = colMeans(gs[[nm]]),
+             covariance = stats::cov(gs[[nm]]), center = centers[[k]][[nm]]))
+      rbindlist(lapply(names(gs), function(nm)
+        moment_test_from_G(gs[[nm]], nm, center = centers[[k]][[nm]])$result),
+        fill = TRUE)[, K := as.integer(k)]
     }), fill = TRUE)
     r2 <- NULL
     if (score_r2) {
@@ -105,12 +111,18 @@ run_battery <- function(fits_sub, phi_list, Zs_by_K, pi_tr, sim_eval_fun,
       r2[, rep := rep]
     }
     scoring_log("E4 %s: rep %d/%d done", label, rep, R)
-    list(tests = tests[, rep := rep], r2 = r2)
+    list(tests = tests[, rep := rep], r2 = r2, moments = moment_summaries)
   })
 }
 
+#' One checkpoint per BATTERY (training seed x arm x alternative x strength): a
+#' few hundred files for the whole study, and at most one battery of work is
+#' lost on an interruption. (A checkpoint per replication would be 50,000 files.)
+battery_checkpoint <- function(key, expr)
+  revision_checkpoint("E4_battery", cfg, key, expr)
+
 acc <- list(size = list(), power = list(), r2 = list(), strata_ill = NULL,
-            word_rank = NULL, word_resid = NULL)
+            word_rank = NULL, word_resid = NULL, centers = list(), moments = list())
 
 # =============================== SIZE (null DGP) ===============================
 for (t in seq_len(cfg$S_train)) {
@@ -128,8 +140,7 @@ for (t in seq_len(cfg$S_train)) {
 
   word_ins <- score_insample(fits_sub, sim_tr$dtm, cfg$c, "dev",
                              word_at = cfg$K_test)$word
-  word_tr_l <- make_word_lookup(word_ins, cfg$K_test)
-  Zs_by_K <- instruments_by_K(sim_tr$dtm, word_tr_l, cfg$K_test)
+  Zs_by_K <- instruments_by_K(sim_tr$dtm, word_ins, cfg$K_test)
 
   sim_eval_null <- function(seed, J) {
     sim_lda_corpus(J, cfg$W, cfg$K_true, cfg$alpha_DGP, cfg$beta_DGP,
@@ -138,9 +149,12 @@ for (t in seq_len(cfg$S_train)) {
   }
   centers <- estimate_centers(fits_sub, phi_list, Zs_by_K, sim_eval_null,
                               cfg$J_center, seeds$eval_seed + 2500000L)
-  reps <- run_battery(fits_sub, phi_list, Zs_by_K, pi_tr, sim_eval_null,
-                      cfg$R_null, cfg$K_test, seeds$eval_seed + 3000000L,
-                      centers = centers, label = sprintf("null t%d", t))
+  reps <- battery_checkpoint(sprintf("null_t%d", t),
+    run_battery(fits_sub, phi_list, Zs_by_K, pi_tr, sim_eval_null,
+                cfg$R_null, cfg$K_test, seeds$eval_seed + 3000000L,
+                centers = centers, label = sprintf("null t%d", t)))
+  acc$centers[[as.character(t)]] <- centers
+  acc$moments[[paste0("null_", t)]] <- lapply(reps, `[[`, "moments")
   acc$size[[t]] <- rbindlist(lapply(reps, `[[`, "tests"))[, train_seed := t]
   log_msg("E4 null corpus %d/%d: %d eval replications done (fold-in scoring, 0 new fits)",
           t, cfg$S_train, cfg$R_null)
@@ -196,8 +210,7 @@ for (alt in names(cfg$alternatives)) {
 
       word_ins <- score_insample(fits_sub, sim_tr$dtm, cfg$c, "dev",
                                  word_at = cfg$K_test)$word
-      word_tr_l <- make_word_lookup(word_ins, cfg$K_test)
-      Zs_by_K <- instruments_by_K(sim_tr$dtm, word_tr_l, cfg$K_test)
+      Zs_by_K <- instruments_by_K(sim_tr$dtm, word_ins, cfg$K_test)
 
       Phi_ev <- if (alt == "drift")
         drift_phi(sim_tr$Phi, s_val, cfg$beta_DGP, seeds$dgp_seed + 33L)
@@ -212,10 +225,12 @@ for (alt in names(cfg$alternatives)) {
                        theta_sampler = tsamp, group_vocab = gv_ev,
                        doc_prefix = "ev")
       }
-      reps <- run_battery(fits_sub, phi_list, Zs_by_K, pi_tr, sim_eval_alt,
-                          cfg$R_power, cfg$K_test,
-                          seeds$eval_seed + 4000000L, score_r2 = TRUE,
-                          label = sprintf("power %s=%.3g t%d", alt, s_val, t))
+      reps <- battery_checkpoint(sprintf("power_%s_%s_t%d", alt, num2tag(s_val), t),
+        run_battery(fits_sub, phi_list, Zs_by_K, pi_tr, sim_eval_alt,
+                    cfg$R_power, cfg$K_test,
+                    seeds$eval_seed + 4000000L, score_r2 = TRUE,
+                    label = sprintf("power %s=%.3g t%d", alt, s_val, t)))
+      acc$moments[[paste(alt, s_val, t, sep = "_")]] <- lapply(reps, `[[`, "moments")
       tests <- rbindlist(lapply(reps, `[[`, "tests"), fill = TRUE)
       r2 <- rbindlist(lapply(reps, `[[`, "r2"))
       acc$power[[length(acc$power) + 1L]] <-
@@ -275,11 +290,11 @@ r2_tab <- if (nrow(r2)) {
      by = .(K, alt, strength)]
 } else r2
 
-out <- list(size = size, power = power, r2 = r2,
+out <- list(centers = acc$centers, moments = acc$moments, size = size, power = power, r2 = r2,
             size_tab = size_tab, power_tab = power_tab, r2_tab = r2_tab,
             strata_ill = acc$strata_ill, word_rank = acc$word_rank,
             word_resid = acc$word_resid, config = cfg)
-cache_put(out, p_data("E4", sprintf("e4_results_%s.qs2", TAG)), cfg)
-write_result(size_tab, "e4_size", cfg)
-if (nrow(power_tab)) write_result(power_tab, "e4_power", cfg)
+cache_put(out, p_data("E4", sprintf("e4_results_%s%s.qs2", TAG, SFX)), cfg)
+write_result(size_tab, paste0("e4_size", SFX), cfg)
+if (nrow(power_tab)) write_result(power_tab, paste0("e4_power", SFX), cfg)
 log_msg("=== E4 [%s] complete ===", PROFILE)

@@ -1,7 +1,8 @@
 {
   "title": "Replication package for 'Goodness-of-Fit Indices and Diagnostics for Topic Models'",
   "upload_type": "software",
-  "description": "<p>Code, cached results and data behind every table and figure of <em>Goodness-of-Fit Indices and Diagnostics for Topic Models</em> (Craig M. Lewis and Francesco Grossetti; submitted to the Journal of the Royal Statistical Society, Series B): the four simulation studies of Section 5, the MD&amp;A empirical application of Section 6, and the September 2026 robustness arms. Three reproduction lanes: exhibits rebuilt from the shipped caches (minutes), full recompute (simulations about one day, MD&amp;A about seven hours), and the robustness batch (about sixteen hours). The methods are implemented in the R package OpTop (https://github.com/contefranz/OpTop); install.R pins OpTop 0.20.0 and NLPstudio 1.2.0, and sessionInfo.txt records both production environments. The raw Item-7 corpus (178 MB) is deposited separately.</p>",
+  "version": "1.0.0",
+  "description": "<p>Code and cached results behind every table, figure and reported number of <em>Goodness-of-Fit Indices and Diagnostics for Topic Models</em> (Craig M. Lewis and Francesco Grossetti; submitted to the Journal of the Royal Statistical Society, Series B) and its Supplementary Material: the four simulation studies, the MD&amp;A empirical application, the evaluation-only revision batch and the Stage 3 computations.</p><p>Lanes (reproduce.sh): <code>paper</code> regenerates every exhibit exactly from the shipped caches and the deposited result objects (about two minutes); <code>stage3</code> recomputes the analyses that read the fitted-model cache (about 45 minutes on 8 workers); <code>revision</code> reruns the evaluation-only batch (about 28 hours on 8 workers); <code>full-sims</code>, <code>full-mdna</code> and <code>robustness</code> refit the models (statistically equivalent, not bit-identical). install.R pins R 4.6.1, the CRAN snapshot of 2026-07-01, OpTop 0.20.1 (commit cba1273ea8) and NLPstudio 1.2.0 (commit 771b42e328).</p><p>The large objects (result objects, fitted-model cache, MD&amp;A corpus) are deposited in a separate Zenodo data record and fetched by <code>./reproduce.sh fetch</code>, which verifies every file against the checksums tracked in this repository. The harmonised support and the discrepancy indices are computed with the R package OpTop (https://github.com/contefranz/OpTop); the held-out protocols, certification rules, firm-clustered inference and residual diagnostics are implemented in this package. Code under MIT; data and results under CC0-1.0.</p>",
   "creators": [
     {"name": "Lewis, Craig M.", "affiliation": "Vanderbilt University", "orcid": "0000-0001-8734-1702"},
     {"name": "Grossetti, Francesco", "affiliation": "Bocconi University", "orcid": "0000-0002-5130-7745"}
@@ -9,5 +10,9 @@
   "license": "mit",
   "access_right": "open",
   "language": "eng",
-  "keywords": ["topic models", "latent Dirichlet allocation", "goodness of fit", "model selection", "specification tests", "held-out evaluation", "R"]
+  "keywords": ["topic models", "latent Dirichlet allocation", "goodness of fit", "model selection", "specification tests", "held-out evaluation", "R"],
+  "related_identifiers": [
+    {"identifier": "https://github.com/contefranz/OpTop", "relation": "requires", "resource_type": "software", "scheme": "url"},
+    {"identifier": "10.5281/zenodo.20556350", "relation": "requires", "resource_type": "software", "scheme": "doi"}
+  ]
 }

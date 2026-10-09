@@ -104,33 +104,46 @@ moment_test <- function(Z, E, test_label = "test", center = NULL) {
 #' Wald machinery on a precomputed J x q moment matrix G. Split out so large
 #' evaluation sets can accumulate G block-wise (G_block = E_block %*% t(Z))
 #' without materializing the dense J x W residual matrix (run_mdna.R).
+#'
+#' Rank-deficient covariance: a Moore-Penrose Wald form is chi-square with
+#' rank(Sigma) degrees of freedom, NOT q. The reference distribution therefore
+#' uses df = the numerical rank behind the pseudo-inverse and the case is
+#' flagged; referring it to chi2_q (as the pre-revision code did) would
+#' understate the evidence. The full-rank branch is numerically unchanged.
 moment_test_from_G <- function(G, test_label = "test", center = NULL) {
   G <- as.matrix(G)
   J <- nrow(G); q <- ncol(G)
   gbar <- colMeans(G)
   S <- stats::cov(G)
-  flag <- ""
+  flag <- ""; df_use <- q
+  pinv <- function() {
+    sv <- svd(S)$d
+    tol <- sqrt(.Machine$double.eps)            # MASS::ginv's own default
+    df_use <<- as.integer(sum(sv > tol * sv[1L]))
+    flag <<- sprintf("rank-deficient: rank %d of %d, df = rank", df_use, q)
+    MASS::ginv(S, tol = tol)
+  }
   Sinv <- tryCatch({
     if (q == 1L) {
+      if (!is.finite(S[1L]) || S[1L] <= 0) stop("degenerate variance")
       matrix(1 / S, 1L, 1L)
     } else if (rcond(S) < 1e-12) {
-      flag <- "pseudo-inverse"
-      MASS::ginv(S)
+      pinv()
     } else {
       solve(S)
     }
-  }, error = function(e) { flag <<- "pseudo-inverse"; MASS::ginv(S) })
+  }, error = function(e) pinv())
   wald <- function(v) as.numeric(J * t(v) %*% Sinv %*% v)
+  pv <- function(w) if (df_use > 0L) pchisq(w, df = df_use, lower.tail = FALSE)
+                    else NA_real_
   W <- wald(gbar)
   res <- data.table(
-    test = test_label, stat = W, df = q,
-    pval = pchisq(W, df = q, lower.tail = FALSE),
+    test = test_label, stat = W, df = df_use, pval = pv(W),
     gbar_absmax = max(abs(gbar)), J_ev = J, flag = flag
   )
   if (!is.null(center)) {
     Wc <- wald(gbar - center)
-    res[, `:=`(stat_centered = Wc,
-               pval_centered = pchisq(Wc, df = q, lower.tail = FALSE))]
+    res[, `:=`(stat_centered = Wc, pval_centered = pv(Wc))]
   }
   t_strata <- sqrt(J) * gbar / sqrt(diag(S))
   p_strata <- 2 * pnorm(-abs(t_strata))
@@ -159,6 +172,33 @@ make_instrument_set <- function(train_dtm, word_scores_train = NULL,
       min_docfreq = min_docfreq, docfreq = docfreq_tr)
   }
   Zs
+}
+
+#' Instrument sets for every tested K (training-only construction); the single
+#' implementation shared by run_mdna.R and run_E4.R.
+#'
+#' `word_dt` is the tidy TRAINING word-score table over several K (columns K,
+#' metric, word_id, r2_word) returned by score_insample(..., word_at = ).
+#' Test 3's strata must come from the scores of the SAME K whose residuals are
+#' tested. The subset below therefore uses an argument name that cannot collide
+#' with a column: inside `[.data.table` a closure argument called `K` is
+#' shadowed by the column `K`, so `K == K` is always TRUE and `list(K)` is a
+#' self-join -- either way every K silently receives the strata of the
+#' smallest one (the defect this function replaces; guarded by gate U17).
+make_instruments_by_K <- function(train_dtm, word_dt, K_test, B = 5L, S = 5L,
+                                  min_docfreq = 5L, metric_use = "dev") {
+  stopifnot(is.data.table(word_dt),
+            all(c("K", "metric", "word_id", "r2_word") %in% names(word_dt)))
+  out <- lapply(K_test, function(k_target) {
+    ws <- word_dt[K == k_target & metric == metric_use, .(word_id, r2_word)]
+    if (!nrow(ws))
+      stop(sprintf("no training word scores for K = %s (metric '%s')",
+                   k_target, metric_use), call. = FALSE)
+    stopifnot(!anyDuplicated(ws$word_id))
+    make_instrument_set(train_dtm, ws, B = B, S = S, min_docfreq = min_docfreq)
+  })
+  names(out) <- as.character(K_test)
+  out
 }
 
 #' Run the Section-4 battery on a residual matrix (theta already folded in).

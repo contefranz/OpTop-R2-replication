@@ -1,0 +1,31 @@
+criterion,word,value
+over-observed (residual),trust,0.000339
+over-observed (residual),interest,0.000308
+over-observed (residual),company,0.000267
+over-observed (residual),october,0.00022
+over-observed (residual),income,0.000217
+over-observed (residual),costs,0.000214
+over-observed (residual),expenses,0.000193
+over-observed (residual),decrease,0.000172
+over-observed (residual),capital,0.000152
+over-observed (residual),compared,0.000151
+over-observed (residual),operating,0.000136
+over-observed (residual),properties,0.00013
+over-observed (residual),research,0.000128
+over-observed (residual),fiscal,0.000124
+over-observed (residual),development,0.000116
+worst fit (word R2),resubmitted,-0.43
+worst fit (word R2),transitory,-0.384
+worst fit (word R2),beginning-of-year,-0.334
+worst fit (word R2),lloyd,-0.279
+worst fit (word R2),lasted,-0.255
+worst fit (word R2),equipment-related,-0.247
+worst fit (word R2),concord,-0.239
+worst fit (word R2),statements-note,-0.236
+worst fit (word R2),resurfacing,-0.232
+worst fit (word R2),deconsolidations,-0.232
+worst fit (word R2),templates,-0.223
+worst fit (word R2),division's,-0.221
+worst fit (word R2),fungible,-0.205
+worst fit (word R2),breathing,-0.203
+worst fit (word R2),nottingham,-0.201

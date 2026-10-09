@@ -1,0 +1,13 @@
+eval,rule,eps,share,mc_se_fits,n_fits
+ho_completion,adjacent_pointwise,0.005,0.87,0.089504810547317,10
+ho_completion,adjacent_pointwise,0.01,1,0,10
+ho_completion,adjacent_simultaneous,0.005,0.83,0.11551815634109,10
+ho_completion,adjacent_simultaneous,0.01,1,0,10
+ho_completion,total_gain,0.005,0.67,0.124766448481419,10
+ho_completion,total_gain,0.01,0.95,0.0401386485959743,10
+ho_reconstruction,adjacent_pointwise,0.005,0.41,0.160865713493515,10
+ho_reconstruction,adjacent_pointwise,0.01,0.9,0.1,10
+ho_reconstruction,adjacent_simultaneous,0.005,0.4,0.163299316185545,10
+ho_reconstruction,adjacent_simultaneous,0.01,0.9,0.1,10
+ho_reconstruction,total_gain,0.005,0,0,10
+ho_reconstruction,total_gain,0.01,0.4,0.163299316185545,10

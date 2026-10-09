@@ -150,14 +150,51 @@ make_heldout_partition <- function(theta_list, phi_list, score_dtm, pi_glob,
   )
 }
 
-.collect_word <- function(res, K, metric, ids) {
+#' `d_null_override` (held-out Deviance only): the baseline word deviance in the
+#' Poisson form of Section 2.4, from .word_null_dev_poisson(); r2_word is then
+#' recomputed from it.
+.collect_word <- function(res, K, metric, ids, d_null_override = NULL) {
+  d_model <- as.numeric(res$d_model)
+  d_null <- as.numeric(res$d_null); r2 <- as.numeric(res$r2_word)
+  if (!is.null(d_null_override)) {
+    d_null <- as.numeric(d_null_override)
+    r2 <- ifelse(d_null > 0, 1 - d_model / d_null, NA_real_)
+  }
   data.table(
     K = K, metric = metric,
     word_id = as.character(names(res$r2_word) %||% ids),
-    r2_word = as.numeric(res$r2_word),
-    d_model = as.numeric(res$d_model),
-    d_null = as.numeric(res$d_null)
+    r2_word = r2, d_model = d_model, d_null = d_null
   )
+}
+
+#' Baseline word-level deviance in POISSON form,
+#'   D_w(null) = 2 sum_j [ N_jw log(N_jw / B_jw) - (N_jw - B_jw) ],  B_jw = L_j pi_w,
+#' as Section 2.4 of the paper defines it (every summand is nonnegative).
+#'
+#' Why it is computed here and not taken from the package: OpTop <= 0.20.1 (0.20.1 adds a validity warning only)
+#' returns the word-level FITTED deviance with its linear term but the word-level
+#' NULL deviance without it (2 sum_j N log(N/B); src/index_core.cpp). In-sample
+#' the omitted term is identically zero, because the baseline is the marginal of
+#' the scored corpus (sum_j B_jw = N_w), so nothing in-sample -- including the
+#' training word scores behind Test 3 -- is affected. HELD-OUT, the baseline
+#' comes from training and the counts from evaluation, so N_w - B_w != 0: the
+#' term carries the contribution of the documents in which a word does NOT
+#' occur, and dropping it makes words concentrated in few documents look far
+#' worse fitted than the baseline. Computing the null directly makes the
+#' pipeline correct under either package version. Expected counts are floored
+#' at `eps` inside the logarithm only, as in the package.
+.word_null_dev_poisson <- function(score_dtm, pi_glob, eps = 1e-12) {
+  L <- as.numeric(Matrix::rowSums(score_dtm)); pi_w <- as.numeric(pi_glob)
+  stopifnot(length(pi_w) == ncol(score_dtm))
+  Tm <- as(as(score_dtm, "generalMatrix"), "TsparseMatrix")
+  jj <- Tm@j + 1L
+  b <- pmax(pi_w[jj] * L[Tm@i + 1L], eps)
+  d <- numeric(ncol(score_dtm))
+  if (length(jj)) {
+    agg <- rowsum(2 * Tm@x * log(Tm@x / b), jj)
+    d[as.integer(rownames(agg))] <- agg[, 1L]
+  }
+  d - 2 * (as.numeric(Matrix::colSums(score_dtm)) - pi_w * sum(L))
 }
 
 # --- Held-out scoring ---------------------------------------------------------------
@@ -171,11 +208,17 @@ make_heldout_partition <- function(theta_list, phi_list, score_dtm, pi_glob,
 #'   completion: the complementary halves).
 #' @param pi_glob named training baseline (optop_make_baseline(train_dtm)$pi_glob).
 #' @param word_at integer vector of K values at which word-level indices are kept.
+#' @param min_null null-discrepancy floor delta. NULL = package default
+#'   (delta = c); a number sets it independently of the support threshold c --
+#'   c governs support coarsening, delta governs which documents enter the
+#'   relative-fit estimand, and the two are distinct choices. 0 = strict
+#'   positivity. Raw d_model / d_null are returned for every document either
+#'   way, so delta can also be varied afterwards without rescoring.
 #' @return list(summary, doc, word, minbin_report)
 score_heldout <- function(fits, foldin_dtm, score_dtm, pi_glob, c = 1,
                           metrics = c("dev", "chisq", "se"),
                           word_at = NULL, word_metrics = "dev",
-                          foldin_seed = 1L, n_threads = 1L) {
+                          foldin_seed = 1L, n_threads = 1L, min_null = NULL, resolution = FALSE) {
   K_grid <- as.integer(names(fits))
   theta_list <- lapply(fits, foldin_theta, newdata_dtm = foldin_dtm,
                        seed = foldin_seed)
@@ -183,6 +226,9 @@ score_heldout <- function(fits, foldin_dtm, score_dtm, pi_glob, c = 1,
 
   part <- make_heldout_partition(theta_list, phi_list, score_dtm, pi_glob, c)
   base <- list(pi_glob = pi_glob)
+  # held-out baseline word deviance in Poisson form (does not depend on K)
+  word_null_dev <- if (!is.null(word_at) && "dev" %in% word_metrics)
+    .word_null_dev_poisson(score_dtm, pi_glob) else NULL
 
   sum_rows <- list(); doc_rows <- list(); word_rows <- list()
   for (k in seq_along(K_grid)) {
@@ -192,25 +238,40 @@ score_heldout <- function(fits, foldin_dtm, score_dtm, pi_glob, c = 1,
                         vocab = colnames(score_dtm))
     for (m in metrics) {
       res <- .metric_fun(m)(pf, score_dtm, part, base, macro = TRUE,
-                            level = "document", n_threads = n_threads)
+                            level = "document", n_threads = n_threads,
+                            min_null = min_null)
       sum_rows[[length(sum_rows) + 1L]] <- data.table(
         K = K, metric = m, r2_micro = res$r2, r2_macro = res$r2_macro,
         J_pos = sum(!is.na(res$r2_doc)),
-        # docs dropped by the 0.14.1 null-discrepancy floor (min_null = c)
+        # docs dropped by the null-discrepancy floor (default min_null = c)
         null_excl_share = res$null_excluded_share %||% NA_real_
       )
       doc_rows[[length(doc_rows) + 1L]] <- .collect_doc(res, K, m, part$L, rownames(score_dtm))
     }
     if (!is.null(word_at) && K %in% word_at) {
       for (m in word_metrics) {
-        resw <- .metric_fun(m)(pf, score_dtm, part, base, macro = TRUE,
-                               level = "word", n_threads = n_threads)
-        word_rows[[length(word_rows) + 1L]] <- .collect_word(resw, K, m, colnames(score_dtm))
+        # Only this guarded branch replaces the invalid package null. Never
+        # suppress unrelated warnings or calls whose null is retained.
+        resw <- withCallingHandlers(
+          .metric_fun(m)(pf, score_dtm, part, base, macro = TRUE,
+                         level = "word", n_threads = n_threads),
+          optop_word_null_baseline = function(w) {
+            if (m == "dev" && !is.null(word_null_dev) &&
+                length(word_null_dev) == ncol(score_dtm) &&
+                all(is.finite(word_null_dev))) invokeRestart("muffleWarning")
+          })
+        word_rows[[length(word_rows) + 1L]] <- .collect_word(
+          resw, K, m, colnames(score_dtm),
+          d_null_override = if (m == "dev") word_null_dev else NULL)
       }
     }
   }
 
+  resolution_rows <- if (resolution) rbindlist(lapply(seq_along(K_grid), function(k)
+    support_resolution(theta_list[[k]], phi_list[[k]], score_dtm, part, K_grid[k]))) else NULL
   list(
+    resolution = resolution_rows,
+    scoring = if (exists("revision_provenance")) revision_provenance() else NULL,
     summary = rbindlist(sum_rows),
     doc = rbindlist(doc_rows),
     word = if (length(word_rows)) rbindlist(word_rows) else NULL,
@@ -224,22 +285,29 @@ score_heldout <- function(fits, foldin_dtm, score_dtm, pi_glob, c = 1,
 #' documents is exact; Micro/Macro are re-pooled from the stacked doc table.
 score_heldout_blocked <- function(fits, foldin_dtm, score_dtm, pi_glob, c = 1,
                                   metrics = "dev", block_docs = 2500L,
-                                  foldin_seed = 1L, n_threads = 1L) {
+                                  foldin_seed = 1L, n_threads = 1L,
+                                  min_null = NULL, parallel = FALSE) {
   J <- nrow(score_dtm)
   starts <- seq(1L, J, by = block_docs)
-  docs <- rbindlist(lapply(starts, function(s) {
+  # blocks are independent (per-document partition and scores); `parallel`
+  # spreads them over the current future plan -- only from the MAIN process
+  runner <- if (parallel) function(x, f) future.apply::future_lapply(
+    x, f, future.seed = NULL) else lapply
+  docs <- rbindlist(runner(starts, function(s) {
     rows <- s:min(s + block_docs - 1L, J)
     score_heldout(fits, foldin_dtm[rows, , drop = FALSE],
                   score_dtm[rows, , drop = FALSE], pi_glob, c,
                   metrics = metrics, foldin_seed = foldin_seed,
-                  n_threads = n_threads)$doc
+                  n_threads = n_threads, min_null = min_null)$doc
   }))
-  # pooling filter matches the engine's null-discrepancy floor (min_null = c)
+  # Pooling uses the SAME retained set as the engine: r2_doc is NA exactly for
+  # the documents the floor excluded (delta = min_null, default c; strict
+  # positivity at 0), so the floor is never re-derived here from c.
   summary <- docs[, .(
-    r2_micro = 1 - sum(d_model[d_null >= c]) / sum(d_null[d_null >= c]),
+    r2_micro = 1 - sum(d_model[!is.na(r2_doc)]) / sum(d_null[!is.na(r2_doc)]),
     r2_macro = mean(r2_doc, na.rm = TRUE),
     J_pos = sum(!is.na(r2_doc)),
-    null_excl_share = mean(d_null < c)
+    null_excl_share = mean(is.na(r2_doc))
   ), by = .(K, metric)]
   list(summary = summary, doc = docs)
 }

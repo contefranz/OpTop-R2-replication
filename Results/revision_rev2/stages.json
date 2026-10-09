@@ -1,0 +1,803 @@
+{
+  "acceptance": {
+    "code": {
+      "Code/R/source_all.R": "444cdac2d55546577f48ceaf2281234d68c578136feeed41903f8f087f426198",
+      "Code/R/theme_paper.R": "6c4ac198c1cde06393f91f9f61d6c9fa154c6a1e707faeb3319587f92a555f0e",
+      "Code/R/utils_comparators.R": "899c3346770c5504d78f48e7a24621ccb5c946a55a9d399e9a43c39016402f63",
+      "Code/R/utils_dgp.R": "05de5daafa194c52b598e780e37197a1225bb1bfa4bcfe09b95ba7e5d97e077e",
+      "Code/R/utils_fit.R": "118c3340a55de5bf07c42dcb67968696bebdaaaa5651a1decbe85c3a58f62e64",
+      "Code/R/utils_heldout.R": "ebbf34ba15923ba419a496808ff352e0324a62f995e16d16582777d53dc9519e",
+      "Code/R/utils_inference.R": "2d8ae3f13be7d1abdda9e7022b13720b8873240412ac741cb7cceb75b71a30da",
+      "Code/R/utils_io.R": "44b0c8b1ecb695cc8b686cc450a218d1c89c2b12d8cd5fa657f1ceba508ec03b",
+      "Code/R/utils_moment_tests.R": "4a3fa2653033ab4ca9e96253e3ced43163ae80ac520a124f868679a5227e1709",
+      "Code/R/utils_revision.R": "cb0f08e18c9aaec22b661d364f110473f87cbff51179d3fb4318e3d9c0165cbf",
+      "Code/config/configs.R": "5c2336a0a013813f067a97a145f21f7aa4381009332955811b041979a4a3af91",
+      "Code/finalize_revision.R": "9e0eaf4d5a046bb74b2273ebac563cbd6c00f551370f0a288893153f33730316"
+    },
+    "command": [
+      "Rscript",
+      "Code/finalize_revision.R",
+      "suffix=_rev2"
+    ],
+    "finished": "2026-09-20T12:44:19",
+    "inputs": {},
+    "log": "Results/revision_rev2/acceptance.log",
+    "minutes": 0.2,
+    "outputs": {
+      "Results/revision_rev2/acceptance.json": "51831e698ff01164ebcfbfce92c4480b6af31adde2ecdd1cce01397922a96917"
+    },
+    "package": "0.20.1 cba1273ea8061d3afb7cb26344779d95c492c90f",
+    "returncode": 0,
+    "started": "2026-09-20T12:44:05",
+    "status": "complete"
+  },
+  "e1_base": {
+    "code": {
+      "Code/R/source_all.R": "444cdac2d55546577f48ceaf2281234d68c578136feeed41903f8f087f426198",
+      "Code/R/theme_paper.R": "6c4ac198c1cde06393f91f9f61d6c9fa154c6a1e707faeb3319587f92a555f0e",
+      "Code/R/utils_comparators.R": "899c3346770c5504d78f48e7a24621ccb5c946a55a9d399e9a43c39016402f63",
+      "Code/R/utils_dgp.R": "05de5daafa194c52b598e780e37197a1225bb1bfa4bcfe09b95ba7e5d97e077e",
+      "Code/R/utils_fit.R": "118c3340a55de5bf07c42dcb67968696bebdaaaa5651a1decbe85c3a58f62e64",
+      "Code/R/utils_heldout.R": "ebbf34ba15923ba419a496808ff352e0324a62f995e16d16582777d53dc9519e",
+      "Code/R/utils_inference.R": "2d8ae3f13be7d1abdda9e7022b13720b8873240412ac741cb7cceb75b71a30da",
+      "Code/R/utils_io.R": "44b0c8b1ecb695cc8b686cc450a218d1c89c2b12d8cd5fa657f1ceba508ec03b",
+      "Code/R/utils_moment_tests.R": "4a3fa2653033ab4ca9e96253e3ced43163ae80ac520a124f868679a5227e1709",
+      "Code/R/utils_revision.R": "cb0f08e18c9aaec22b661d364f110473f87cbff51179d3fb4318e3d9c0165cbf",
+      "Code/config/configs.R": "5c2336a0a013813f067a97a145f21f7aa4381009332955811b041979a4a3af91",
+      "Code/run_E1.R": "2c8c4bca0a37e16a29c9812bdbdb434baedf44baeea237d16919c341472de740"
+    },
+    "command": [
+      "Rscript",
+      "Code/run_E1.R",
+      "full",
+      "<workers>",
+      "cfg_from=Data/E1/e1_results_E1_full_Kstar40_J1000_W5000_a0p5_b0p01_k10-100by10_warplda_fa0p1_fb0p01.qs2",
+      "out_suffix=_rev2"
+    ],
+    "finished": "2026-09-19T19:34:06",
+    "inputs": {
+      "Data/E1/e1_results_E1_full_Kstar40_J1000_W5000_a0p5_b0p01_k10-100by10_warplda_fa0p1_fb0p01.qs2": "1816e3d0c1fa2240c595fd0add57eb2d30e0839eeb4c3a99cdeacb0acfce24d7"
+    },
+    "log": "Results/revision_rev2/e1_base.log",
+    "minutes": 54.6,
+    "outputs": {
+      "Data/E1/e1_results_E1_full_Kstar40_J1000_W5000_a0p5_b0p01_k10-100by10_warplda_fa0p1_fb0p01_rev2.qs2": "8213e61a15ef3558409978ca9ffc19bd5878ea159274bfeb052e58466aceb6f5"
+    },
+    "package": "0.20.1 cba1273ea8061d3afb7cb26344779d95c492c90f",
+    "returncode": 0,
+    "started": "2026-09-19T18:39:30",
+    "status": "complete"
+  },
+  "e1_dgp2": {
+    "code": {
+      "Code/R/source_all.R": "444cdac2d55546577f48ceaf2281234d68c578136feeed41903f8f087f426198",
+      "Code/R/theme_paper.R": "6c4ac198c1cde06393f91f9f61d6c9fa154c6a1e707faeb3319587f92a555f0e",
+      "Code/R/utils_comparators.R": "899c3346770c5504d78f48e7a24621ccb5c946a55a9d399e9a43c39016402f63",
+      "Code/R/utils_dgp.R": "05de5daafa194c52b598e780e37197a1225bb1bfa4bcfe09b95ba7e5d97e077e",
+      "Code/R/utils_fit.R": "118c3340a55de5bf07c42dcb67968696bebdaaaa5651a1decbe85c3a58f62e64",
+      "Code/R/utils_heldout.R": "ebbf34ba15923ba419a496808ff352e0324a62f995e16d16582777d53dc9519e",
+      "Code/R/utils_inference.R": "2d8ae3f13be7d1abdda9e7022b13720b8873240412ac741cb7cceb75b71a30da",
+      "Code/R/utils_io.R": "44b0c8b1ecb695cc8b686cc450a218d1c89c2b12d8cd5fa657f1ceba508ec03b",
+      "Code/R/utils_moment_tests.R": "4a3fa2653033ab4ca9e96253e3ced43163ae80ac520a124f868679a5227e1709",
+      "Code/R/utils_revision.R": "cb0f08e18c9aaec22b661d364f110473f87cbff51179d3fb4318e3d9c0165cbf",
+      "Code/config/configs.R": "5c2336a0a013813f067a97a145f21f7aa4381009332955811b041979a4a3af91",
+      "Code/run_E1.R": "2c8c4bca0a37e16a29c9812bdbdb434baedf44baeea237d16919c341472de740"
+    },
+    "command": [
+      "Rscript",
+      "Code/run_E1.R",
+      "full",
+      "<workers>",
+      "cfg_from=Data/E1/e1_results_E1_full_Kstar20_J1000_W10000_a0p5_b0p01_k5-50by5_warplda_fa0p1_fb0p01.qs2",
+      "out_suffix=_rev2"
+    ],
+    "finished": "2026-09-19T20:34:26",
+    "inputs": {
+      "Data/E1/e1_results_E1_full_Kstar20_J1000_W10000_a0p5_b0p01_k5-50by5_warplda_fa0p1_fb0p01.qs2": "0040040b6f414ccea10f5b4a6ccef53a109cb80e1189ec98cf9afdf4c91286f6"
+    },
+    "log": "Results/revision_rev2/e1_dgp2.log",
+    "minutes": 60.3,
+    "outputs": {
+      "Data/E1/e1_results_E1_full_Kstar20_J1000_W10000_a0p5_b0p01_k5-50by5_warplda_fa0p1_fb0p01_rev2.qs2": "d96cdd684a913715d53d3ec5ecbcb30ccc8fc0786d7dcc9df37041b9a20a9bdf"
+    },
+    "package": "0.20.1 cba1273ea8061d3afb7cb26344779d95c492c90f",
+    "returncode": 0,
+    "started": "2026-09-19T19:34:06",
+    "status": "complete"
+  },
+  "e2_base": {
+    "code": {
+      "Code/R/source_all.R": "444cdac2d55546577f48ceaf2281234d68c578136feeed41903f8f087f426198",
+      "Code/R/theme_paper.R": "6c4ac198c1cde06393f91f9f61d6c9fa154c6a1e707faeb3319587f92a555f0e",
+      "Code/R/utils_comparators.R": "899c3346770c5504d78f48e7a24621ccb5c946a55a9d399e9a43c39016402f63",
+      "Code/R/utils_dgp.R": "05de5daafa194c52b598e780e37197a1225bb1bfa4bcfe09b95ba7e5d97e077e",
+      "Code/R/utils_fit.R": "118c3340a55de5bf07c42dcb67968696bebdaaaa5651a1decbe85c3a58f62e64",
+      "Code/R/utils_heldout.R": "ebbf34ba15923ba419a496808ff352e0324a62f995e16d16582777d53dc9519e",
+      "Code/R/utils_inference.R": "2d8ae3f13be7d1abdda9e7022b13720b8873240412ac741cb7cceb75b71a30da",
+      "Code/R/utils_io.R": "44b0c8b1ecb695cc8b686cc450a218d1c89c2b12d8cd5fa657f1ceba508ec03b",
+      "Code/R/utils_moment_tests.R": "4a3fa2653033ab4ca9e96253e3ced43163ae80ac520a124f868679a5227e1709",
+      "Code/R/utils_revision.R": "cb0f08e18c9aaec22b661d364f110473f87cbff51179d3fb4318e3d9c0165cbf",
+      "Code/config/configs.R": "5c2336a0a013813f067a97a145f21f7aa4381009332955811b041979a4a3af91",
+      "Code/run_E2.R": "88576802e2feeef1c5d87fdc05f8b8bc6ff7bd910c93df8bb9d08dfd573385bf"
+    },
+    "command": [
+      "Rscript",
+      "Code/run_E2.R",
+      "full",
+      "<workers>",
+      "cfg_from=Data/E2/e2_results_E2_full_Kstar40_J1000_W5000_a0p5_b0p01_k10-100by10_warplda_fa0p1_fb0p01.qs2",
+      "out_suffix=_rev2",
+      "J_truth=20000"
+    ],
+    "finished": "2026-09-19T13:18:08",
+    "inputs": {
+      "Data/E2/e2_results_E2_full_Kstar40_J1000_W5000_a0p5_b0p01_k10-100by10_warplda_fa0p1_fb0p01.qs2": "b50a2b1212605c82cb1d5b90f2c2a793b2c21f3532002aea580a081d26c2264d"
+    },
+    "log": "Results/revision_rev2/e2_base.log",
+    "minutes": 81.0,
+    "outputs": {
+      "Data/E2/e2_results_E2_full_Kstar40_J1000_W5000_a0p5_b0p01_k10-100by10_warplda_fa0p1_fb0p01_rev2.qs2": "897c00cafb2548dd06cb09610d808cf353dde4bb080ea3296b5f9bad4178fac7"
+    },
+    "package": "0.20.1 cba1273ea8061d3afb7cb26344779d95c492c90f",
+    "returncode": 0,
+    "started": "2026-09-19T11:57:09",
+    "status": "complete"
+  },
+  "e2_dgp2": {
+    "code": {
+      "Code/R/source_all.R": "444cdac2d55546577f48ceaf2281234d68c578136feeed41903f8f087f426198",
+      "Code/R/theme_paper.R": "6c4ac198c1cde06393f91f9f61d6c9fa154c6a1e707faeb3319587f92a555f0e",
+      "Code/R/utils_comparators.R": "899c3346770c5504d78f48e7a24621ccb5c946a55a9d399e9a43c39016402f63",
+      "Code/R/utils_dgp.R": "05de5daafa194c52b598e780e37197a1225bb1bfa4bcfe09b95ba7e5d97e077e",
+      "Code/R/utils_fit.R": "118c3340a55de5bf07c42dcb67968696bebdaaaa5651a1decbe85c3a58f62e64",
+      "Code/R/utils_heldout.R": "ebbf34ba15923ba419a496808ff352e0324a62f995e16d16582777d53dc9519e",
+      "Code/R/utils_inference.R": "2d8ae3f13be7d1abdda9e7022b13720b8873240412ac741cb7cceb75b71a30da",
+      "Code/R/utils_io.R": "44b0c8b1ecb695cc8b686cc450a218d1c89c2b12d8cd5fa657f1ceba508ec03b",
+      "Code/R/utils_moment_tests.R": "4a3fa2653033ab4ca9e96253e3ced43163ae80ac520a124f868679a5227e1709",
+      "Code/R/utils_revision.R": "cb0f08e18c9aaec22b661d364f110473f87cbff51179d3fb4318e3d9c0165cbf",
+      "Code/config/configs.R": "5c2336a0a013813f067a97a145f21f7aa4381009332955811b041979a4a3af91",
+      "Code/run_E2.R": "88576802e2feeef1c5d87fdc05f8b8bc6ff7bd910c93df8bb9d08dfd573385bf"
+    },
+    "command": [
+      "Rscript",
+      "Code/run_E2.R",
+      "full",
+      "<workers>",
+      "cfg_from=Data/E2/e2_results_E2_full_Kstar20_J1000_W10000_a0p5_b0p01_k5-50by5_warplda_fa0p1_fb0p01.qs2",
+      "out_suffix=_rev2",
+      "J_truth=20000"
+    ],
+    "finished": "2026-09-19T14:34:54",
+    "inputs": {
+      "Data/E2/e2_results_E2_full_Kstar20_J1000_W10000_a0p5_b0p01_k5-50by5_warplda_fa0p1_fb0p01.qs2": "bef45a7334b6aef92d38f33d0efed0f371928cbc1a77f498e1b02fa612fda715"
+    },
+    "log": "Results/revision_rev2/e2_dgp2.log",
+    "minutes": 76.8,
+    "outputs": {
+      "Data/E2/e2_results_E2_full_Kstar20_J1000_W10000_a0p5_b0p01_k5-50by5_warplda_fa0p1_fb0p01_rev2.qs2": "6de2c22b40186e8d9447728f478a0d3e5fa66be79b15c5ec672caae4fe991646"
+    },
+    "package": "0.20.1 cba1273ea8061d3afb7cb26344779d95c492c90f",
+    "returncode": 0,
+    "started": "2026-09-19T13:18:08",
+    "status": "complete"
+  },
+  "e4_base": {
+    "code": {
+      "Code/R/source_all.R": "444cdac2d55546577f48ceaf2281234d68c578136feeed41903f8f087f426198",
+      "Code/R/theme_paper.R": "6c4ac198c1cde06393f91f9f61d6c9fa154c6a1e707faeb3319587f92a555f0e",
+      "Code/R/utils_comparators.R": "899c3346770c5504d78f48e7a24621ccb5c946a55a9d399e9a43c39016402f63",
+      "Code/R/utils_dgp.R": "05de5daafa194c52b598e780e37197a1225bb1bfa4bcfe09b95ba7e5d97e077e",
+      "Code/R/utils_fit.R": "118c3340a55de5bf07c42dcb67968696bebdaaaa5651a1decbe85c3a58f62e64",
+      "Code/R/utils_heldout.R": "ebbf34ba15923ba419a496808ff352e0324a62f995e16d16582777d53dc9519e",
+      "Code/R/utils_inference.R": "2d8ae3f13be7d1abdda9e7022b13720b8873240412ac741cb7cceb75b71a30da",
+      "Code/R/utils_io.R": "44b0c8b1ecb695cc8b686cc450a218d1c89c2b12d8cd5fa657f1ceba508ec03b",
+      "Code/R/utils_moment_tests.R": "4a3fa2653033ab4ca9e96253e3ced43163ae80ac520a124f868679a5227e1709",
+      "Code/R/utils_revision.R": "cb0f08e18c9aaec22b661d364f110473f87cbff51179d3fb4318e3d9c0165cbf",
+      "Code/config/configs.R": "5c2336a0a013813f067a97a145f21f7aa4381009332955811b041979a4a3af91",
+      "Code/run_E4.R": "e46eb8bc012c0935de0f14a7852bfe4c27bc063748c15efb0ad2de0b429d5e18"
+    },
+    "command": [
+      "Rscript",
+      "Code/run_E4.R",
+      "full",
+      "<workers>",
+      "cfg_from=Data/E4/e4_results_E4_full_Kstar40_J1000_W5000_a0p5_b0p01_k10-100by10_warplda_fa0p1_fb0p01.qs2",
+      "out_suffix=_rev2"
+    ],
+    "finished": "2026-09-20T04:46:58",
+    "inputs": {
+      "Data/E4/e4_results_E4_full_Kstar40_J1000_W5000_a0p5_b0p01_k10-100by10_warplda_fa0p1_fb0p01.qs2": "7c7bc21e03cd6678abaaf0b934fb07c7520c22b332fa4434b5fa962cf04c950d"
+    },
+    "log": "Results/revision_rev2/e4_base.log",
+    "minutes": 492.5,
+    "outputs": {
+      "Data/E4/e4_results_E4_full_Kstar40_J1000_W5000_a0p5_b0p01_k10-100by10_warplda_fa0p1_fb0p01_rev2.qs2": "c8e8d6bac08d21d661efb6e0654e9d745a8687d86c5f811f347b1d00380f3a4a"
+    },
+    "package": "0.20.1 cba1273ea8061d3afb7cb26344779d95c492c90f",
+    "returncode": 0,
+    "started": "2026-09-19T20:34:26",
+    "status": "complete"
+  },
+  "e4_prior": {
+    "code": {
+      "Code/R/source_all.R": "444cdac2d55546577f48ceaf2281234d68c578136feeed41903f8f087f426198",
+      "Code/R/theme_paper.R": "6c4ac198c1cde06393f91f9f61d6c9fa154c6a1e707faeb3319587f92a555f0e",
+      "Code/R/utils_comparators.R": "899c3346770c5504d78f48e7a24621ccb5c946a55a9d399e9a43c39016402f63",
+      "Code/R/utils_dgp.R": "05de5daafa194c52b598e780e37197a1225bb1bfa4bcfe09b95ba7e5d97e077e",
+      "Code/R/utils_fit.R": "118c3340a55de5bf07c42dcb67968696bebdaaaa5651a1decbe85c3a58f62e64",
+      "Code/R/utils_heldout.R": "ebbf34ba15923ba419a496808ff352e0324a62f995e16d16582777d53dc9519e",
+      "Code/R/utils_inference.R": "2d8ae3f13be7d1abdda9e7022b13720b8873240412ac741cb7cceb75b71a30da",
+      "Code/R/utils_io.R": "44b0c8b1ecb695cc8b686cc450a218d1c89c2b12d8cd5fa657f1ceba508ec03b",
+      "Code/R/utils_moment_tests.R": "4a3fa2653033ab4ca9e96253e3ced43163ae80ac520a124f868679a5227e1709",
+      "Code/R/utils_revision.R": "cb0f08e18c9aaec22b661d364f110473f87cbff51179d3fb4318e3d9c0165cbf",
+      "Code/config/configs.R": "5c2336a0a013813f067a97a145f21f7aa4381009332955811b041979a4a3af91",
+      "Code/run_E4.R": "e46eb8bc012c0935de0f14a7852bfe4c27bc063748c15efb0ad2de0b429d5e18"
+    },
+    "command": [
+      "Rscript",
+      "Code/run_E4.R",
+      "full",
+      "<workers>",
+      "cfg_from=Data/E4/e4_results_E4_full_Kstar40_J1000_W5000_a0p5_b0p01_k10-100by10_warplda_fa0p5_fb0p01.qs2",
+      "out_suffix=_rev2"
+    ],
+    "finished": "2026-09-20T05:56:14",
+    "inputs": {
+      "Data/E4/e4_results_E4_full_Kstar40_J1000_W5000_a0p5_b0p01_k10-100by10_warplda_fa0p5_fb0p01.qs2": "9c9f841fe93b8f34d664d08ecaffc7b3e2489a7139ddeb088128590d880b71fe"
+    },
+    "log": "Results/revision_rev2/e4_prior.log",
+    "minutes": 69.3,
+    "outputs": {
+      "Data/E4/e4_results_E4_full_Kstar40_J1000_W5000_a0p5_b0p01_k10-100by10_warplda_fa0p5_fb0p01_rev2.qs2": "7edd6ec1281887d6d472a6cdccfbf919003f0f1f2042246cb8266819a4151f4a"
+    },
+    "package": "0.20.1 cba1273ea8061d3afb7cb26344779d95c492c90f",
+    "returncode": 0,
+    "started": "2026-09-20T04:46:58",
+    "status": "complete"
+  },
+  "e5_resolution": {
+    "code": {
+      "Code/R/source_all.R": "444cdac2d55546577f48ceaf2281234d68c578136feeed41903f8f087f426198",
+      "Code/R/theme_paper.R": "6c4ac198c1cde06393f91f9f61d6c9fa154c6a1e707faeb3319587f92a555f0e",
+      "Code/R/utils_comparators.R": "899c3346770c5504d78f48e7a24621ccb5c946a55a9d399e9a43c39016402f63",
+      "Code/R/utils_dgp.R": "05de5daafa194c52b598e780e37197a1225bb1bfa4bcfe09b95ba7e5d97e077e",
+      "Code/R/utils_fit.R": "118c3340a55de5bf07c42dcb67968696bebdaaaa5651a1decbe85c3a58f62e64",
+      "Code/R/utils_heldout.R": "ebbf34ba15923ba419a496808ff352e0324a62f995e16d16582777d53dc9519e",
+      "Code/R/utils_inference.R": "2d8ae3f13be7d1abdda9e7022b13720b8873240412ac741cb7cceb75b71a30da",
+      "Code/R/utils_io.R": "44b0c8b1ecb695cc8b686cc450a218d1c89c2b12d8cd5fa657f1ceba508ec03b",
+      "Code/R/utils_moment_tests.R": "4a3fa2653033ab4ca9e96253e3ced43163ae80ac520a124f868679a5227e1709",
+      "Code/R/utils_revision.R": "cb0f08e18c9aaec22b661d364f110473f87cbff51179d3fb4318e3d9c0165cbf",
+      "Code/config/configs.R": "5c2336a0a013813f067a97a145f21f7aa4381009332955811b041979a4a3af91",
+      "Code/run_revision_diagnostics.R": "8e1c5888466a7ddae72307665e1358de4fa51315d0af8a44d8de10c0a6cc8b4e"
+    },
+    "command": [
+      "Rscript",
+      "Code/run_revision_diagnostics.R",
+      "<workers>",
+      "mode=e5",
+      "input=Data/E5/e5_results_E5_full_Kstar40_J1000_W5000_a0p5_b0p01_k10-100by10_warplda_fa0p1_fb0p01.qs2",
+      "out_suffix=_rev2"
+    ],
+    "finished": "2026-09-19T16:45:57",
+    "inputs": {
+      "Data/E5/e5_results_E5_full_Kstar40_J1000_W5000_a0p5_b0p01_k10-100by10_warplda_fa0p1_fb0p01.qs2": "ec135c144de5f3cde00f3b5aca31009de101b98b8e35247cba7765829bd97357"
+    },
+    "log": "Results/revision_rev2/e5_resolution.log",
+    "minutes": 0.1,
+    "outputs": {
+      "Data/E5/e5_resolution_rev2.qs2": "a4992b3032c4c6b24740cabbbbd66aa26e4b1b5d008425e84f21610482271b2e"
+    },
+    "package": "0.20.1 cba1273ea8061d3afb7cb26344779d95c492c90f",
+    "returncode": 0,
+    "started": "2026-09-19T16:45:52",
+    "status": "complete"
+  },
+  "e6": {
+    "code": {
+      "Code/R/source_all.R": "444cdac2d55546577f48ceaf2281234d68c578136feeed41903f8f087f426198",
+      "Code/R/theme_paper.R": "6c4ac198c1cde06393f91f9f61d6c9fa154c6a1e707faeb3319587f92a555f0e",
+      "Code/R/utils_comparators.R": "899c3346770c5504d78f48e7a24621ccb5c946a55a9d399e9a43c39016402f63",
+      "Code/R/utils_dgp.R": "05de5daafa194c52b598e780e37197a1225bb1bfa4bcfe09b95ba7e5d97e077e",
+      "Code/R/utils_fit.R": "118c3340a55de5bf07c42dcb67968696bebdaaaa5651a1decbe85c3a58f62e64",
+      "Code/R/utils_heldout.R": "ebbf34ba15923ba419a496808ff352e0324a62f995e16d16582777d53dc9519e",
+      "Code/R/utils_inference.R": "2d8ae3f13be7d1abdda9e7022b13720b8873240412ac741cb7cceb75b71a30da",
+      "Code/R/utils_io.R": "44b0c8b1ecb695cc8b686cc450a218d1c89c2b12d8cd5fa657f1ceba508ec03b",
+      "Code/R/utils_moment_tests.R": "4a3fa2653033ab4ca9e96253e3ced43163ae80ac520a124f868679a5227e1709",
+      "Code/R/utils_revision.R": "cb0f08e18c9aaec22b661d364f110473f87cbff51179d3fb4318e3d9c0165cbf",
+      "Code/config/configs.R": "5c2336a0a013813f067a97a145f21f7aa4381009332955811b041979a4a3af91",
+      "Code/run_E6.R": "1ac678bccd9e097d262ffa66ff8e3da6a0ba5b5cced7c63aab21362048a316c3"
+    },
+    "command": [
+      "Rscript",
+      "Code/run_E6.R",
+      "full",
+      "<workers>",
+      "cfg_from=Data/E6/e6_results_E6_full_Kstar40_J1000_W5000_a0p5_b0p01_k10-100by10_warplda_fa0p1_fb0p01.qs2",
+      "out_suffix=_rev2"
+    ],
+    "finished": "2026-09-19T16:45:52",
+    "inputs": {
+      "Data/E6/e6_results_E6_full_Kstar40_J1000_W5000_a0p5_b0p01_k10-100by10_warplda_fa0p1_fb0p01.qs2": "97c52070fe620a3fab083b277163702f4fa77495418ddfb1d2a8e49910670c33"
+    },
+    "log": "Results/revision_rev2/e6.log",
+    "minutes": 34.1,
+    "outputs": {
+      "Data/E6/e6_results_E6_full_Kstar40_J1000_W5000_a0p5_b0p01_k10-100by10_warplda_fa0p1_fb0p01_rev2.qs2": "991b1ce6a6ecf79b17be880ffae4f0d07798dd179c6465c156816b00e022f88a"
+    },
+    "package": "0.20.1 cba1273ea8061d3afb7cb26344779d95c492c90f",
+    "returncode": 0,
+    "started": "2026-09-19T16:11:44",
+    "status": "complete"
+  },
+  "mdna": {
+    "code": {
+      "Code/R/source_all.R": "444cdac2d55546577f48ceaf2281234d68c578136feeed41903f8f087f426198",
+      "Code/R/theme_paper.R": "6c4ac198c1cde06393f91f9f61d6c9fa154c6a1e707faeb3319587f92a555f0e",
+      "Code/R/utils_comparators.R": "899c3346770c5504d78f48e7a24621ccb5c946a55a9d399e9a43c39016402f63",
+      "Code/R/utils_dgp.R": "05de5daafa194c52b598e780e37197a1225bb1bfa4bcfe09b95ba7e5d97e077e",
+      "Code/R/utils_fit.R": "118c3340a55de5bf07c42dcb67968696bebdaaaa5651a1decbe85c3a58f62e64",
+      "Code/R/utils_heldout.R": "ebbf34ba15923ba419a496808ff352e0324a62f995e16d16582777d53dc9519e",
+      "Code/R/utils_inference.R": "2d8ae3f13be7d1abdda9e7022b13720b8873240412ac741cb7cceb75b71a30da",
+      "Code/R/utils_io.R": "44b0c8b1ecb695cc8b686cc450a218d1c89c2b12d8cd5fa657f1ceba508ec03b",
+      "Code/R/utils_moment_tests.R": "4a3fa2653033ab4ca9e96253e3ced43163ae80ac520a124f868679a5227e1709",
+      "Code/R/utils_revision.R": "cb0f08e18c9aaec22b661d364f110473f87cbff51179d3fb4318e3d9c0165cbf",
+      "Code/config/configs.R": "5c2336a0a013813f067a97a145f21f7aa4381009332955811b041979a4a3af91",
+      "Code/run_mdna.R": "6104a663b0ad590b5eee689e991e9ddda7ac03c4d1af6885d28cf67fb62b8e9a"
+    },
+    "command": [
+      "Rscript",
+      "Code/run_mdna.R",
+      "<workers>",
+      "K_grid=10:200:10",
+      "refine_span=0",
+      "tests_K=40,50,60,170,180,190",
+      "c_part=1",
+      "min_null=1",
+      "out_suffix=_rev2"
+    ],
+    "finished": "2026-09-19T09:34:53",
+    "inputs": {
+      "Data/MDNA/mdna_prep_2015_2016.qs2": "f9a257f3783618edeac97163dc7728ec29e1cd1fd97b92881fb0b458f0ec9750"
+    },
+    "log": "Results/revision_rev2/mdna.log",
+    "minutes": 62.0,
+    "outputs": {
+      "Data/MDNA/mdna_results_MDNA_2015_2016_rev2.qs2": "d035626e78cfc3998e3642163a0db5e6c0b234b5468aa6b87cab531e0b64cac4"
+    },
+    "package": "0.20.1 cba1273ea8061d3afb7cb26344779d95c492c90f",
+    "returncode": 0,
+    "started": "2026-09-19T08:32:54",
+    "status": "complete"
+  },
+  "mdna_c05": {
+    "code": {
+      "Code/R/source_all.R": "444cdac2d55546577f48ceaf2281234d68c578136feeed41903f8f087f426198",
+      "Code/R/theme_paper.R": "6c4ac198c1cde06393f91f9f61d6c9fa154c6a1e707faeb3319587f92a555f0e",
+      "Code/R/utils_comparators.R": "899c3346770c5504d78f48e7a24621ccb5c946a55a9d399e9a43c39016402f63",
+      "Code/R/utils_dgp.R": "05de5daafa194c52b598e780e37197a1225bb1bfa4bcfe09b95ba7e5d97e077e",
+      "Code/R/utils_fit.R": "118c3340a55de5bf07c42dcb67968696bebdaaaa5651a1decbe85c3a58f62e64",
+      "Code/R/utils_heldout.R": "ebbf34ba15923ba419a496808ff352e0324a62f995e16d16582777d53dc9519e",
+      "Code/R/utils_inference.R": "2d8ae3f13be7d1abdda9e7022b13720b8873240412ac741cb7cceb75b71a30da",
+      "Code/R/utils_io.R": "44b0c8b1ecb695cc8b686cc450a218d1c89c2b12d8cd5fa657f1ceba508ec03b",
+      "Code/R/utils_moment_tests.R": "4a3fa2653033ab4ca9e96253e3ced43163ae80ac520a124f868679a5227e1709",
+      "Code/R/utils_revision.R": "cb0f08e18c9aaec22b661d364f110473f87cbff51179d3fb4318e3d9c0165cbf",
+      "Code/config/configs.R": "5c2336a0a013813f067a97a145f21f7aa4381009332955811b041979a4a3af91",
+      "Code/run_mdna.R": "6104a663b0ad590b5eee689e991e9ddda7ac03c4d1af6885d28cf67fb62b8e9a"
+    },
+    "command": [
+      "Rscript",
+      "Code/run_mdna.R",
+      "<workers>",
+      "K_grid=10:200:10",
+      "refine_span=0",
+      "tests_K=40,50,60,170,180,190",
+      "c_part=0.5",
+      "min_null=1",
+      "out_suffix=_c05_rev2"
+    ],
+    "finished": "2026-09-19T10:35:06",
+    "inputs": {
+      "Data/MDNA/mdna_prep_2015_2016.qs2": "f9a257f3783618edeac97163dc7728ec29e1cd1fd97b92881fb0b458f0ec9750"
+    },
+    "log": "Results/revision_rev2/mdna_c05.log",
+    "minutes": 60.2,
+    "outputs": {
+      "Data/MDNA/mdna_results_MDNA_2015_2016_c05_rev2.qs2": "b54ae10872324fd4af504522ce86c67a2f036e88834ca91df73454a043989515"
+    },
+    "package": "0.20.1 cba1273ea8061d3afb7cb26344779d95c492c90f",
+    "returncode": 0,
+    "started": "2026-09-19T09:34:53",
+    "status": "complete"
+  },
+  "mdna_c2": {
+    "code": {
+      "Code/R/source_all.R": "444cdac2d55546577f48ceaf2281234d68c578136feeed41903f8f087f426198",
+      "Code/R/theme_paper.R": "6c4ac198c1cde06393f91f9f61d6c9fa154c6a1e707faeb3319587f92a555f0e",
+      "Code/R/utils_comparators.R": "899c3346770c5504d78f48e7a24621ccb5c946a55a9d399e9a43c39016402f63",
+      "Code/R/utils_dgp.R": "05de5daafa194c52b598e780e37197a1225bb1bfa4bcfe09b95ba7e5d97e077e",
+      "Code/R/utils_fit.R": "118c3340a55de5bf07c42dcb67968696bebdaaaa5651a1decbe85c3a58f62e64",
+      "Code/R/utils_heldout.R": "ebbf34ba15923ba419a496808ff352e0324a62f995e16d16582777d53dc9519e",
+      "Code/R/utils_inference.R": "2d8ae3f13be7d1abdda9e7022b13720b8873240412ac741cb7cceb75b71a30da",
+      "Code/R/utils_io.R": "44b0c8b1ecb695cc8b686cc450a218d1c89c2b12d8cd5fa657f1ceba508ec03b",
+      "Code/R/utils_moment_tests.R": "4a3fa2653033ab4ca9e96253e3ced43163ae80ac520a124f868679a5227e1709",
+      "Code/R/utils_revision.R": "cb0f08e18c9aaec22b661d364f110473f87cbff51179d3fb4318e3d9c0165cbf",
+      "Code/config/configs.R": "5c2336a0a013813f067a97a145f21f7aa4381009332955811b041979a4a3af91",
+      "Code/run_mdna.R": "6104a663b0ad590b5eee689e991e9ddda7ac03c4d1af6885d28cf67fb62b8e9a"
+    },
+    "command": [
+      "Rscript",
+      "Code/run_mdna.R",
+      "<workers>",
+      "K_grid=10:200:10",
+      "refine_span=0",
+      "tests_K=40,50,60,170,180,190",
+      "c_part=2",
+      "min_null=1",
+      "out_suffix=_c2_rev2"
+    ],
+    "finished": "2026-09-19T11:34:29",
+    "inputs": {
+      "Data/MDNA/mdna_prep_2015_2016.qs2": "f9a257f3783618edeac97163dc7728ec29e1cd1fd97b92881fb0b458f0ec9750"
+    },
+    "log": "Results/revision_rev2/mdna_c2.log",
+    "minutes": 59.4,
+    "outputs": {
+      "Data/MDNA/mdna_results_MDNA_2015_2016_c2_rev2.qs2": "2a3375ed65a8c9296417a5ba6dc6ed1a9f88c3ff7768375e4e6295fde8fe014f"
+    },
+    "package": "0.20.1 cba1273ea8061d3afb7cb26344779d95c492c90f",
+    "returncode": 0,
+    "started": "2026-09-19T10:35:06",
+    "status": "complete"
+  },
+  "mdna_g100": {
+    "code": {
+      "Code/R/source_all.R": "444cdac2d55546577f48ceaf2281234d68c578136feeed41903f8f087f426198",
+      "Code/R/theme_paper.R": "6c4ac198c1cde06393f91f9f61d6c9fa154c6a1e707faeb3319587f92a555f0e",
+      "Code/R/utils_comparators.R": "899c3346770c5504d78f48e7a24621ccb5c946a55a9d399e9a43c39016402f63",
+      "Code/R/utils_dgp.R": "05de5daafa194c52b598e780e37197a1225bb1bfa4bcfe09b95ba7e5d97e077e",
+      "Code/R/utils_fit.R": "118c3340a55de5bf07c42dcb67968696bebdaaaa5651a1decbe85c3a58f62e64",
+      "Code/R/utils_heldout.R": "ebbf34ba15923ba419a496808ff352e0324a62f995e16d16582777d53dc9519e",
+      "Code/R/utils_inference.R": "2d8ae3f13be7d1abdda9e7022b13720b8873240412ac741cb7cceb75b71a30da",
+      "Code/R/utils_io.R": "44b0c8b1ecb695cc8b686cc450a218d1c89c2b12d8cd5fa657f1ceba508ec03b",
+      "Code/R/utils_moment_tests.R": "4a3fa2653033ab4ca9e96253e3ced43163ae80ac520a124f868679a5227e1709",
+      "Code/R/utils_revision.R": "cb0f08e18c9aaec22b661d364f110473f87cbff51179d3fb4318e3d9c0165cbf",
+      "Code/config/configs.R": "5c2336a0a013813f067a97a145f21f7aa4381009332955811b041979a4a3af91",
+      "Code/run_mdna.R": "6104a663b0ad590b5eee689e991e9ddda7ac03c4d1af6885d28cf67fb62b8e9a"
+    },
+    "command": [
+      "Rscript",
+      "Code/run_mdna.R",
+      "<workers>",
+      "K_grid=10:100:10",
+      "refine_span=0",
+      "tests_K=40,50,60",
+      "c_part=1",
+      "min_null=1",
+      "out_suffix=_g100_rev2"
+    ],
+    "finished": "2026-09-19T11:57:09",
+    "inputs": {
+      "Data/MDNA/mdna_prep_2015_2016.qs2": "f9a257f3783618edeac97163dc7728ec29e1cd1fd97b92881fb0b458f0ec9750"
+    },
+    "log": "Results/revision_rev2/mdna_g100.log",
+    "minutes": 22.7,
+    "outputs": {
+      "Data/MDNA/mdna_results_MDNA_2015_2016_g100_rev2.qs2": "71e7096ec96bcdff2994c9f974340b98a53fa8d09a60bed3743e031fd7e55ec5"
+    },
+    "package": "0.20.1 cba1273ea8061d3afb7cb26344779d95c492c90f",
+    "returncode": 0,
+    "started": "2026-09-19T11:34:29",
+    "status": "complete"
+  },
+  "post_e2_base": {
+    "code": {
+      "Code/R/source_all.R": "444cdac2d55546577f48ceaf2281234d68c578136feeed41903f8f087f426198",
+      "Code/R/theme_paper.R": "6c4ac198c1cde06393f91f9f61d6c9fa154c6a1e707faeb3319587f92a555f0e",
+      "Code/R/utils_comparators.R": "899c3346770c5504d78f48e7a24621ccb5c946a55a9d399e9a43c39016402f63",
+      "Code/R/utils_dgp.R": "05de5daafa194c52b598e780e37197a1225bb1bfa4bcfe09b95ba7e5d97e077e",
+      "Code/R/utils_fit.R": "118c3340a55de5bf07c42dcb67968696bebdaaaa5651a1decbe85c3a58f62e64",
+      "Code/R/utils_heldout.R": "ebbf34ba15923ba419a496808ff352e0324a62f995e16d16582777d53dc9519e",
+      "Code/R/utils_inference.R": "2d8ae3f13be7d1abdda9e7022b13720b8873240412ac741cb7cceb75b71a30da",
+      "Code/R/utils_io.R": "44b0c8b1ecb695cc8b686cc450a218d1c89c2b12d8cd5fa657f1ceba508ec03b",
+      "Code/R/utils_moment_tests.R": "4a3fa2653033ab4ca9e96253e3ced43163ae80ac520a124f868679a5227e1709",
+      "Code/R/utils_revision.R": "cb0f08e18c9aaec22b661d364f110473f87cbff51179d3fb4318e3d9c0165cbf",
+      "Code/config/configs.R": "5c2336a0a013813f067a97a145f21f7aa4381009332955811b041979a4a3af91",
+      "Code/postprocess_e2_gap.R": "ae95a444a9eef68db5ff1604075ce54b5aee659300574ebfba8c45ec82b478db"
+    },
+    "command": [
+      "Rscript",
+      "Code/postprocess_e2_gap.R",
+      "file=Data/E2/e2_results_E2_full_Kstar40_J1000_W5000_a0p5_b0p01_k10-100by10_warplda_fa0p1_fb0p01_rev2.qs2"
+    ],
+    "finished": "2026-09-20T12:44:04",
+    "inputs": {
+      "Data/E2/e2_results_E2_full_Kstar40_J1000_W5000_a0p5_b0p01_k10-100by10_warplda_fa0p1_fb0p01_rev2.qs2": "897c00cafb2548dd06cb09610d808cf353dde4bb080ea3296b5f9bad4178fac7"
+    },
+    "log": "Results/revision_rev2/post_e2_base.log",
+    "minutes": 0.0,
+    "outputs": {},
+    "package": "0.20.1 cba1273ea8061d3afb7cb26344779d95c492c90f",
+    "returncode": 0,
+    "started": "2026-09-20T12:44:03",
+    "status": "complete"
+  },
+  "post_e2_dgp2": {
+    "code": {
+      "Code/R/source_all.R": "444cdac2d55546577f48ceaf2281234d68c578136feeed41903f8f087f426198",
+      "Code/R/theme_paper.R": "6c4ac198c1cde06393f91f9f61d6c9fa154c6a1e707faeb3319587f92a555f0e",
+      "Code/R/utils_comparators.R": "899c3346770c5504d78f48e7a24621ccb5c946a55a9d399e9a43c39016402f63",
+      "Code/R/utils_dgp.R": "05de5daafa194c52b598e780e37197a1225bb1bfa4bcfe09b95ba7e5d97e077e",
+      "Code/R/utils_fit.R": "118c3340a55de5bf07c42dcb67968696bebdaaaa5651a1decbe85c3a58f62e64",
+      "Code/R/utils_heldout.R": "ebbf34ba15923ba419a496808ff352e0324a62f995e16d16582777d53dc9519e",
+      "Code/R/utils_inference.R": "2d8ae3f13be7d1abdda9e7022b13720b8873240412ac741cb7cceb75b71a30da",
+      "Code/R/utils_io.R": "44b0c8b1ecb695cc8b686cc450a218d1c89c2b12d8cd5fa657f1ceba508ec03b",
+      "Code/R/utils_moment_tests.R": "4a3fa2653033ab4ca9e96253e3ced43163ae80ac520a124f868679a5227e1709",
+      "Code/R/utils_revision.R": "cb0f08e18c9aaec22b661d364f110473f87cbff51179d3fb4318e3d9c0165cbf",
+      "Code/config/configs.R": "5c2336a0a013813f067a97a145f21f7aa4381009332955811b041979a4a3af91",
+      "Code/postprocess_e2_gap.R": "ae95a444a9eef68db5ff1604075ce54b5aee659300574ebfba8c45ec82b478db"
+    },
+    "command": [
+      "Rscript",
+      "Code/postprocess_e2_gap.R",
+      "file=Data/E2/e2_results_E2_full_Kstar20_J1000_W10000_a0p5_b0p01_k5-50by5_warplda_fa0p1_fb0p01_rev2.qs2"
+    ],
+    "finished": "2026-09-20T12:44:05",
+    "inputs": {
+      "Data/E2/e2_results_E2_full_Kstar20_J1000_W10000_a0p5_b0p01_k5-50by5_warplda_fa0p1_fb0p01_rev2.qs2": "6de2c22b40186e8d9447728f478a0d3e5fa66be79b15c5ec672caae4fe991646"
+    },
+    "log": "Results/revision_rev2/post_e2_dgp2.log",
+    "minutes": 0.0,
+    "outputs": {},
+    "package": "0.20.1 cba1273ea8061d3afb7cb26344779d95c492c90f",
+    "returncode": 0,
+    "started": "2026-09-20T12:44:04",
+    "status": "complete"
+  },
+  "post_e4_base": {
+    "code": {
+      "Code/R/source_all.R": "444cdac2d55546577f48ceaf2281234d68c578136feeed41903f8f087f426198",
+      "Code/R/theme_paper.R": "6c4ac198c1cde06393f91f9f61d6c9fa154c6a1e707faeb3319587f92a555f0e",
+      "Code/R/utils_comparators.R": "899c3346770c5504d78f48e7a24621ccb5c946a55a9d399e9a43c39016402f63",
+      "Code/R/utils_dgp.R": "05de5daafa194c52b598e780e37197a1225bb1bfa4bcfe09b95ba7e5d97e077e",
+      "Code/R/utils_fit.R": "118c3340a55de5bf07c42dcb67968696bebdaaaa5651a1decbe85c3a58f62e64",
+      "Code/R/utils_heldout.R": "ebbf34ba15923ba419a496808ff352e0324a62f995e16d16582777d53dc9519e",
+      "Code/R/utils_inference.R": "2d8ae3f13be7d1abdda9e7022b13720b8873240412ac741cb7cceb75b71a30da",
+      "Code/R/utils_io.R": "44b0c8b1ecb695cc8b686cc450a218d1c89c2b12d8cd5fa657f1ceba508ec03b",
+      "Code/R/utils_moment_tests.R": "4a3fa2653033ab4ca9e96253e3ced43163ae80ac520a124f868679a5227e1709",
+      "Code/R/utils_revision.R": "cb0f08e18c9aaec22b661d364f110473f87cbff51179d3fb4318e3d9c0165cbf",
+      "Code/config/configs.R": "5c2336a0a013813f067a97a145f21f7aa4381009332955811b041979a4a3af91",
+      "Code/postprocess_e4.R": "d9e210517bdbf9051ae7bfe64a05bf07828cadaa39411b6ba86d7877535f32cd"
+    },
+    "command": [
+      "Rscript",
+      "Code/postprocess_e4.R",
+      "file=Data/E4/e4_results_E4_full_Kstar40_J1000_W5000_a0p5_b0p01_k10-100by10_warplda_fa0p1_fb0p01_rev2.qs2"
+    ],
+    "finished": "2026-09-20T12:44:01",
+    "inputs": {
+      "Data/E4/e4_results_E4_full_Kstar40_J1000_W5000_a0p5_b0p01_k10-100by10_warplda_fa0p1_fb0p01_rev2.qs2": "c8e8d6bac08d21d661efb6e0654e9d745a8687d86c5f811f347b1d00380f3a4a"
+    },
+    "log": "Results/revision_rev2/post_e4_base.log",
+    "minutes": 0.0,
+    "outputs": {},
+    "package": "0.20.1 cba1273ea8061d3afb7cb26344779d95c492c90f",
+    "returncode": 0,
+    "started": "2026-09-20T12:43:59",
+    "status": "complete"
+  },
+  "post_e4_prior": {
+    "code": {
+      "Code/R/source_all.R": "444cdac2d55546577f48ceaf2281234d68c578136feeed41903f8f087f426198",
+      "Code/R/theme_paper.R": "6c4ac198c1cde06393f91f9f61d6c9fa154c6a1e707faeb3319587f92a555f0e",
+      "Code/R/utils_comparators.R": "899c3346770c5504d78f48e7a24621ccb5c946a55a9d399e9a43c39016402f63",
+      "Code/R/utils_dgp.R": "05de5daafa194c52b598e780e37197a1225bb1bfa4bcfe09b95ba7e5d97e077e",
+      "Code/R/utils_fit.R": "118c3340a55de5bf07c42dcb67968696bebdaaaa5651a1decbe85c3a58f62e64",
+      "Code/R/utils_heldout.R": "ebbf34ba15923ba419a496808ff352e0324a62f995e16d16582777d53dc9519e",
+      "Code/R/utils_inference.R": "2d8ae3f13be7d1abdda9e7022b13720b8873240412ac741cb7cceb75b71a30da",
+      "Code/R/utils_io.R": "44b0c8b1ecb695cc8b686cc450a218d1c89c2b12d8cd5fa657f1ceba508ec03b",
+      "Code/R/utils_moment_tests.R": "4a3fa2653033ab4ca9e96253e3ced43163ae80ac520a124f868679a5227e1709",
+      "Code/R/utils_revision.R": "cb0f08e18c9aaec22b661d364f110473f87cbff51179d3fb4318e3d9c0165cbf",
+      "Code/config/configs.R": "5c2336a0a013813f067a97a145f21f7aa4381009332955811b041979a4a3af91",
+      "Code/postprocess_e4.R": "d9e210517bdbf9051ae7bfe64a05bf07828cadaa39411b6ba86d7877535f32cd"
+    },
+    "command": [
+      "Rscript",
+      "Code/postprocess_e4.R",
+      "file=Data/E4/e4_results_E4_full_Kstar40_J1000_W5000_a0p5_b0p01_k10-100by10_warplda_fa0p5_fb0p01_rev2.qs2"
+    ],
+    "finished": "2026-09-20T12:44:03",
+    "inputs": {
+      "Data/E4/e4_results_E4_full_Kstar40_J1000_W5000_a0p5_b0p01_k10-100by10_warplda_fa0p5_fb0p01_rev2.qs2": "7edd6ec1281887d6d472a6cdccfbf919003f0f1f2042246cb8266819a4151f4a"
+    },
+    "log": "Results/revision_rev2/post_e4_prior.log",
+    "minutes": 0.0,
+    "outputs": {},
+    "package": "0.20.1 cba1273ea8061d3afb7cb26344779d95c492c90f",
+    "returncode": 0,
+    "started": "2026-09-20T12:44:01",
+    "status": "complete"
+  },
+  "restarts": {
+    "code": {
+      "Code/R/source_all.R": "444cdac2d55546577f48ceaf2281234d68c578136feeed41903f8f087f426198",
+      "Code/R/theme_paper.R": "6c4ac198c1cde06393f91f9f61d6c9fa154c6a1e707faeb3319587f92a555f0e",
+      "Code/R/utils_comparators.R": "899c3346770c5504d78f48e7a24621ccb5c946a55a9d399e9a43c39016402f63",
+      "Code/R/utils_dgp.R": "05de5daafa194c52b598e780e37197a1225bb1bfa4bcfe09b95ba7e5d97e077e",
+      "Code/R/utils_fit.R": "118c3340a55de5bf07c42dcb67968696bebdaaaa5651a1decbe85c3a58f62e64",
+      "Code/R/utils_heldout.R": "ebbf34ba15923ba419a496808ff352e0324a62f995e16d16582777d53dc9519e",
+      "Code/R/utils_inference.R": "2d8ae3f13be7d1abdda9e7022b13720b8873240412ac741cb7cceb75b71a30da",
+      "Code/R/utils_io.R": "44b0c8b1ecb695cc8b686cc450a218d1c89c2b12d8cd5fa657f1ceba508ec03b",
+      "Code/R/utils_moment_tests.R": "4a3fa2653033ab4ca9e96253e3ced43163ae80ac520a124f868679a5227e1709",
+      "Code/R/utils_revision.R": "cb0f08e18c9aaec22b661d364f110473f87cbff51179d3fb4318e3d9c0165cbf",
+      "Code/config/configs.R": "5c2336a0a013813f067a97a145f21f7aa4381009332955811b041979a4a3af91",
+      "Code/run_mdna_restarts.R": "923e1a10cfde9338ffec3fa5d6d12fad22dfeec37f4b00d2ca733dcc8f6d944a"
+    },
+    "command": [
+      "Rscript",
+      "Code/run_mdna_restarts.R",
+      "<workers>",
+      "common=2",
+      "out_suffix=_rev2"
+    ],
+    "finished": "2026-09-19T18:35:07",
+    "inputs": {
+      "Data/MDNA/mdna_prep_2015_2016.qs2": "f9a257f3783618edeac97163dc7728ec29e1cd1fd97b92881fb0b458f0ec9750"
+    },
+    "log": "Results/revision_rev2/restarts.log",
+    "minutes": 36.7,
+    "outputs": {
+      "Data/MDNA/mdna_restarts_MDNA_2015_2016_rev2.qs2": "04690d72b8d81ea5061a1c0f2026e11cf19100e203c75fd835cf7704c99d287d"
+    },
+    "package": "0.20.1 cba1273ea8061d3afb7cb26344779d95c492c90f",
+    "returncode": 0,
+    "started": "2026-09-19T17:58:22",
+    "status": "complete"
+  },
+  "selreps": {
+    "code": {
+      "Code/R/source_all.R": "444cdac2d55546577f48ceaf2281234d68c578136feeed41903f8f087f426198",
+      "Code/R/theme_paper.R": "6c4ac198c1cde06393f91f9f61d6c9fa154c6a1e707faeb3319587f92a555f0e",
+      "Code/R/utils_comparators.R": "899c3346770c5504d78f48e7a24621ccb5c946a55a9d399e9a43c39016402f63",
+      "Code/R/utils_dgp.R": "05de5daafa194c52b598e780e37197a1225bb1bfa4bcfe09b95ba7e5d97e077e",
+      "Code/R/utils_fit.R": "118c3340a55de5bf07c42dcb67968696bebdaaaa5651a1decbe85c3a58f62e64",
+      "Code/R/utils_heldout.R": "ebbf34ba15923ba419a496808ff352e0324a62f995e16d16582777d53dc9519e",
+      "Code/R/utils_inference.R": "2d8ae3f13be7d1abdda9e7022b13720b8873240412ac741cb7cceb75b71a30da",
+      "Code/R/utils_io.R": "44b0c8b1ecb695cc8b686cc450a218d1c89c2b12d8cd5fa657f1ceba508ec03b",
+      "Code/R/utils_moment_tests.R": "4a3fa2653033ab4ca9e96253e3ced43163ae80ac520a124f868679a5227e1709",
+      "Code/R/utils_revision.R": "cb0f08e18c9aaec22b661d364f110473f87cbff51179d3fb4318e3d9c0165cbf",
+      "Code/config/configs.R": "5c2336a0a013813f067a97a145f21f7aa4381009332955811b041979a4a3af91",
+      "Code/run_E1_selreps.R": "38fa0a7251117d1c6a26e73b9582382a892225627f6328319b355f7c2720ed1a"
+    },
+    "command": [
+      "Rscript",
+      "Code/run_E1_selreps.R",
+      "full",
+      "<workers>",
+      "cfg_from=Data/E1/e1_results_E1_full_Kstar40_J1000_W5000_a0p5_b0p01_k10-100by10_warplda_fa0p1_fb0p01.qs2",
+      "out_suffix=_rev2",
+      "R_sel=10"
+    ],
+    "finished": "2026-09-20T12:42:31",
+    "inputs": {
+      "Data/E1/e1_results_E1_full_Kstar40_J1000_W5000_a0p5_b0p01_k10-100by10_warplda_fa0p1_fb0p01.qs2": "1816e3d0c1fa2240c595fd0add57eb2d30e0839eeb4c3a99cdeacb0acfce24d7"
+    },
+    "log": "Results/revision_rev2/selreps.log",
+    "minutes": 406.3,
+    "outputs": {
+      "Data/E1/e1_selreps_E1_full_Kstar40_J1000_W5000_a0p5_b0p01_k10-100by10_warplda_fa0p1_fb0p01_rev2.qs2": "9dc2b40d1fbd447364d8dc249488b1cac158568ba633b0f002067a5fb66198ab"
+    },
+    "package": "0.20.1 cba1273ea8061d3afb7cb26344779d95c492c90f",
+    "returncode": 0,
+    "started": "2026-09-20T05:56:14",
+    "status": "complete"
+  },
+  "smoke": {
+    "code": {
+      "Code/R/source_all.R": "444cdac2d55546577f48ceaf2281234d68c578136feeed41903f8f087f426198",
+      "Code/R/theme_paper.R": "6c4ac198c1cde06393f91f9f61d6c9fa154c6a1e707faeb3319587f92a555f0e",
+      "Code/R/utils_comparators.R": "899c3346770c5504d78f48e7a24621ccb5c946a55a9d399e9a43c39016402f63",
+      "Code/R/utils_dgp.R": "05de5daafa194c52b598e780e37197a1225bb1bfa4bcfe09b95ba7e5d97e077e",
+      "Code/R/utils_fit.R": "118c3340a55de5bf07c42dcb67968696bebdaaaa5651a1decbe85c3a58f62e64",
+      "Code/R/utils_heldout.R": "ebbf34ba15923ba419a496808ff352e0324a62f995e16d16582777d53dc9519e",
+      "Code/R/utils_inference.R": "2d8ae3f13be7d1abdda9e7022b13720b8873240412ac741cb7cceb75b71a30da",
+      "Code/R/utils_io.R": "44b0c8b1ecb695cc8b686cc450a218d1c89c2b12d8cd5fa657f1ceba508ec03b",
+      "Code/R/utils_moment_tests.R": "4a3fa2653033ab4ca9e96253e3ced43163ae80ac520a124f868679a5227e1709",
+      "Code/R/utils_revision.R": "cb0f08e18c9aaec22b661d364f110473f87cbff51179d3fb4318e3d9c0165cbf",
+      "Code/config/configs.R": "5c2336a0a013813f067a97a145f21f7aa4381009332955811b041979a4a3af91",
+      "Code/revision_smoke.sh": "f408b761fe78119377639efb9a439312f91f1dce9eeff9620abbd55f43f820e3",
+      "Code/run_E1.R": "2c8c4bca0a37e16a29c9812bdbdb434baedf44baeea237d16919c341472de740",
+      "Code/run_E1_selreps.R": "38fa0a7251117d1c6a26e73b9582382a892225627f6328319b355f7c2720ed1a",
+      "Code/run_E2.R": "88576802e2feeef1c5d87fdc05f8b8bc6ff7bd910c93df8bb9d08dfd573385bf",
+      "Code/run_E3.R": "242014a5d49f16bbb2b229646e2a15257fc43bd3a80fd5bad1bcd9aaf83e67ba",
+      "Code/run_E4.R": "e46eb8bc012c0935de0f14a7852bfe4c27bc063748c15efb0ad2de0b429d5e18",
+      "Code/run_E5.R": "4884b212ab65897ce4c86d3eb0b02a4b2d88a0f94e3446f5f6df1d3fb44bf159",
+      "Code/run_E6.R": "1ac678bccd9e097d262ffa66ff8e3da6a0ba5b5cced7c63aab21362048a316c3",
+      "Code/run_mdna.R": "6104a663b0ad590b5eee689e991e9ddda7ac03c4d1af6885d28cf67fb62b8e9a",
+      "Code/run_mdna_restarts.R": "923e1a10cfde9338ffec3fa5d6d12fad22dfeec37f4b00d2ca733dcc8f6d944a",
+      "Code/run_nips_section3.R": "d7beefafe36a4ea4ce44e7551ef3fe947b76b11d23a7dbcfdc5f81d5a7051b08",
+      "Code/run_revision_diagnostics.R": "8e1c5888466a7ddae72307665e1358de4fa51315d0af8a44d8de10c0a6cc8b4e"
+    },
+    "command": [
+      "bash",
+      "Code/revision_smoke.sh",
+      "<workers>",
+      "_rev2"
+    ],
+    "finished": "2026-09-19T18:39:30",
+    "inputs": {},
+    "log": "Results/revision_rev2/smoke.log",
+    "minutes": 1.4,
+    "outputs": {},
+    "package": "0.20.1 cba1273ea8061d3afb7cb26344779d95c492c90f",
+    "returncode": 0,
+    "started": "2026-09-19T18:38:06",
+    "status": "complete"
+  },
+  "unbinned": {
+    "code": {
+      "Code/R/source_all.R": "444cdac2d55546577f48ceaf2281234d68c578136feeed41903f8f087f426198",
+      "Code/R/theme_paper.R": "6c4ac198c1cde06393f91f9f61d6c9fa154c6a1e707faeb3319587f92a555f0e",
+      "Code/R/utils_comparators.R": "899c3346770c5504d78f48e7a24621ccb5c946a55a9d399e9a43c39016402f63",
+      "Code/R/utils_dgp.R": "05de5daafa194c52b598e780e37197a1225bb1bfa4bcfe09b95ba7e5d97e077e",
+      "Code/R/utils_fit.R": "118c3340a55de5bf07c42dcb67968696bebdaaaa5651a1decbe85c3a58f62e64",
+      "Code/R/utils_heldout.R": "ebbf34ba15923ba419a496808ff352e0324a62f995e16d16582777d53dc9519e",
+      "Code/R/utils_inference.R": "2d8ae3f13be7d1abdda9e7022b13720b8873240412ac741cb7cceb75b71a30da",
+      "Code/R/utils_io.R": "44b0c8b1ecb695cc8b686cc450a218d1c89c2b12d8cd5fa657f1ceba508ec03b",
+      "Code/R/utils_moment_tests.R": "4a3fa2653033ab4ca9e96253e3ced43163ae80ac520a124f868679a5227e1709",
+      "Code/R/utils_revision.R": "cb0f08e18c9aaec22b661d364f110473f87cbff51179d3fb4318e3d9c0165cbf",
+      "Code/config/configs.R": "5c2336a0a013813f067a97a145f21f7aa4381009332955811b041979a4a3af91",
+      "Code/run_revision_diagnostics.R": "8e1c5888466a7ddae72307665e1358de4fa51315d0af8a44d8de10c0a6cc8b4e"
+    },
+    "command": [
+      "Rscript",
+      "Code/run_revision_diagnostics.R",
+      "<workers>",
+      "mode=unbinned",
+      "out_suffix=_rev2"
+    ],
+    "finished": "2026-09-19T17:58:22",
+    "inputs": {
+      "Data/E1/e1_results_E1_full_Kstar20_J1000_W10000_a0p5_b0p01_k5-50by5_warplda_fa0p1_fb0p01.qs2": "0040040b6f414ccea10f5b4a6ccef53a109cb80e1189ec98cf9afdf4c91286f6",
+      "Data/E1/e1_results_E1_full_Kstar40_J1000_W5000_a0p5_b0p01_k10-100by10_warplda_fa0p1_fb0p01.qs2": "1816e3d0c1fa2240c595fd0add57eb2d30e0839eeb4c3a99cdeacb0acfce24d7",
+      "Data/MDNA/mdna_prep_2015_2016.qs2": "f9a257f3783618edeac97163dc7728ec29e1cd1fd97b92881fb0b458f0ec9750"
+    },
+    "log": "Results/revision_rev2/unbinned.log",
+    "minutes": 72.4,
+    "outputs": {
+      "Data/MDNA/unbinned_comparator_rev2.qs2": "7825672f1c82f79dd2222b367f3716b62cdedfd36775616c226d433eae6bb6ad"
+    },
+    "package": "0.20.1 cba1273ea8061d3afb7cb26344779d95c492c90f",
+    "returncode": 0,
+    "started": "2026-09-19T16:45:57",
+    "status": "complete"
+  },
+  "units": {
+    "code": {
+      "Code/R/source_all.R": "444cdac2d55546577f48ceaf2281234d68c578136feeed41903f8f087f426198",
+      "Code/R/theme_paper.R": "6c4ac198c1cde06393f91f9f61d6c9fa154c6a1e707faeb3319587f92a555f0e",
+      "Code/R/utils_comparators.R": "899c3346770c5504d78f48e7a24621ccb5c946a55a9d399e9a43c39016402f63",
+      "Code/R/utils_dgp.R": "05de5daafa194c52b598e780e37197a1225bb1bfa4bcfe09b95ba7e5d97e077e",
+      "Code/R/utils_fit.R": "118c3340a55de5bf07c42dcb67968696bebdaaaa5651a1decbe85c3a58f62e64",
+      "Code/R/utils_heldout.R": "ebbf34ba15923ba419a496808ff352e0324a62f995e16d16582777d53dc9519e",
+      "Code/R/utils_inference.R": "2d8ae3f13be7d1abdda9e7022b13720b8873240412ac741cb7cceb75b71a30da",
+      "Code/R/utils_io.R": "44b0c8b1ecb695cc8b686cc450a218d1c89c2b12d8cd5fa657f1ceba508ec03b",
+      "Code/R/utils_moment_tests.R": "4a3fa2653033ab4ca9e96253e3ced43163ae80ac520a124f868679a5227e1709",
+      "Code/R/utils_revision.R": "cb0f08e18c9aaec22b661d364f110473f87cbff51179d3fb4318e3d9c0165cbf",
+      "Code/config/configs.R": "5c2336a0a013813f067a97a145f21f7aa4381009332955811b041979a4a3af91",
+      "Code/tests_unit.R": "06e5dda2630f200b7909cc2c9e66301b1c320d0511e835b14e215733f2ea5064"
+    },
+    "command": [
+      "Rscript",
+      "Code/tests_unit.R"
+    ],
+    "finished": "2026-09-19T08:31:31",
+    "inputs": {},
+    "log": "Results/revision_rev2/units.log",
+    "minutes": 0.1,
+    "outputs": {},
+    "package": "0.20.1 cba1273ea8061d3afb7cb26344779d95c492c90f",
+    "returncode": 0,
+    "started": "2026-09-19T08:31:24",
+    "status": "complete"
+  }
+}

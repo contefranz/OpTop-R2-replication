@@ -14,3 +14,18 @@ Data/corpus/*
 
 # --- Generated previews ------------------------------------------------------
 README.html
+
+# --- Deposited on Zenodo with their own DOI (./reproduce.sh fetch results|fits|corpus);
+#     the expected contents are tracked in Data/MANIFEST-*.sha256 ----------------
+Data/*/*_rev1.qs2
+Data/*/*_rev1_*.qs2
+Data/*/*_rev2.qs2
+Data/*/*_rev2_*.qs2
+Data/MDNA/stage3_mdna_completion_G.qs2
+Data/MDNA/mdna_prep_2015_2016_n*.qs2
+
+# --- Run-time state of the revision batch and project-local R library ------------
+Data/Checkpoints/
+running.lock
+*.tmp
+.Rlib/

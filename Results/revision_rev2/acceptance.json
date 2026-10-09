@@ -1,0 +1,411 @@
+{
+  "suffix": "_rev2",
+  "at": "2026-09-20 12:44:19",
+  "n_checks": 67,
+  "n_failed": 0,
+  "accepted": true,
+  "checks": [
+    {
+      "id": "A1",
+      "check": "output of 'mdna' exists",
+      "pass": true,
+      "detail": "mdna_results_MDNA_2015_2016_rev2.qs2"
+    },
+    {
+      "id": "A1",
+      "check": "output of 'mdna_c05' exists",
+      "pass": true,
+      "detail": "mdna_results_MDNA_2015_2016_c05_rev2.qs2"
+    },
+    {
+      "id": "A1",
+      "check": "output of 'mdna_c2' exists",
+      "pass": true,
+      "detail": "mdna_results_MDNA_2015_2016_c2_rev2.qs2"
+    },
+    {
+      "id": "A1",
+      "check": "output of 'mdna_g100' exists",
+      "pass": true,
+      "detail": "mdna_results_MDNA_2015_2016_g100_rev2.qs2"
+    },
+    {
+      "id": "A1",
+      "check": "output of 'e1_base' exists",
+      "pass": true,
+      "detail": "e1_results_E1_full_Kstar40_J1000_W5000_a0p5_b0p01_k10-100by10_warplda_fa0p1_fb0p01_rev2.qs2"
+    },
+    {
+      "id": "A1",
+      "check": "output of 'e1_dgp2' exists",
+      "pass": true,
+      "detail": "e1_results_E1_full_Kstar20_J1000_W10000_a0p5_b0p01_k5-50by5_warplda_fa0p1_fb0p01_rev2.qs2"
+    },
+    {
+      "id": "A1",
+      "check": "output of 'e2_base' exists",
+      "pass": true,
+      "detail": "e2_results_E2_full_Kstar40_J1000_W5000_a0p5_b0p01_k10-100by10_warplda_fa0p1_fb0p01_rev2.qs2"
+    },
+    {
+      "id": "A1",
+      "check": "output of 'e2_dgp2' exists",
+      "pass": true,
+      "detail": "e2_results_E2_full_Kstar20_J1000_W10000_a0p5_b0p01_k5-50by5_warplda_fa0p1_fb0p01_rev2.qs2"
+    },
+    {
+      "id": "A1",
+      "check": "output of 'e6' exists",
+      "pass": true,
+      "detail": "e6_results_E6_full_Kstar40_J1000_W5000_a0p5_b0p01_k10-100by10_warplda_fa0p1_fb0p01_rev2.qs2"
+    },
+    {
+      "id": "A1",
+      "check": "output of 'e4_base' exists",
+      "pass": true,
+      "detail": "e4_results_E4_full_Kstar40_J1000_W5000_a0p5_b0p01_k10-100by10_warplda_fa0p1_fb0p01_rev2.qs2"
+    },
+    {
+      "id": "A1",
+      "check": "output of 'e4_prior' exists",
+      "pass": true,
+      "detail": "e4_results_E4_full_Kstar40_J1000_W5000_a0p5_b0p01_k10-100by10_warplda_fa0p5_fb0p01_rev2.qs2"
+    },
+    {
+      "id": "A1",
+      "check": "output of 'selreps' exists",
+      "pass": true,
+      "detail": "e1_selreps_E1_full_Kstar40_J1000_W5000_a0p5_b0p01_k10-100by10_warplda_fa0p1_fb0p01_rev2.qs2"
+    },
+    {
+      "id": "A1",
+      "check": "output of 'e5_resolution' exists",
+      "pass": true,
+      "detail": "e5_resolution_rev2.qs2"
+    },
+    {
+      "id": "A1",
+      "check": "output of 'unbinned' exists",
+      "pass": true,
+      "detail": "unbinned_comparator_rev2.qs2"
+    },
+    {
+      "id": "A1",
+      "check": "output of 'restarts' exists",
+      "pass": true,
+      "detail": "mdna_restarts_MDNA_2015_2016_rev2.qs2"
+    },
+    {
+      "id": "A2",
+      "check": "'mdna' stamped: Poisson word null on scored tokens, OpTop >= 0.20.1",
+      "pass": true,
+      "detail": "poisson_scored_tokens / OpTop 0.20.1"
+    },
+    {
+      "id": "A2",
+      "check": "'mdna_c05' stamped: Poisson word null on scored tokens, OpTop >= 0.20.1",
+      "pass": true,
+      "detail": "poisson_scored_tokens / OpTop 0.20.1"
+    },
+    {
+      "id": "A2",
+      "check": "'mdna_c2' stamped: Poisson word null on scored tokens, OpTop >= 0.20.1",
+      "pass": true,
+      "detail": "poisson_scored_tokens / OpTop 0.20.1"
+    },
+    {
+      "id": "A2",
+      "check": "'mdna_g100' stamped: Poisson word null on scored tokens, OpTop >= 0.20.1",
+      "pass": true,
+      "detail": "poisson_scored_tokens / OpTop 0.20.1"
+    },
+    {
+      "id": "A2",
+      "check": "'e1_base' stamped: Poisson word null on scored tokens, OpTop >= 0.20.1",
+      "pass": true,
+      "detail": "poisson_scored_tokens / OpTop 0.20.1"
+    },
+    {
+      "id": "A2",
+      "check": "'e1_dgp2' stamped: Poisson word null on scored tokens, OpTop >= 0.20.1",
+      "pass": true,
+      "detail": "poisson_scored_tokens / OpTop 0.20.1"
+    },
+    {
+      "id": "A2",
+      "check": "'e2_base' stamped: Poisson word null on scored tokens, OpTop >= 0.20.1",
+      "pass": true,
+      "detail": "poisson_scored_tokens / OpTop 0.20.1"
+    },
+    {
+      "id": "A2",
+      "check": "'e2_dgp2' stamped: Poisson word null on scored tokens, OpTop >= 0.20.1",
+      "pass": true,
+      "detail": "poisson_scored_tokens / OpTop 0.20.1"
+    },
+    {
+      "id": "A2",
+      "check": "'e6' stamped: Poisson word null on scored tokens, OpTop >= 0.20.1",
+      "pass": true,
+      "detail": "poisson_scored_tokens / OpTop 0.20.1"
+    },
+    {
+      "id": "A2",
+      "check": "'e4_base' stamped: Poisson word null on scored tokens, OpTop >= 0.20.1",
+      "pass": true,
+      "detail": "poisson_scored_tokens / OpTop 0.20.1"
+    },
+    {
+      "id": "A2",
+      "check": "'e4_prior' stamped: Poisson word null on scored tokens, OpTop >= 0.20.1",
+      "pass": true,
+      "detail": "poisson_scored_tokens / OpTop 0.20.1"
+    },
+    {
+      "id": "A2",
+      "check": "'selreps' stamped: Poisson word null on scored tokens, OpTop >= 0.20.1",
+      "pass": true,
+      "detail": "poisson_scored_tokens / OpTop 0.20.1"
+    },
+    {
+      "id": "A2",
+      "check": "'e5_resolution' stamped: Poisson word null on scored tokens, OpTop >= 0.20.1",
+      "pass": true,
+      "detail": "poisson_scored_tokens / OpTop 0.20.1"
+    },
+    {
+      "id": "A2",
+      "check": "'unbinned' stamped: Poisson word null on scored tokens, OpTop >= 0.20.1",
+      "pass": true,
+      "detail": "poisson_scored_tokens / OpTop 0.20.1"
+    },
+    {
+      "id": "A2",
+      "check": "'restarts' stamped: Poisson word null on scored tokens, OpTop >= 0.20.1",
+      "pass": true,
+      "detail": "poisson_scored_tokens / OpTop 0.20.1"
+    },
+    {
+      "id": "B1",
+      "check": "'e1_base' configuration equals its source (declared overrides aside)",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "id": "B1",
+      "check": "'e1_dgp2' configuration equals its source (declared overrides aside)",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "id": "B1",
+      "check": "'e2_base' configuration equals its source (declared overrides aside)",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "id": "B1",
+      "check": "'e2_dgp2' configuration equals its source (declared overrides aside)",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "id": "B1",
+      "check": "'e6' configuration equals its source (declared overrides aside)",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "id": "B1",
+      "check": "'e4_base' configuration equals its source (declared overrides aside)",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "id": "B1",
+      "check": "'e4_prior' configuration equals its source (declared overrides aside)",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "id": "B2",
+      "check": "'e2_base' reference sample has 20,000 documents, with stored SEs",
+      "pass": true,
+      "detail": "J_truth = 20000"
+    },
+    {
+      "id": "B2",
+      "check": "'e2_dgp2' reference sample has 20,000 documents, with stored SEs",
+      "pass": true,
+      "detail": "J_truth = 20000"
+    },
+    {
+      "id": "B3",
+      "check": "'mdna': delta = 1, unrefined grid, same evaluation data",
+      "pass": true,
+      "detail": "c = 1, |K| = 20"
+    },
+    {
+      "id": "B3",
+      "check": "'mdna_c05': delta = 1, unrefined grid, same evaluation data",
+      "pass": true,
+      "detail": "c = 0.5, |K| = 20"
+    },
+    {
+      "id": "B3",
+      "check": "'mdna_c2': delta = 1, unrefined grid, same evaluation data",
+      "pass": true,
+      "detail": "c = 2, |K| = 20"
+    },
+    {
+      "id": "B3",
+      "check": "'mdna_g100': delta = 1, unrefined grid, same evaluation data",
+      "pass": true,
+      "detail": "c = 1, |K| = 10"
+    },
+    {
+      "id": "B4",
+      "check": "MD&A diagnostics kept at K in {40,50,60,170,180,190}",
+      "pass": true,
+      "detail": "40,50,60,170,180,190"
+    },
+    {
+      "id": "C1",
+      "check": "D_null('condition') = 9562.168059 from the definition (legacy 8771.558890)",
+      "pass": true,
+      "detail": "definition 9562.168059 | pipeline 9562.168059 (all 20 K) | log-only 8771.558890"
+    },
+    {
+      "id": "D1",
+      "check": "E6 Lemma S1: document total == package word totals, every unit",
+      "pass": true,
+      "detail": "max |rel| 4.3e-15 over 20 units"
+    },
+    {
+      "id": "D2",
+      "check": "E6 raw word discrepancies kept for every K, both scenarios, both samples",
+      "pass": true,
+      "detail": "2,000,000 rows"
+    },
+    {
+      "id": "D3",
+      "check": "MD&A word-level summaries at K = 50 equal the verified rev1 values",
+      "pass": true,
+      "detail": "Micro 0.3531 / Macro 0.2204 on 17047 words"
+    },
+    {
+      "id": "D4",
+      "check": "MD&A raw word discrepancies kept at every K (held-out and training)",
+      "pass": true,
+      "detail": "551,520 held-out rows"
+    },
+    {
+      "id": "E1",
+      "check": "MD&A document-level indices reproduce the published cache",
+      "pass": true,
+      "detail": "max |diff| 5.4e-13 over 180 rows"
+    },
+    {
+      "id": "E2",
+      "check": "MD&A Tests 1-2 reproduce the published cache (K = 40, 50, 60)",
+      "pass": true,
+      "detail": "max rel diff 0.0e+00"
+    },
+    {
+      "id": "E3",
+      "check": "MD&A corrected Test 3 equals the verified values at the six K",
+      "pass": true,
+      "detail": "K=40: 15.67, K=50: 16.90, K=60: 19.88, K=170: 38.75, K=180: 35.67, K=190: 45.99"
+    },
+    {
+      "id": "E4",
+      "check": "MD&A selections under the three rules equal the verified values",
+      "pass": true,
+      "detail": "50/80/180/80/80/180"
+    },
+    {
+      "id": "E5",
+      "check": "'e1_base' indices and pointwise selections reproduce the published cache",
+      "pass": true,
+      "detail": "max |diff| 9.2e-13; 10 replicates under all rules"
+    },
+    {
+      "id": "E5",
+      "check": "'e1_dgp2' indices and pointwise selections reproduce the published cache",
+      "pass": true,
+      "detail": "max |diff| 0.0e+00; 10 replicates under all rules"
+    },
+    {
+      "id": "E6",
+      "check": "'e2_base' evaluation-replicate estimates reproduce the published cache",
+      "pass": true,
+      "detail": "max |diff| 5.4e-14 over 3000 replicate rows (targets differ by design)"
+    },
+    {
+      "id": "E6",
+      "check": "'e2_dgp2' evaluation-replicate estimates reproduce the published cache",
+      "pass": true,
+      "detail": "max |diff| 0.0e+00 over 3000 replicate rows (targets differ by design)"
+    },
+    {
+      "id": "E7",
+      "check": "'e4_base': Tests 1-2 and Test 3 at the smallest K reproduce; Test 3 at K* changes",
+      "pass": true,
+      "detail": "unchanged rows: max rel diff 7.2e-14; Test 3 at K > 10 changed in 100% of 5000 rows"
+    },
+    {
+      "id": "E7",
+      "check": "'e4_prior': Tests 1-2 and Test 3 at the smallest K reproduce; Test 3 at K* changes",
+      "pass": true,
+      "detail": "unchanged rows: max rel diff 8.5e-14; Test 3 at K > 10 changed in 100% of 5000 rows"
+    },
+    {
+      "id": "E8",
+      "check": "E6 in-sample word curves reproduce the published cache",
+      "pass": true,
+      "detail": "max |diff| 0.0e+00"
+    },
+    {
+      "id": "E9",
+      "check": "selreps: pointwise selections reproduce; all three rules for every replication",
+      "pass": true,
+      "detail": "100 replications x 3 rules"
+    },
+    {
+      "id": "E10",
+      "check": "restarts scored on the support of the production grid and the restarts",
+      "pass": true,
+      "detail": "harmonised over the production grid and the restarts"
+    },
+    {
+      "id": "E11",
+      "check": "unbinned comparator: three floors, both protocols, every candidate",
+      "pass": true,
+      "detail": "3 sources"
+    },
+    {
+      "id": "E12",
+      "check": "'mdna' carries support-resolution rows",
+      "pass": true,
+      "detail": "138,640 rows"
+    },
+    {
+      "id": "E12",
+      "check": "'e1_base' carries support-resolution rows",
+      "pass": true,
+      "detail": "1,000,000 rows"
+    },
+    {
+      "id": "E12",
+      "check": "'e5_resolution' carries support-resolution rows",
+      "pass": true,
+      "detail": "46,000 rows"
+    },
+    {
+      "id": "F1",
+      "check": "every cached fit is byte-identical to the pre-revision manifest",
+      "pass": true,
+      "detail": "3076 files; 0 missing, 0 changed"
+    }
+  ]
+}

@@ -25,9 +25,10 @@ source(here::here("Code", "config", "configs.R"))
 
 cli <- parse_cli(args)
 PROFILE <- cli$profile
-cfg <- get_config("E6", PROFILE)
-cfg <- apply_overrides(cfg, cli$overrides, strict = FALSE)
-cfg$label <- run_label(cfg, cli$overrides, cli$label)
+rc <- resolve_cfg(cli, "E6", PROFILE)          # honours cfg_from= / out_suffix=
+cfg <- rc$cfg; SFX <- rc$out_suffix
+if (!rc$from_cache || !is.null(cli$label))
+  cfg$label <- run_label(cfg, rc$overrides, cli$label)
 TAG <- run_tag(cfg)
 setup_parallel(cli$workers)
 log_msg("=== E6 [%s] tag=%s S=%d x %d scenarios ===", PROFILE, TAG, cfg$S,
@@ -73,6 +74,7 @@ log_msg("scoring pass: tail -f %s", proj_path("Data", "scoring.log"))
 
 # ------------------------------ scoring pass ----------------------------------
 score_unit <- function(i) {
+  revision_checkpoint("E6", cfg, paste0("unit_", i), {
   sc_id <- units$sc_id[i]; r <- units$r[i]
   t0 <- proc.time()[["elapsed"]]
   scoring_log("E6 %s replicate %d/%d: scoring started", sc_id, r, cfg$S)
@@ -118,23 +120,32 @@ score_unit <- function(i) {
 
   # Lemma 2 identity on the UNBINNED support (training fit at K*)
   fstar <- fits[[as.character(cfg$K_true)]]
-  l2 <- lemma2_residual(theta_from_fit(fstar), phi_from_fit(fstar), sim_tr$dtm)
+  dw <- ins$word[K == cfg$K_true][match(colnames(sim_tr$dtm), word_id), d_model]
+  l2 <- lemma2_residual(theta_from_fit(fstar), phi_from_fit(fstar), sim_tr$dtm,
+                         word_d_model = dw)
+  stopifnot(abs(l2$rel_resid_pkg) < 1e-10,
+            l2$max_word_diff < 1e-8 * max(1, max(abs(dw))))
   lemma2 <- data.table(scenario = sc_id, replicate = r,
                        dev_doc = l2$dev_doc, dev_word = l2$dev_word,
-                       resid = l2$resid)
+                       resid = l2$resid, rel_resid_pkg = l2$rel_resid_pkg,
+                       max_word_diff = l2$max_word_diff, n_floored = l2$n_floored)
 
   scoring_log("E6 %s replicate %d/%d: DONE in %.0fs", sc_id, r, cfg$S,
               proc.time()[["elapsed"]] - t0)
   log_msg("E6 %s replicate %d/%d scored", sc_id, r, cfg$S)
-  list(curve = curve, word_star = word_star, lemma2 = lemma2)
+  list(curve = curve, word_star = word_star, lemma2 = lemma2,
+       word_raw = rbindlist(list(copy(ins$word)[, eval := "insample"],
+                                 copy(rec$word)[, eval := "ho_reconstruction"]))[
+         , `:=`(scenario = sc_id, replicate = r)])
+  })
 }
 
 res <- future_lapply(seq_len(nrow(units)), score_unit, future.seed = NULL)
 pull <- function(name) rbindlist(lapply(res, `[[`, name), fill = TRUE)
 
-out <- list(curve = pull("curve"), word_star = pull("word_star"),
+out <- list(word_raw = pull("word_raw"), curve = pull("curve"), word_star = pull("word_star"),
             lemma2 = pull("lemma2"), config = cfg)
-cache_put(out, p_data("E6", sprintf("e6_results_%s.qs2", TAG)), cfg)
-write_result(out$curve, "e6_word_micro_macro", cfg)
-write_result(out$lemma2, "e6_lemma2", cfg)
+cache_put(out, p_data("E6", sprintf("e6_results_%s%s.qs2", TAG, SFX)), cfg)
+write_result(out$curve, paste0("e6_word_micro_macro", SFX), cfg)
+write_result(out$lemma2, paste0("e6_lemma2", SFX), cfg)
 log_msg("=== E6 [%s] complete ===", PROFILE)

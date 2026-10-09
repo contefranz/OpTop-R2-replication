@@ -1,0 +1,28 @@
+\begin{table}
+\centering
+\begin{tblr}[         %% tabularray outer open
+]                     %% tabularray outer close
+{                     %% tabularray inner open
+colspec={Q[]Q[]},
+hline{2}={1-2}{solid, black, 0.05em},
+hline{1}={1-2}{solid, black, 0.08em},
+hline{17}={1-2}{solid, black, 0.08em},
+}                     %% tabularray inner close
+rule & K_hat \\
+eps-rule 0p01 (chisq, rec) & 80 \\
+eps-rule 0p01 (dev, rec) & 80 \\
+eps-rule 0p01 (se, rec) & 80 \\
+eps-rule 0p005 (chisq, rec) & 120 \\
+eps-rule 0p005 (dev, rec) & 120 \\
+eps-rule 0p005 (se, rec) & 110 \\
+eps-rule 0p01 (chisq, com) & 80 \\
+eps-rule 0p01 (dev, com) & 50 \\
+eps-rule 0p01 (se, com) & 40 \\
+eps-rule 0p005 (chisq, com) & 120 \\
+eps-rule 0p005 (dev, com) & 120 \\
+eps-rule 0p005 (se, com) & 90 \\
+perplexity_min & 200 \\
+npmi_max & 180 \\
+optimal_topic (all rejected; min-stat) & 190 \\
+\end{tblr}
+\end{table}

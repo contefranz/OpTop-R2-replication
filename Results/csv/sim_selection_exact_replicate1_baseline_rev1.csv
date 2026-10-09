@@ -1,0 +1,13 @@
+eval,rule,eps,K_hat,certified,n_comparisons,max_ub,M
+ho_reconstruction,adjacent_pointwise,0.01,40,TRUE,1,0.00167076545050621,1
+ho_reconstruction,adjacent_simultaneous,0.01,40,TRUE,1,0.00181696829354866,9
+ho_reconstruction,total_gain,0.01,40,TRUE,6,0.00634865741610203,45
+ho_reconstruction,adjacent_pointwise,0.005,40,TRUE,1,0.00167076545050621,1
+ho_reconstruction,adjacent_simultaneous,0.005,40,TRUE,1,0.00181696829354866,9
+ho_reconstruction,total_gain,0.005,50,TRUE,5,0.00494192200501748,45
+ho_completion,adjacent_pointwise,0.01,40,TRUE,1,0.000599977427240187,1
+ho_completion,adjacent_simultaneous,0.01,40,TRUE,1,0.00163979697013795,9
+ho_completion,total_gain,0.01,40,TRUE,6,0.00285643793308479,45
+ho_completion,adjacent_pointwise,0.005,40,TRUE,1,0.000599977427240187,1
+ho_completion,adjacent_simultaneous,0.005,40,TRUE,1,0.00163979697013795,9
+ho_completion,total_gain,0.005,40,TRUE,6,0.00285643793308479,45

@@ -25,6 +25,15 @@
 #   A2  table : boilerplate share by FF12 industry
 #
 # Usage: Rscript Code/make_mdna_outputs.R [y1=2015] [y2=2016] [sample_n=0]
+#          [in_suffix=_rev1]  read mdna_results_<TAG><in_suffix>.qs2; the output
+#                             label inherits the suffix, so exhibits built from a
+#                             re-scored object never overwrite the originals
+#          [out_label=name]   explicit output label (Results/Figures/<name>/MDNA)
+#          [K_ref=50]         reference fit of the K-specific exhibits; must be the
+#                             K at which the object stores them (its K_hat)
+# The K marked in the figures is a REFERENCE FIT (the exploratory pointwise
+# crossing), not the primary selection: under the revised Definition 1 the
+# primary rule is total-gain adequacy, reported in the R1_selection_rules table.
 # =============================================================================
 
 suppressMessages({
@@ -35,13 +44,15 @@ source(here::here("Code", "R", "source_all.R"))
 
 .args <- commandArgs(trailingOnly = TRUE)
 P <- list(y1 = 2015L, y2 = 2016L, sample_n = 0L,
-          families = "dev")   # "dev" = Deviance-only figures; "all" = 3 families
+          families = "dev",   # "dev" = Deviance-only figures; "all" = 3 families
+          in_suffix = "", out_label = "", K_ref = 0L)
 for (a in .args) {
   kv <- strsplit(a, "=", fixed = TRUE)[[1L]]
   if (length(kv) != 2L || !kv[1L] %in% names(P))
     stop("unknown argument '", a, "'. Valid: ",
          paste(names(P), collapse = ", "), call. = FALSE)
-  P[[kv[1L]]] <- if (kv[1L] == "families") kv[2L] else as.integer(kv[2L])
+  P[[kv[1L]]] <- if (kv[1L] %in% c("families", "in_suffix", "out_label")) kv[2L]
+                 else as.integer(kv[2L])
 }
 stopifnot(P$families %in% c("dev", "all"))
 DEV_ONLY <- P$families == "dev"
@@ -49,8 +60,9 @@ fam_note <- if (DEV_ONLY)
   "Deviance Macro Index" else
   "all three discrepancy families"
 suffix <- if (P$sample_n > 0L) sprintf("_n%d", P$sample_n) else ""
-TAG <- sprintf("MDNA_%d_%d%s", P$y1, P$y2, suffix)
-RUN_LABEL <- sprintf("mdna_%d_%d%s", P$y1, P$y2, suffix)
+TAG <- sprintf("MDNA_%d_%d%s%s", P$y1, P$y2, suffix, P$in_suffix)
+RUN_LABEL <- if (nzchar(P$out_label)) P$out_label else
+  sprintf("mdna_%d_%d%s%s", P$y1, P$y2, suffix, P$in_suffix)
 f <- p_data("MDNA", sprintf("mdna_results_%s.qs2", TAG))
 stopifnot(file.exists(f))
 x <- cache_get(f)
@@ -62,9 +74,13 @@ if (length(miss))
        "run_mdna.R (missing fields: ", paste(miss, collapse = ", "),
        "). Re-run prep_mdna.R and run_mdna.R with the same y1/y2/sample_n.",
        call. = FALSE)
-K_hat <- x$K_hat
-log_msg("MDNA outputs for %s (pooled fiscal %d+%d, K-hat = %d)",
-        TAG, P$y1, P$y2, K_hat)
+K_hat <- if (P$K_ref > 0L) P$K_ref else x$K_hat    # REFERENCE fit (see header)
+if (K_hat != x$K_hat)
+  stop(sprintf(paste("K_ref = %d, but this object stores its K-specific exhibits",
+                     "(battery, vocabulary, residual ranking) at K = %d only"),
+               K_hat, x$K_hat), call. = FALSE)
+log_msg("MDNA outputs for %s -> label %s (pooled fiscal %d+%d, reference fit K = %d)",
+        TAG, RUN_LABEL, P$y1, P$y2, K_hat)
 
 .tabs <- list()
 emit <- function(dt, name) {
@@ -96,7 +112,7 @@ p1 <- ggplot(s, aes(x = K, y = r2_macro, linetype = eval_lab)) +
   labs(x = "Number of topics (K)", y = expression(R["Macro"]^2),
        title = sprintf("MD&A corpus (fiscal %d-%d): fit over K", P$y1, P$y2),
        subtitle = sprintf(
-         "In-sample and held-out protocols; K-hat = %d (completion, eps = 0.01)",
+         "In-sample and held-out protocols; dot-dash: reference fit K = %d",
          K_hat)) +
   theme_paper()
 save_fig(p1, "R1_fit_curves", "MDNA",
@@ -123,8 +139,8 @@ p1b <- ggplot(g, aes(x = K, y = gap, linetype = eval_lab)) +
   labs(x = "Number of topics (K)", y = "Micro - Macro gap",
        title = "Aggregation heterogeneity: Micro - Macro gap over K",
        subtitle = sprintf(
-         "%s; ribbon: delta-method 95%% CI on the reconstruction target",
-         fam_note)) +
+         "Ribbon: delta-method 95%% CI, reconstruction target; dot-dash line: K = %d",
+         K_hat)) +
   theme_paper()
 save_fig(p1b, "R1b_micro_macro_gap", "MDNA",
          width = if (DEV_ONLY) 7.4 else 10.2, height = 4.4)
@@ -145,9 +161,9 @@ p1c <- ggplot(ga, aes(x = K_next, y = delta_mean)) +
    else facet_grid(eval_lab ~ metric_lab)} +
   labs(x = "Number of topics (K)",
        y = expression(Delta ~ R["Macro"]^2 ~ "(gain from previous grid point)"),
-       title = "Adjacent held-out gains and the eps-adequacy rule",
+       title = "Adjacent held-out gains",
        subtitle = sprintf(
-         "%s; whiskers: one-sided upper bounds; dashed lines: eps = 0.01 and 0.005",
+         "%s; whiskers: POINTWISE one-sided upper bounds (exploratory); dashed lines: eps = 0.01 and 0.005",
          fam_note)) +
   theme_paper()
 save_fig(p1c, "R1c_adjacent_gains", "MDNA",
@@ -160,6 +176,12 @@ sel <- rbindlist(list(
                             sub("eps_", "", rule), metric, eval), K_hat)],
   x$sel_comparators[, .(rule, K_hat)]), fill = TRUE)
 emit(sel, "R1_selection")
+# the certified rules of the revised Definition 1, from the stored document scores
+sel_rules <- rbindlist(lapply(c(rec = "rec", com = "com"), function(mn)
+  select_k_all_rules(x[[paste0("doc_", mn)]], c(0.01, 0.005), 0.05)[
+    , protocol := mn]), use.names = TRUE)
+emit(sel_rules[, .(protocol, metric, rule, eps, K_hat, certified, n_comparisons,
+                   max_ub, M)], "R1_selection_rules")
 
 # ================== R2: consistency battery at K-hat (table) ===================
 bat1 <- x$battery_ci[, .(block = "fit", eval = eval_lab_m[eval], metric,
@@ -258,8 +280,10 @@ pa3 <- ggplot(dl, aes(x = L, y = r2_doc)) +
   theme_paper()
 save_fig(pa3, "A3_fit_vs_length", "MDNA", width = 7.4)
 
-writexl::write_xlsx(.tabs, p_results("xlsx", sprintf("MDNA_tables_%d_%d%s.xlsx",
-                                                     P$y1, P$y2, suffix)))
-log_msg("workbook: MDNA_tables_%d_%d%s.xlsx (%d sheets)", P$y1, P$y2, suffix,
-        length(.tabs))
+# the workbook follows the output label too, so a run on a re-scored object or
+# under an explicit out_label never overwrites the baseline workbook
+wb_tag <- if (nzchar(P$out_label)) paste0("_", P$out_label) else P$in_suffix
+wb <- sprintf("MDNA_tables_%d_%d%s%s.xlsx", P$y1, P$y2, suffix, wb_tag)
+writexl::write_xlsx(.tabs, p_results("xlsx", wb))
+log_msg("workbook: %s (%d sheets)", wb, length(.tabs))
 log_msg("=== MDNA outputs complete (label %s) ===", RUN_LABEL)

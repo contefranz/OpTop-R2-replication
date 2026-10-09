@@ -24,9 +24,10 @@ cli <- parse_cli(args)
 PROFILE <- cli$profile
 EXPERIMENT <- cli$experiment %||% "E1"   # E1 | E1b | E1c
 
-cfg <- get_config(EXPERIMENT, PROFILE)
-cfg <- apply_overrides(cfg, cli$overrides, strict = FALSE)
-cfg$label <- run_label(cfg, cli$overrides, cli$label)
+rc <- resolve_cfg(cli, EXPERIMENT, PROFILE)   # honours cfg_from= / out_suffix=
+cfg <- rc$cfg; SFX <- rc$out_suffix
+if (!rc$from_cache || !is.null(cli$label))
+  cfg$label <- run_label(cfg, rc$overrides, cli$label)
 TAG <- run_tag(cfg)
 setup_parallel(cli$workers)
 log_msg("=== %s [%s] tag=%s S=%d ===", EXPERIMENT, PROFILE, TAG, cfg$S)
@@ -58,6 +59,7 @@ log_msg("scoring pass: tail -f %s", proj_path("Data", "scoring.log"))
 
 # ------------------------------ scoring pass ----------------------------------
 score_one <- function(r) {
+  revision_checkpoint("E1", cfg, paste0("unit_", r), {
   t0 <- proc.time()[["elapsed"]]
   scoring_log("E1 replicate %d/%d: scoring started", r, cfg$S)
   seeds <- make_seeds(cfg$seed_base, r)
@@ -73,13 +75,13 @@ score_one <- function(r) {
   scoring_log("E1 r%d: in-sample scored (%.0fs)", r,
               proc.time()[["elapsed"]] - t0)
   rec <- score_heldout(fits, sim_ev$dtm, sim_ev$dtm, base_tr$pi_glob, cfg$c,
-                       cfg$metrics, foldin_seed = seeds$split_seed)
+                       cfg$metrics, foldin_seed = seeds$split_seed, resolution = TRUE)
   scoring_log("E1 r%d: reconstruction scored (%.0fs)", r,
               proc.time()[["elapsed"]] - t0)
   spl <- split_tokens_binomial(sim_ev$dtm, cfg$completion_prop,
                                seed = seeds$split_seed)
   com <- score_heldout(fits, spl$foldin, spl$score, base_tr$pi_glob, cfg$c,
-                       cfg$metrics, foldin_seed = seeds$split_seed + 1L)
+                       cfg$metrics, foldin_seed = seeds$split_seed + 1L, resolution = TRUE)
   scoring_log("E1 r%d: completion scored (%.0fs)", r,
               proc.time()[["elapsed"]] - t0)
 
@@ -101,6 +103,24 @@ score_one <- function(r) {
     }
   }
 
+  # Revised Definition 1: the total-gain rule needs EVERY pairwise gain, so the
+  # all-pairs table (tiny: m(m-1)/2 rows per family) is stored for every
+  # replicate, together with the selections under all three rules. Storing
+  # only adjacent gains is what left the total-gain rows unrecoverable before.
+  pairs_all <- list(); sel_all <- list()
+  for (mn in c("ho_reconstruction", "ho_completion")) {
+    # SUPPORT COLLAPSE: under the second generating configuration nearly every
+    # completion document falls below the discrepancy floor, and a seed can be
+    # left with fewer than two retained documents in every family. There is then
+    # no paired gain to store (paired_gains_all() returns no rows); the selection
+    # table below still records the case, as "none certified" with n_retained.
+    pa <- paired_gains_all(modes[[mn]]$doc, cfg$sel_alpha, NULL, "all_pairs")
+    if (nrow(pa)) pairs_all[[mn]] <- pa[, `:=`(eval = mn, replicate = r)]
+    sel_all[[mn]] <- select_k_all_rules(modes[[mn]]$doc, cfg$eps_grid,
+                                        cfg$sel_alpha)[
+      , `:=`(eval = mn, replicate = r)]
+  }
+
   comp <- comparator_metrics(fits, sim_tr$dtm, sim_ev$dtm)
   sel <- select_from_metrics(comp)
   ot <- run_optimal_topic(fits, sim_tr$dtm, alpha = cfg$sel_alpha)
@@ -112,8 +132,12 @@ score_one <- function(r) {
                                    eval = "comparator", replicate = r, rule)]
 
   out <- list(
+    resolution = rbindlist(list(copy(rec$resolution)[, eval := "ho_reconstruction"],
+                                 copy(com$resolution)[, eval := "ho_completion"]))[, replicate := r],
     summary = summary, ci = ci, gains = rbindlist(gains),
     khat = rbindlist(khat, fill = TRUE),
+    pairs_all = rbindlist(pairs_all, use.names = TRUE),
+    sel_all = rbindlist(sel_all, use.names = TRUE),
     comp = copy(comp)[, replicate := r],
     diagnostics = fit_out$diagnostics[, replicate := r],
     minbin = data.table(replicate = r,
@@ -128,6 +152,7 @@ score_one <- function(r) {
               proc.time()[["elapsed"]] - t0)
   log_msg("E1 replicate %d/%d scored", r, cfg$S)
   out
+  })
 }
 
 res <- future_lapply(seq_len(cfg$S), score_one, future.seed = NULL)
@@ -135,14 +160,18 @@ res <- future_lapply(seq_len(cfg$S), score_one, future.seed = NULL)
 pull <- function(name) rbindlist(lapply(res, `[[`, name), fill = TRUE)
 
 out <- list(
-  summary = pull("summary"), ci = pull("ci"), gains = pull("gains"),
-  khat = pull("khat"), comparators = pull("comp"),
+  resolution = pull("resolution"), summary = pull("summary"), ci = pull("ci"), gains = pull("gains"),
+  khat = pull("khat"), pairs_all = pull("pairs_all"), sel_all = pull("sel_all"),
+  comparators = pull("comp"),
   diagnostics = pull("diagnostics"),
   minbin = pull("minbin"), doc_rep1 = res[[1L]]$doc_rep1, config = cfg
 )
 cache_put(out, p_data(cfg$experiment,
-                      sprintf("%s_results_%s.qs2", tolower(cfg$experiment), TAG)),
+                      sprintf("%s_results_%s%s.qs2", tolower(cfg$experiment), TAG,
+                              SFX)),
           cfg)
-write_result(out$summary, sprintf("%s_summary", tolower(cfg$experiment)), cfg)
-write_result(out$khat, sprintf("%s_khat", tolower(cfg$experiment)), cfg)
+write_result(out$summary, sprintf("%s_summary%s", tolower(cfg$experiment), SFX), cfg)
+write_result(out$khat, sprintf("%s_khat%s", tolower(cfg$experiment), SFX), cfg)
+write_result(out$sel_all, sprintf("%s_selection_rules%s", tolower(cfg$experiment), SFX),
+             cfg)
 log_msg("=== %s [%s] complete ===", EXPERIMENT, PROFILE)

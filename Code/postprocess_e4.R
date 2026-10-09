@@ -25,12 +25,11 @@ source(here::here("Code", "R", "source_all.R"))
 
 .args <- commandArgs(trailingOnly = TRUE)
 f <- sub("^file=", "", grep("^file=", .args, value = TRUE))
-if (!length(f)) {
-  cand <- list.files(proj_path("Data", "E4"), "^e4_results_E4_full_.*\\.qs2$",
-                     full.names = TRUE)
-  stopifnot(length(cand) > 0L)
-  f <- cand[which.max(file.mtime(cand))]
-}
+if (length(f) != 1L || !file.exists(f)) stop("Provide file=<explicit existing result.qs2>")
+# outputs inherit the input object's revision suffix (e.g. "_rev1"), so
+# post-processing a re-scored object never overwrites the original csv files
+SFX <- if (grepl("_rev[0-9A-Za-z]*\\.qs2$", f))
+  sub("^.*(_rev[0-9A-Za-z]*)\\.qs2$", "\\1", f) else ""
 cat(sprintf("post-processing: %s\n", basename(f)))
 x <- qs_read(f)
 cfg <- x$config
@@ -73,7 +72,7 @@ cat("\n== null rejection at pooled empirical crit (should be ~0.05) ==\n")
 print(xcheck[order(K, test)])
 
 if (HAS_POWER) {
-  write_result(adj, "e4_power_sizeadj", cfg)
+  write_result(adj, paste0("e4_power_sizeadj", SFX), cfg)
   cat("\n== size-adjusted power at K = K_true ==\n")
   print(adj[K == K_true], nrows = 200L)
 }
@@ -88,7 +87,7 @@ agg <- by_seed[, .(micro_mean = mean(r2_micro), micro_sd = sd(r2_micro),
                    macro_mean = mean(r2_macro), macro_sd = sd(r2_macro)),
                by = strength]
 wide <- dcast(by_seed, train_seed ~ strength, value.var = "r2_micro")
-write_result(by_seed, "e4_contamrefit_by_seed", cfg)
+write_result(by_seed, paste0("e4_contamrefit_by_seed", SFX), cfg)
 
 cat("\n== contamination (refit): across-seed aggregate at K = K_true ==\n")
 print(agg)

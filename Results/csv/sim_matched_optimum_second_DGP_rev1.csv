@@ -1,0 +1,4 @@
+eval,n,exact,mean_K,dist
+insample,10,0,37.5,25:2 30:1 35:2 40:2 45:1 50:2
+ho_reconstruction,10,0,45.5,35:1 40:1 45:4 50:4
+ho_completion,1,0,30,30:1

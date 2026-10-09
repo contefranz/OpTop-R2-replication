@@ -20,12 +20,11 @@ source(here::here("Code", "R", "source_all.R"))
 
 .args <- commandArgs(trailingOnly = TRUE)
 f <- sub("^file=", "", grep("^file=", .args, value = TRUE))
-if (!length(f)) {
-  cand <- list.files(proj_path("Data", "E2"), "^e2_results_E2_full_.*\\.qs2$",
-                     full.names = TRUE)
-  stopifnot(length(cand) > 0L)
-  f <- cand[which.max(file.mtime(cand))]
-}
+if (length(f) != 1L || !file.exists(f)) stop("Provide file=<explicit existing result.qs2>")
+# outputs inherit the input object's revision suffix (e.g. "_rev1"), so
+# post-processing a re-scored object never overwrites the original csv files
+SFX <- if (grepl("_rev[0-9A-Za-z]*\\.qs2$", f))
+  sub("^.*(_rev[0-9A-Za-z]*)\\.qs2$", "\\1", f) else ""
 cat(sprintf("post-processing: %s\n", basename(f)))
 x <- qs_read(f)
 cfg <- x$config
@@ -50,7 +49,7 @@ zt <- g[, .(cover_emp = mean(cover),
         by = .(K, J_ev)]
 diag <- merge(diag, zt, by = c("K", "J_ev"))[order(J_ev, K)]
 
-write_result(diag, "e2_gap_diagnosis", cfg)
+write_result(diag, paste0("e2_gap_diagnosis", SFX), cfg)
 cat("\n== gap CI diagnosis by (J_ev, K) ==\n")
 print(diag, nrows = 60L, digits = 3)
 

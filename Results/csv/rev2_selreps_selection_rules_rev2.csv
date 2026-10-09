@@ -1,0 +1,13 @@
+eval,metric,rule,eps,n,mode_K,exact,within_one_step,mean_K,none_certified,dist
+ho_completion,dev,adjacent_pointwise,0.01,100,40,1,1,40,0,40:100
+ho_completion,dev,adjacent_pointwise,0.005,100,40,0.87,1,41.3,0,40:87 50:13
+ho_completion,dev,adjacent_simultaneous,0.01,100,40,1,1,40,0,40:100
+ho_completion,dev,adjacent_simultaneous,0.005,100,40,0.83,1,41.7,0,40:83 50:17
+ho_completion,dev,total_gain,0.01,100,40,0.95,1,40.5,0,40:95 50:5
+ho_completion,dev,total_gain,0.005,100,40,0.67,0.87,45.5,0,40:67 50:20 60:4 70:9
+ho_reconstruction,dev,adjacent_pointwise,0.01,100,40,0.9,1,41,0,40:90 50:10
+ho_reconstruction,dev,adjacent_pointwise,0.005,100,50,0.41,1,45.9,0,40:41 50:59
+ho_reconstruction,dev,adjacent_simultaneous,0.01,100,40,0.9,1,41,0,40:90 50:10
+ho_reconstruction,dev,adjacent_simultaneous,0.005,100,50,0.4,0.97,46.3,0,40:40 50:57 60:3
+ho_reconstruction,dev,total_gain,0.01,100,50,0.4,0.98,46.2,0,40:40 50:58 60:2
+ho_reconstruction,dev,total_gain,0.005,100,70,0,0.21,65.8,0,50:21 60:22 70:35 80:22

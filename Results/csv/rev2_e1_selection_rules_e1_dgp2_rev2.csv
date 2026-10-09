@@ -1,0 +1,37 @@
+eval,metric,rule,eps,n,mode_K,exact,within_one_step,mean_K,none_certified,dist
+ho_completion,chisq,adjacent_pointwise,0.01,10,30,0,0,30,0.9,30:1
+ho_completion,chisq,adjacent_pointwise,0.005,10,45,0,0,45,0.9,45:1
+ho_completion,chisq,adjacent_simultaneous,0.01,10,,0,0,,1,""
+ho_completion,chisq,adjacent_simultaneous,0.005,10,,0,0,,1,""
+ho_completion,chisq,total_gain,0.01,10,,0,0,,1,""
+ho_completion,chisq,total_gain,0.005,10,,0,0,,1,""
+ho_completion,dev,adjacent_pointwise,0.01,10,30,0,0,30,0.9,30:1
+ho_completion,dev,adjacent_pointwise,0.005,10,30,0,0,30,0.9,30:1
+ho_completion,dev,adjacent_simultaneous,0.01,10,,0,0,,1,""
+ho_completion,dev,adjacent_simultaneous,0.005,10,,0,0,,1,""
+ho_completion,dev,total_gain,0.01,10,,0,0,,1,""
+ho_completion,dev,total_gain,0.005,10,,0,0,,1,""
+ho_completion,se,adjacent_pointwise,0.01,10,15,0,0.1,15,0.9,15:1
+ho_completion,se,adjacent_pointwise,0.005,10,15,0,0.1,15,0.9,15:1
+ho_completion,se,adjacent_simultaneous,0.01,10,45,0,0,45,0.9,45:1
+ho_completion,se,adjacent_simultaneous,0.005,10,45,0,0,45,0.9,45:1
+ho_completion,se,total_gain,0.01,10,45,0,0,45,0.9,45:1
+ho_completion,se,total_gain,0.005,10,45,0,0,45,0.9,45:1
+ho_reconstruction,chisq,adjacent_pointwise,0.01,10,20,1,1,20,0,20:10
+ho_reconstruction,chisq,adjacent_pointwise,0.005,10,20,1,1,20,0,20:10
+ho_reconstruction,chisq,adjacent_simultaneous,0.01,10,20,1,1,20,0,20:10
+ho_reconstruction,chisq,adjacent_simultaneous,0.005,10,20,1,1,20,0,20:10
+ho_reconstruction,chisq,total_gain,0.01,10,20,0.9,0.9,22.5,0,20:9 45:1
+ho_reconstruction,chisq,total_gain,0.005,10,20,0.5,0.5,28.125,0.2,20:5 35:1 45:2
+ho_reconstruction,dev,adjacent_pointwise,0.01,10,20,1,1,20,0,20:10
+ho_reconstruction,dev,adjacent_pointwise,0.005,10,20,1,1,20,0,20:10
+ho_reconstruction,dev,adjacent_simultaneous,0.01,10,20,1,1,20,0,20:10
+ho_reconstruction,dev,adjacent_simultaneous,0.005,10,20,1,1,20,0,20:10
+ho_reconstruction,dev,total_gain,0.01,10,20,0.7,0.7,26.5,0,20:7 35:1 45:2
+ho_reconstruction,dev,total_gain,0.005,10,20,0.3,0.3,33.75,0.2,20:3 35:1 40:1 45:3
+ho_reconstruction,se,adjacent_pointwise,0.01,10,10,0.1,0.5,13,0,10:5 15:4 20:1
+ho_reconstruction,se,adjacent_pointwise,0.005,10,10,0,0.4,15,0,10:5 15:4 40:1
+ho_reconstruction,se,adjacent_simultaneous,0.01,10,10,0.1,0.5,16,0,10:4 15:4 20:1 40:1
+ho_reconstruction,se,adjacent_simultaneous,0.005,10,10,0,0.4,17.5,0,10:4 15:4 35:1 40:1
+ho_reconstruction,se,total_gain,0.01,10,10,0,0.3,16.4285714285714,0.3,10:3 15:3 40:1
+ho_reconstruction,se,total_gain,0.005,10,10,0,0.3,16.4285714285714,0.3,10:3 15:3 40:1
