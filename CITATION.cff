@@ -8,7 +8,7 @@ license:
   - MIT
   - CC0-1.0
 repository-code: "https://github.com/contefranz/OpTop-R2-replication"
-abstract: "Code, cached results and data behind every table, figure and reported number of 'Goodness-of-Fit Indices and Diagnostics for Topic Models' (Lewis and Grossetti) and its Supplementary Material: four simulation studies, the MD&A empirical application, the evaluation-only revision batch and the Stage 3 computations. Exhibits are regenerated exactly from the shipped caches and the result objects deposited on Zenodo. Code under MIT; data under CC0-1.0."
+abstract: "Code, cached results and data behind every table, figure and reported number of 'Goodness-of-Fit Indices and Diagnostics for Topic Models' (Grossetti and Lewis) and its Supplementary Material: four simulation studies, the MD&A empirical application, the evaluation-only revision batch and the Stage 3 computations. Exhibits are regenerated exactly from the shipped caches and the result objects deposited on Zenodo. Code under MIT; data under CC0-1.0."
 keywords:
   - topic models
   - latent Dirichlet allocation
@@ -18,15 +18,15 @@ keywords:
   - held-out evaluation
   - R
 authors:
-  - family-names: Lewis
-    given-names: Craig M.
-    orcid: "https://orcid.org/0000-0001-8734-1702"
-    affiliation: "Vanderbilt University"
   - family-names: Grossetti
     given-names: Francesco
     orcid: "https://orcid.org/0000-0002-5130-7745"
     affiliation: "Bocconi University"
     email: francesco.grossetti@unibocconi.it
+  - family-names: Lewis
+    given-names: Craig M.
+    orcid: "https://orcid.org/0000-0001-8734-1702"
+    affiliation: "Vanderbilt University"
 references:
   - type: software
     title: "OpTop: Optimal Topic Selection and Goodness-of-Fit for Topic Models"
@@ -57,9 +57,9 @@ preferred-citation:
   year: 2026
   notes: "Submitted to the Journal of the Royal Statistical Society, Series B."
   authors:
-    - family-names: Lewis
-      given-names: Craig M.
-      orcid: "https://orcid.org/0000-0001-8734-1702"
     - family-names: Grossetti
       given-names: Francesco
       orcid: "https://orcid.org/0000-0002-5130-7745"
+    - family-names: Lewis
+      given-names: Craig M.
+      orcid: "https://orcid.org/0000-0001-8734-1702"

@@ -18,7 +18,7 @@ output:
 > exploratory configurations, not the published runs. Run times for the published design are in `../README.md`.
 
 Replication code for the simulation experiments of *"Goodness-of-Fit Indices
-and Diagnostics for Topic Models"* (Lewis & Grossetti). Everything below runs
+and Diagnostics for Topic Models"* (Grossetti & Lewis). Everything below runs
 from the **project root**. Command grammar (all entry points):
 
 ```sh

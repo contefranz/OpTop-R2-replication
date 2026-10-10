@@ -1,7 +1,7 @@
 # Replication Package
 
 **Goodness-of-Fit Indices and Diagnostics for Topic Models**
-Craig M. Lewis (Vanderbilt University) and Francesco Grossetti (Bocconi University)
+Francesco Grossetti (Bocconi University) and Craig M. Lewis (Vanderbilt University)
 Submitted to the *Journal of the Royal Statistical Society, Series B*. Contact: francesco.grossetti@unibocconi.it
 
 - Code: https://github.com/contefranz/OpTop-R2-replication (archived on Zenodo: DOI *to be added at release*)
