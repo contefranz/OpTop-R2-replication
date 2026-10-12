@@ -4,7 +4,7 @@
 Francesco Grossetti (Bocconi University) and Craig M. Lewis (Vanderbilt University)
 Submitted to the *Journal of the Royal Statistical Society, Series B*. Contact: francesco.grossetti@unibocconi.it
 
-- Code: https://github.com/contefranz/OpTop-R2-replication (archived on Zenodo: DOI *to be added at release*)
+- Code: https://github.com/contefranz/OpTop-R2-replication, archived on Zenodo: DOI [10.5281/zenodo.23319623](https://doi.org/10.5281/zenodo.23319623) (all versions)
 - Data objects: Zenodo data record, DOI [10.5281/zenodo.23269400](https://doi.org/10.5281/zenodo.23269400) (Section 3)
 - Licences: code MIT (`LICENSE`); data and results CC0-1.0 (`LICENSE-DATA`)
 
@@ -209,4 +209,4 @@ On 9 October 2026, with the environment of `install.R` (R 4.6.1, macOS 27.0.1), 
 
 ## 10. Citation and licences
 
-Please cite the paper and this package (`CITATION.cff`; GitHub's "Cite this repository"). Code: MIT. Data, result objects, tables and figures: CC0-1.0 (`LICENSE-DATA`). SEC filing text is in the public domain.
+Please cite the paper and this package (DOI [10.5281/zenodo.23319623](https://doi.org/10.5281/zenodo.23319623); `CITATION.cff`; GitHub's "Cite this repository"), and the data record (DOI [10.5281/zenodo.23269400](https://doi.org/10.5281/zenodo.23269400)) if you use the deposited objects. Code: MIT. Data, result objects, tables and figures: CC0-1.0 (`LICENSE-DATA`). SEC filing text is in the public domain.

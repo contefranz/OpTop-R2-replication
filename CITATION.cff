@@ -2,8 +2,9 @@ cff-version: 1.2.0
 message: "If you use this replication package, please cite the paper (preferred citation) and the package itself."
 type: software
 title: "Replication package for 'Goodness-of-Fit Indices and Diagnostics for Topic Models'"
-version: 1.0.0
+version: 1.0.1
 date-released: 2026-10-12
+doi: 10.5281/zenodo.23319623
 license:
   - MIT
   - CC0-1.0
@@ -31,6 +32,7 @@ references:
   - type: software
     title: "OpTop: Optimal Topic Selection and Goodness-of-Fit for Topic Models"
     version: 0.20.1
+    doi: 10.5281/zenodo.22877586
     repository-code: "https://github.com/contefranz/OpTop"
     url: "https://contefranz.github.io/OpTop/"
     license: GPL-3.0-only
@@ -44,7 +46,7 @@ references:
   - type: software
     title: "NLPstudio"
     version: 1.2.0
-    doi: 10.5281/zenodo.20556350
+    doi: 10.5281/zenodo.21506588
     repository-code: "https://github.com/contefranz/NLPstudio"
     authors:
       - family-names: Grossetti
