@@ -3,12 +3,12 @@ message: "If you use this replication package, please cite the paper (preferred 
 type: software
 title: "Replication package for 'Goodness-of-Fit Indices and Diagnostics for Topic Models'"
 version: 1.0.0
-date-released: 2026-10-09
+date-released: 2026-10-12
 license:
   - MIT
   - CC0-1.0
 repository-code: "https://github.com/contefranz/OpTop-R2-replication"
-abstract: "Code, cached results and data behind every table, figure and reported number of 'Goodness-of-Fit Indices and Diagnostics for Topic Models' (Grossetti and Lewis) and its Supplementary Material: four simulation studies, the MD&A empirical application, the evaluation-only revision batch and the Stage 3 computations. Exhibits are regenerated exactly from the shipped caches and the result objects deposited on Zenodo. Code under MIT; data under CC0-1.0."
+abstract: "Code, cached results and data behind every table, figure and reported number of 'Goodness-of-Fit Indices and Diagnostics for Topic Models' (Grossetti and Lewis) and its Supplementary Material: four simulation studies, the MD&A empirical application, the evaluation-only revision batch and the Stage 3 computations. Exhibits are regenerated exactly from the shipped caches and the result objects deposited on Zenodo (https://doi.org/10.5281/zenodo.23269400). Code under MIT; data under CC0-1.0."
 keywords:
   - topic models
   - latent Dirichlet allocation
@@ -50,6 +50,22 @@ references:
       - family-names: Grossetti
         given-names: Francesco
         orcid: "https://orcid.org/0000-0002-5130-7745"
+  - type: data
+    title: 'Replication data for "Goodness-of-Fit Indices and Diagnostics for Topic Models": Form 10-K MD&A corpus, fitted topic models and cached results'
+    version: 1.0.0
+    doi: 10.5281/zenodo.23269400
+    url: "https://doi.org/10.5281/zenodo.23269400"
+    year: 2026
+    publisher:
+      name: Zenodo
+    license: CC0-1.0
+    authors:
+      - family-names: Grossetti
+        given-names: Francesco
+        orcid: "https://orcid.org/0000-0002-5130-7745"
+      - family-names: Lewis
+        given-names: Craig M.
+        orcid: "https://orcid.org/0000-0001-8734-1702"
 preferred-citation:
   type: unpublished
   status: submitted

@@ -32,8 +32,8 @@ cd "$(dirname "$0")"
 # a project-local library created by `Rscript install.R lib=.Rlib` takes precedence
 if [ -d .Rlib ]; then export R_LIBS_USER="$PWD/.Rlib"; fi
 
-# Zenodo data record holding the large objects (README.md, Section 4)
-ZENODO_RECORD="${ZENODO_RECORD:-RECORD_ID_TO_BE_FILLED}"
+# Zenodo data record holding the large objects (README.md, Section 3; DOI 10.5281/zenodo.23269400)
+ZENODO_RECORD="${ZENODO_RECORD:-23269400}"
 ZENODO_URL="https://zenodo.org/records/${ZENODO_RECORD}/files"
 
 D=(K_true=40 W=5000 K_grid=10:100:10 fit_method=WarpLDA alpha=0.1 beta=0.01)
@@ -57,17 +57,24 @@ need_results() { need Data/MANIFEST-result_objects.sha256 results; }
 need_fits()    { need Data/MANIFEST-fit_cache.sha256 fits; }
 
 fetch_one() {   # fetch_one <archive> [local dir]: checksum of the archive, then of every member
-  local name="$1" src="${2:-}" tmp manifest
+  local name="$1" src="${2:-}" tmp manifest parts p
   manifest="Data/MANIFEST-${name%.tar}.sha256"     # tracked in git: the expected contents
   tmp="$(mktemp -d)"
   if [ -n "$src" ]; then
-    cp "$src/$name" "$src/SHA256SUMS" "$tmp/"
+    cp "$src/SHA256SUMS" "$tmp/"
   else
-    if [ "$ZENODO_RECORD" = "RECORD_ID_TO_BE_FILLED" ]; then
-      echo "The Zenodo record id is not set yet (ZENODO_RECORD in reproduce.sh)." >&2; exit 1
-    fi
     curl -fL --retry 3 -o "$tmp/SHA256SUMS" "$ZENODO_URL/SHA256SUMS?download=1"
-    curl -fL --retry 3 -o "$tmp/$name" "$ZENODO_URL/$name?download=1"
+  fi
+  # An archive too large for a single upload is deposited in parts (<archive>.part1, .part2, ...),
+  # listed in SHA256SUMS in order: download them, check each, and rejoin them into the archive.
+  parts=$(awk -v n="$name" '$2 ~ ("^" n "[.]part[0-9]+$") { print $2 }' "$tmp/SHA256SUMS")
+  if [ -n "$src" ] && [ -f "$src/$name" ]; then parts=""; fi   # a local copy of the whole archive
+  for p in ${parts:-$name}; do
+    if [ -n "$src" ]; then cp "$src/$p" "$tmp/"; else curl -fL --retry 3 -o "$tmp/$p" "$ZENODO_URL/$p?download=1"; fi
+  done
+  if [ -n "$parts" ]; then
+    (cd "$tmp" && for p in $parts; do grep " $p\$" SHA256SUMS; done | shasum -a 256 -c -)
+    (cd "$tmp" && cat $parts > "$name" && rm -f $parts)
   fi
   (cd "$tmp" && grep " $name\$" SHA256SUMS | shasum -a 256 -c -)
   tar -xf "$tmp/$name"
